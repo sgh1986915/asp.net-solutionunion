@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<jobs xml:base="http://50.57.103.196/">
+   <job name="ActionItemReport" hour="8" url="/Jobs/ActionItemReport" />
+   <job name="Daily" hour="0" url="/Jobs/Daily" />
+   <job name="ImportNewAccounts" interval="5" url="/Jobs/ImportNewAccounts" />
+   <job name="SynchronizeAccounts" interval="5" url="/Jobs/SynchronizeAccounts" />
+   <job name="SynchronizeAccountsSuperFrequent" interval="1" url="/Jobs/SynchronizeAccountsSuperFrequent" />
+</jobs>

@@ -1,0 +1,117 @@
+﻿@model UserProfile
+@section head {
+   <style type="text/css">
+      form h2 { margin-bottom: 0 }
+
+      #changePasswordBtn { 
+         font-size: 120%;
+      }
+   </style>
+   <script>
+      $(function () {
+
+         $('#changePasswordBtn').click(function () {
+            $.get('ChangePassword', function (data) {
+               $.fancybox(data);
+               $.validator.unobtrusive.parse("#ChangePasswordForm");
+            }, "html");
+         });
+      });
+</script>
+}
+
+@using (Html.BeginForm()) {
+   <div style="float: right;">
+      <span id="message" class="@(ViewBag.Message != null ? "hide-after-load" : "")">@ViewBag.Message</span>
+   </div>
+   
+   <h1>Profile</h1>
+   @Html.ValidationSummary(excludePropertyErrors: true)
+   
+   <h2>
+      <img src="/Content/images/icon-step-01.gif" width="21" height="21" align="absmiddle"/>Core
+      Details</h2>
+   <table class="form td2">
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.FirstName)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.Email)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.FirstName, new { HtmlAttributes = new { tabindex = 1 } })
+            @Html.ValidationMessageFor(p => p.FirstName)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.Email, new { HtmlAttributes = new { tabindex = 3 } })
+            @Html.ValidationMessageFor(p => p.Email)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.LastName)
+         </td>
+         <td></td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.LastName, new { HtmlAttributes = new { tabindex = 2 } })
+            @Html.ValidationMessageFor(p => p.LastName)
+         </td>
+         <td>
+            <a class="btn" id="changePasswordBtn" tabindex="4">Change Password</a>
+         </td>
+      </tr>
+   </table>
+   <div class="separator">
+   </div>
+   <h2>
+      <img src="/Content/images/icon-step-02.gif" width="21" height="21" align="absmiddle">User
+      Details</h2>
+   <table class="form td2">
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.CompanyName)
+         </td>
+         <td>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.CompanyName, new { HtmlAttributes = new { tabindex = 5 } })
+            @Html.ValidationMessageFor(p => p.CompanyName)
+         </td>
+         <td>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.Phone)
+         </td>
+         <td>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.Phone, new { HtmlAttributes = new { tabindex = 6 } })
+            @Html.ValidationMessageFor(p => p.Phone)
+         </td>
+         <td>
+         </td>
+      </tr>
+   </table>
+   <div class="separator">
+   </div>
+   <div class="create-form">
+      <input type="submit" class="update" tabindex="12" />
+      <span class="or-link">
+         Or
+         <a href="@Url.Action(null)" tabindex="13">Cancel</a>
+      </span>
+   </div>
+   <div class="clear">
+   </div>
+}

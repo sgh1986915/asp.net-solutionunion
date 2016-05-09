@@ -1,0 +1,175 @@
+﻿@model IEnumerable<InvitationReportItem>
+@section head {
+   <style>
+      #gridContent .list td.last {
+         padding-right: 13px;
+      }
+      #gridContent .list td.last > * {
+         float: right;
+      }
+   </style>
+   <script>
+      
+      function ApplyFilter() {
+         $('#ListFilterForm').submit();
+      }
+
+      function PerformAction(obj, id) {
+         var action = obj.options[obj.selectedIndex].value;
+
+         if (action.match(/^(mailto\:|\/)/)) {
+            location.href = action;
+
+         } else if (action) {
+
+            $.post(action + '/' + id, function (data) {
+
+               ShowMessage(data);
+
+               if (action == "Delete")
+                  ApplyFilter();
+
+            }, "json")
+            .error(function (xhr) {
+               $.fancybox($.parseJSON(xhr.responseText));
+            });
+         }
+
+         obj.selectedIndex = 0;
+      }
+
+      $(function () {
+
+         $('#ListFilterForm').submit(function (event) {
+
+            $.get($(this).attr('action'), $('#ListFilterForm').serialize(), function (data) {
+               $('#gridContent').html(data);
+            }, "html");
+
+            return false;
+         });
+
+         $('#ListFilterForm').jqTransform();
+      });
+      
+   </script>
+}
+
+<script>
+   $(function () {
+
+      $('.list')
+         .sortable({
+            currentValue: $('#sort').val(),
+            click: function (value, query) {
+               $('#sort').val(value);
+               ApplyFilter();
+            }
+         }).jqTransform();
+
+      $('.pager a[href]').click(function () {
+
+         $.get(this.href, function (data) {
+            $('#gridContent').html(data);
+         });
+
+         return false;
+      });
+   });
+</script>
+
+@if (!Request.IsAjaxRequest()) {
+   <div style="float: right;">
+      <span id="message" style="display: none;"></span>
+   </div>
+   <h1>
+      Users / Invitations
+   </h1>
+   <div id="messageDiv">
+   </div>
+   <!--top-search-bar-start-->
+   <form id="ListFilterForm" action="@Url.Action(null)">
+      @Html.Hidden("sort")
+      
+      <div id="top-search-bar">
+         <div class="drop-lft">
+         </div>
+         <div class="drop-middle-bg">
+            <div class="search-block">
+               @Html.TextBox("search")
+            </div>
+         </div>
+         <div class="drop-rgt">
+         </div>
+      </div>
+   </form>
+   <!--top-search-bar-end-->
+   <div class="clear">
+   </div>
+}
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("<div id='gridContent'>");
+}
+<table class="list" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+      <tr>
+         <th data-name="UserFirstName">
+            First Name
+         </th>
+         <th data-name="UserLastName">
+            Last Name
+         </th>
+         <th data-name="Email">
+            Email
+         </th>
+         <th data-name="DateSent">
+            Date Sent
+         </th>
+         <th>
+         </th>
+      </tr>
+   </thead>
+   @{ 
+      var invitations = Model.ToList(); 
+   }
+   @if (invitations.Count() != 0) {
+      int i = -1;
+      foreach (var item in invitations) {
+         i++;
+      <tr class="@(i % 2 == 0 ? "" : "alternate")">
+         <td>
+            @item.UserFirstName
+         </td>
+         <td>
+            @item.UserLastName
+         </td>
+         <td>
+            @item.Email
+         </td>
+         <td>
+            @item.DateSent
+         </td>
+         <td class="last">
+            <select id="action" name="action" onchange="PerformAction(this,'@item.Id');">
+               <option selected="selected" value="">Action</option>
+               <option value="Resend">Resend</option>
+               <option value="@Url.Action("Edit", new { id = item.Id })">Edit</option>
+               <option value="Delete">Delete</option>
+             </select>
+         </td>
+      </tr>
+      }
+   } else { 
+      <tr>
+         <td colspan="5">
+            No Invitations to display.
+         </td>
+      </tr>
+   }
+</table>
+
+@Html.Pager()
+
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("</div>");
+}

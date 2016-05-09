@@ -1,0 +1,422 @@
+﻿@model UserEdit
+@{
+   bool isNew = Page.IsNew ?? false;
+   var newHtml = Html.HtmlHelperFor<UserCreateInput>((isNew) ? (UserCreateInput)Model : null);
+}
+@section head {
+   @RenderPage("EditHead.cshtml")
+   <style>
+      div.services .list td.last > * {
+         float: right;
+      }
+
+      #EditServiceForm .popup-form thead {
+         white-space: nowrap;
+      }
+
+   </style>
+}
+
+@if (!isNew) { 
+   <script>
+
+      function updateCurrentDiscount(value, formattedValue) {
+         $('#currentDiscountDisplay').text(formattedValue);
+         $('#CurrentDiscount').val(value);
+      }
+
+      function computeCurrentDiscount(percentageDiscount) {
+         $.post('@Url.Action("Edit_ComputeDiscount", new { id = this.ViewContext.RouteData.GetRequiredString("id") })', { percentageDiscount: percentageDiscount }, function (data) {
+            updateCurrentDiscount(data.Value, data.FormattedValue);
+         });
+      }
+
+      $(function () {
+         $('#PercentageDiscount').change(function () {
+            var $this = $(this);
+
+            if ($('input[type=checkbox]#PercentageDiscountEnabled').is(':checked'))
+               computeCurrentDiscount($this.val());
+         });
+
+         $('input[type=checkbox]#PercentageDiscountEnabled').change(function () {
+            var $this = $(this);
+
+            if ($this.is(':checked'))
+               computeCurrentDiscount($('#PercentageDiscount').val());
+            else 
+               computeCurrentDiscount(0);
+         });
+      });
+   </script>
+}
+
+@using (Html.BeginForm()) { 
+   
+   <div style="float: right;">
+      @if (ViewBag.Message != null) {
+         <span id="message" class="hide-after-load">@ViewBag.Message</span>
+      }
+      @if (!isNew) {
+         <a href="@(Request.QueryString["returnUrl"] ?? Url.Action("List"))" style=" margin-left: 10px;">&lsaquo; Back</a>         
+      }
+   </div>
+   
+   <h1>Users / @(isNew ? "Add" : "Edit") User</h1>
+   
+   @Html.ValidationSummary(excludePropertyErrors: true)
+   
+   if (isNew) {
+      @newHtml.HiddenFor(p => p.Role)
+      <h2>
+         <img src="/Content/images/icon-step-01.gif" width="21" height="21" align="absmiddle"/>Core
+         Details</h2>
+      <div style="margin: 0 0 20px 40px;">
+         <input type="button" id="btnReseller" class="reseller-@(newHtml.ViewData.Model.Role == UserRole.Reseller ? "on" : "off")" onclick="SetUserType('Reseller');" tabindex="1" />
+         <span class="or-separator">Or</span>
+         <input type="button" id="btnRetail" class="retail-@(newHtml.ViewData.Model.Role == UserRole.Retail ? "on" : "off")" onclick="SetUserType('Retail');" tabindex="2" />
+      </div>
+      <div class="separator">
+      </div>
+   }
+   <h2 style="margin-bottom: 0">
+      <img src="/Content/images/icon-step-0@(isNew ? 2 : 1).gif" width="21" height="21" align="absmiddle"/>User
+      Details</h2>
+   <table class="user-table">
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.Email)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.CompanyName)
+         </td>
+      </tr>
+      <tr>
+         @if (isNew) {
+            <td>
+               @newHtml.EditorFor(p => p.Email, new { HtmlAttributes = new { tabindex = 3 } })
+               @newHtml.ValidationMessageFor(p => p.Email)
+            </td>
+            <td>
+               @newHtml.EditorFor(p => p.CompanyName, new { HtmlAttributes = new { tabindex = 7 } })
+               @newHtml.ValidationMessageFor(p => p.CompanyName)
+            </td>
+         } else {
+            <td>
+               @Html.EditorFor(p => p.Email, new { HtmlAttributes = new { tabindex = 3 } })
+               @Html.ValidationMessageFor(p => p.Email)
+            </td>
+            <td>
+               @Html.EditorFor(p => p.CompanyName, new { HtmlAttributes = new { tabindex = 7 } })
+               @Html.ValidationMessageFor(p => p.CompanyName)
+            </td>
+         }
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.FirstName)
+         </td>
+         @if (isNew) {
+            <td>
+               @newHtml.LabelFor(p => p.Password)
+            </td>
+         }
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.FirstName, new { HtmlAttributes = new { tabindex = 4 } })
+            @Html.ValidationMessageFor(p => p.FirstName)
+         </td>
+         @if (isNew) {
+            <td>
+               @newHtml.EditorFor(p => p.Password, new { HtmlAttributes = new { tabindex = 8 } })
+               @newHtml.ValidationMessageFor(p => p.Password)
+            </td>
+         }
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.LastName)
+         </td>
+         @if (isNew) {
+            <td>
+               @newHtml.LabelFor(p => p.ConfirmPassword)
+            </td>
+         }
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.LastName, new { HtmlAttributes = new { tabindex = 5 } })
+            @Html.ValidationMessageFor(p => p.LastName)
+         </td>
+         @if (isNew) {
+            <td>
+               @newHtml.EditorFor(p => p.ConfirmPassword, new { HtmlAttributes = new { tabindex = 9 } })
+               @newHtml.ValidationMessageFor(p => p.ConfirmPassword)
+            </td>
+         }
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.Phone)
+         </td>
+         <td>
+            &nbsp;
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.Phone, new { HtmlAttributes = new { tabindex = 6 } })
+            @Html.ValidationMessageFor(p => p.Phone)
+         </td>
+         <td>
+            &nbsp;
+         </td>
+      </tr>
+   </table>
+   <div class="separator">
+   </div>
+   <h2 style="margin-bottom: 0">
+      <img src="/Content/images/icon-step-0@(isNew ? 3 : 2).gif" width="21" height="21" align="absmiddle"/>Account
+      Details</h2>
+   <table class="user-table">
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.MinimumMonthlyFee)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.FixedBackupBilling)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.MinimumMonthlyFee, new { HtmlAttributes = new { tabindex = 10 } })
+            @Html.ValidationMessageFor(p => p.MinimumMonthlyFee)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.FixedBackupBilling, new { HtmlAttributes = new { tabindex = 16 } })
+            @Html.ValidationMessageFor(p => p.FixedBackupBilling)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.ProCostPerGb)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.LiteCostPerGb)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.ProCostPerGb, new { HtmlAttributes = new { tabindex = 11 } })
+            <div class="hint">Leave blank for variable pricing</div>
+            @Html.ValidationMessageFor(p => p.ProCostPerGb)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.LiteCostPerGb, new { HtmlAttributes = new { tabindex = 17 } })
+            @Html.ValidationMessageFor(p => p.LiteCostPerGb)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.ProAccountMinimumFee)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.LiteAccountMinimumFee)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.ProAccountMinimumFee, new { HtmlAttributes = new { tabindex = 12 } })
+            @Html.ValidationMessageFor(p => p.ProAccountMinimumFee)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.LiteAccountMinimumFee, new { HtmlAttributes = new { tabindex = 18 } })
+            @Html.ValidationMessageFor(p => p.LiteAccountMinimumFee)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.ProVaultMinimumGb)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.LiteVaultMinimumGb)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.ProVaultMinimumGb, new { HtmlAttributes = new { tabindex = 13 } })
+            @Html.ValidationMessageFor(p => p.ProVaultMinimumGb)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.LiteVaultMinimumGb, new { HtmlAttributes = new { tabindex = 19 } })
+            @Html.ValidationMessageFor(p => p.LiteVaultMinimumGb)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.PercentageDiscount)
+            <span style="margin-left: 3em">
+               @Html.EditorFor(p => p.PercentageDiscountEnabled, new { HtmlAttributes = new { tabindex = 14 } })
+            </span>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.PercentageDiscount, new { HtmlAttributes = new { tabindex = 15 } })
+            @Html.ValidationMessageFor(p => p.PercentageDiscount)
+         </td>
+      </tr>
+      @if (!isNew) {
+         <tr>
+            <td>
+               <br />
+               Discount: <span id="currentDiscountDisplay">@Model.CurrentDiscount.ToString("c")</span>
+
+               @Html.HiddenFor(p => p.CurrentDiscount)
+            </td>
+         </tr>
+      }
+   </table>
+   if (isNew) {
+      <div class="separator">
+      </div>
+      <h2 style="margin-bottom: 0">
+         <img src="/Content/images/icon-step-0@(isNew ? 4 : 3).gif" width="21" height="21" align="absmiddle"/>Billing
+         Details</h2>
+      <table class="user-table">
+         <tr>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.NameOnCard)
+            </td>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.BillingAddress)
+            </td>
+         </tr>
+         <tr>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.NameOnCard, new { HtmlAttributes = new { tabindex = 23, autocomplete = "off" } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.NameOnCard)
+            </td>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.BillingAddress, new { HtmlAttributes = new { tabindex = 28 } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.BillingAddress)
+            </td>
+         </tr>
+         <tr>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.CreditCardNumber)
+            </td>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.City)
+            </td>
+         </tr>
+         <tr>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.CreditCardNumber, new { HtmlAttributes = new { tabindex = 24, autocomplete = "off" } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.CreditCardNumber)
+            </td>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.City, new { HtmlAttributes = new { tabindex = 29 } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.City)
+            </td>
+         </tr>
+         <tr>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.Expiry)
+            </td>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.State)
+            </td>
+         </tr>
+         <tr>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.ExpiryMonth, new { HtmlAttributes = new { tabindex = 25 } })
+               @newHtml.EditorFor(p => p.CreditCard.ExpiryYear, new { HtmlAttributes = new { tabindex = 26 } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.ExpiryMonth)
+               @newHtml.ValidationMessageFor(p => p.CreditCard.ExpiryYear)
+            </td>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.State, new { HtmlAttributes = new { tabindex = 30 } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.State)
+            </td>
+         </tr>
+         <tr>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.CreditCardCVV)
+               <a class="cvv clickable" style="margin-left: 6.3em">What's this?</a>
+            </td>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.PostalCode)
+            </td>
+         </tr>
+         <tr>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.CreditCardCVV, new { HtmlAttributes = new { tabindex = 27, autocomplete = "off" } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.CreditCardCVV)
+            </td>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.PostalCode, new { HtmlAttributes = new { tabindex = 31 } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.PostalCode)
+            </td>
+         </tr>
+         <tr>
+            <td></td>
+            <td>
+               @newHtml.LabelFor(p => p.CreditCard.Country)
+            </td>
+         </tr>
+         <tr>
+            <td></td>
+            <td>
+               @newHtml.EditorFor(p => p.CreditCard.Country, new { HtmlAttributes = new { tabindex = 32 } })
+               @newHtml.ValidationMessageFor(p => p.CreditCard.Country)
+            </td>
+         </tr>
+      </table>
+   } else { 
+      <script>
+
+         function RefreshServices() {
+            $.get('@Url.Action("Services", new { id = ViewContext.RequestContext.RouteData.GetRequiredString("id") })', function (data) {
+               $('div.services').html(data);
+            }, "html");
+         }
+
+         $(function () {
+            $('.addService.btn').click(function () {
+               $.get('@Url.Action("AddService", new { id = ViewContext.RequestContext.RouteData.GetRequiredString("id") })', function (data) {
+                  $.fancybox(data);
+                  $.validator.unobtrusive.parse("#fancybox-content");
+               }, "html");
+            });
+         });
+      </script>
+      <div class="separator">
+      </div>
+      <a class="btn addService" style="float: right;">Add Service</a>
+      <span class="services message" style="float: right; margin-right: 1em; display: none"></span>
+      <h2 style="margin-bottom: 0">
+         <img src="/Content/images/icon-step-04.gif" width="21" height="21" align="absmiddle" />Services
+      </h2>
+      <div class="services">
+         @{Html.RenderAction("Services");}
+      </div>
+   }
+   <div class="separator">
+   </div>
+   
+   <div class="create-form">
+      <input type="submit" id="btnSubmit" name="btnSubmit" class="@(isNew ? "create" : "update")" tabindex="33" />
+      <span class="or-link">
+         Or
+         @if (isNew) {
+            <input type="reset" value="Clear" tabindex="34" />
+         } else {
+            <a href="@Url.Action("List")" tabindex="34">Cancel</a>
+         }
+      </span>
+   </div>
+   <div class="clear">
+   </div>
+}

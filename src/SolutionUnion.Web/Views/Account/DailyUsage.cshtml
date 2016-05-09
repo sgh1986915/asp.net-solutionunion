@@ -1,0 +1,106 @@
+﻿@model ICollection<DailyUsageReportItem>
+@functions {
+   public static string GetDisplayForBytes(decimal fileSize) {
+      fileSize = fileSize / 1024 / 1024;
+      if (fileSize < 1024) {
+         return String.Format("{0}M", Math.Round(fileSize, 1));
+      } else {
+         fileSize = fileSize / 1024;
+         return String.Format("{0}G", Math.Round(fileSize, 1));
+      }
+   }
+}
+<script type="text/javascript">
+
+   function UsageFilter() {
+      $('form#usageForm').submit();
+   }
+
+   $(function () {
+
+      $('form#usageForm').jqTransform();
+
+      $('form#usageForm').ajaxForm({
+         success: function (data) {
+            $.fancybox(data);
+         },
+         error: function (xhr) {
+            $.fancybox($.parseJSON(xhr.responseText));
+         }
+      });
+
+      $('form#usageForm .pager a[href]').click(function () {
+
+         $.get(this.href, function (data) {
+            $.fancybox(data);
+         });
+
+         return false;
+      });
+   });
+</script>
+<div style="min-height: 300px">
+   <h1>
+      Daily Usage</h1>
+   <form action="@Request.Path" id="usageForm">
+   <div id="top-search-bar">
+      <div class="drop-lft">
+      </div>
+      <div class="drop-middle-bg">
+         <div class="view-block">
+            <label>
+               Month:
+            </label>
+            @Html.DropDownList("month", (IEnumerable<SelectListItem>)ViewBag.month, new { id = "usage_month", style = "width: 80px;", autopostback = "true", onchange = "UsageFilter();" })
+         </div>
+      </div>
+      <div class="drop-rgt">
+      </div>
+   </div>
+   <div class="clear">
+   </div>
+   <table class="list">
+      @if (Model.Count > 0) {
+         <tr>
+            <th>
+               Day
+            </th>
+            <th>
+               Data Size
+            </th>
+            <th>
+               Retain Size
+            </th>
+            <th>
+               Total Size
+            </th>
+         </tr>
+         int i = -1;
+         foreach (var item in Model) {
+            i++;
+         <tr class="@(i % 2 == 0 ? "" : "alternate")">
+            <td>
+               @item.Date.ToShortDateString()
+            </td>
+            <td>
+               @GetDisplayForBytes(item.DataSize)
+            </td>
+            <td>
+               @GetDisplayForBytes(item.RetainSize)
+            </td>
+            <td>
+               @GetDisplayForBytes(item.TotalSize)
+            </td>
+         </tr>
+         }
+      } else { 
+         <tr class="empty">
+            <td>
+               This list is empty
+            </td>
+         </tr>
+      }
+   </table>
+   @Html.Pager()
+   </form>
+</div>

@@ -1,0 +1,194 @@
+﻿@model IEnumerable<ServerReportItem>
+@section head {
+   <style>
+      #gridContent .list td.last {
+         padding-right: 13px;
+      }
+      #gridContent .list td.last > * {
+         float: right;
+      }
+   </style>
+   <script>
+
+      function PerformAction(obj, id) {
+         var action = obj.options[obj.selectedIndex].value;
+
+         if (action == "Edit") {
+            location.href = 'Edit/' + id;
+
+         } else if (action == "ChangePassword") {
+
+            $.get('ChangePassword/' + id, function (data) {
+               $.fancybox(data);
+               $.validator.unobtrusive.parse("#ChangePasswordForm");
+            }, "html");
+
+         } else if (action) {
+
+         $.post(action + '/' + id, function (data) {
+
+            $.fancybox(data);
+
+            if (action != "Verify")
+               ApplyFilter();
+
+         }, "json")
+            .error(function (xhr) {
+               $.fancybox($.parseJSON(xhr.responseText));
+            });
+         }
+
+         obj.selectedIndex = 0;
+      }
+
+      function ApplyFilter() {
+         $('#ListServerFilterForm').submit();
+      }
+
+      $(function () {
+
+         $('#ListServerFilterForm').submit(function (event) {
+
+            $.get($(this).attr('action'), $('#ListServerFilterForm').serialize(), function (data) {
+               $('#gridContent').html(data);
+            }, "html");
+
+            event.preventDefault();
+         });
+
+         $("#ListServerFilterForm select:[autopostback=true]").change(function () {
+            $(this).closest("form").submit();
+         });
+
+         $('#ListServerFilterForm').jqTransform();
+      });
+      
+   </script>
+}
+
+<script>
+   $(function () {
+
+      $('.list')
+         .sortable({
+            currentValue: $('#sort').val(),
+            click: function (value, query) {
+               $('#sort').val(value);
+               ApplyFilter();
+            }
+         }).jqTransform();
+
+      $('.pager a[href]').click(function () {
+
+         $.get(this.href, function (data) {
+            $('#gridContent').html(data);
+         });
+
+         return false;
+      });
+   });
+</script>
+
+@if (!Request.IsAjaxRequest()) {
+   <div style="float: right;">
+      <span id="message" style="display: none;"></span>
+   </div>
+   <h1>
+      Accounts / List Servers
+   </h1>
+   <div id="messageDiv">
+   </div>
+   <!--top-search-bar-start-->
+   <form id="ListServerFilterForm" action="@Url.Action(null)">
+      @Html.Hidden("sort")
+      
+      <div id="top-search-bar">
+         <div class="drop-lft">
+         </div>
+         <div class="drop-middle-bg">
+            <div class="account-type-block">
+               <label>
+                  Server Type:
+               </label>
+               @Html.DropDownList("type", (IEnumerable<SelectListItem>)ViewBag.type, "All", new { style = "width: 70px;", autopostback = "true", onchange = "ApplyFilter();" })
+            </div>
+            <div class="search-block">
+               @Html.TextBox("search")
+            </div>
+         </div>
+         <div class="drop-rgt">
+         </div>
+      </div>
+   </form>
+   <!--top-search-bar-end-->
+   <div class="clear">
+   </div>
+}
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("<div id='gridContent'>");
+}
+<table class="list" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+      <tr>
+         <th data-name="OrIpUrl">
+            IP / URL
+         </th>
+         <th>
+            Description
+         </th>
+         <th data-name="IsAcb">
+            Type
+         </th>
+         <th data-name="IsDefault">
+            Default
+         </th>
+         <th>
+         </th>
+      </tr>
+   </thead>
+   @{ 
+      var servers = Model.ToList(); 
+   }
+   @if (servers.Count() != 0) {
+      int i = -1;
+      foreach (var server in servers) {
+         i++;
+      <tr class="@(i % 2 == 0 ? "" : "alternate")">
+         <td>
+            @server.OrIpUrl
+         </td>
+         <td>
+            @server.Description
+         </td>
+         <td>
+            @server.Type.ToString().ToUpperInvariant()
+         </td>
+         <td>
+            @server.IsDefault
+         </td>
+         <td class="last">
+            <select id="action" name="action" onchange="PerformAction(this,'@server.Id');">
+               <option selected="selected" value="">Action</option>
+               <option value="Edit">Edit</option>
+               <option value="MakeDefault">Make Default</option>
+               <option value="Verify">Verify</option>
+               <option value="ChangePassword">Change Password</option>
+               <option value="Delete">Delete</option>
+            </select>
+         </td>
+      </tr>
+      }
+   } else { 
+      <tr>
+         <td colspan="5">
+            No Servers to display.
+         </td>
+      </tr>
+   }
+</table>
+
+@Html.Pager()
+
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("</div>");
+}

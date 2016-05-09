@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/SolutionUnion/!svn/ver/103/trunk/src/SolutionUnion/Services
+END
+ServiceReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/SolutionUnion/!svn/ver/89/trunk/src/SolutionUnion/Services/ServiceReportItem.cs
+END
+CreditCardReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion/Services/CreditCardReportItem.cs
+END
+ActionItemReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/ActionItemReporter.cs
+END
+AccountReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/AccountReporter.cs
+END
+InvoiceReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/InvoiceReporter.cs
+END
+NewAccountReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/SolutionUnion/!svn/ver/61/trunk/src/SolutionUnion/Services/NewAccountReportItem.cs
+END
+ServerReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/61/trunk/src/SolutionUnion/Services/ServerReportItem.cs
+END
+DashboardReport.cs
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/SolutionUnion/!svn/ver/65/trunk/src/SolutionUnion/Services/DashboardReport.cs
+END
+ServiceReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/ServiceReporter.cs
+END
+PortalReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/PortalReporter.cs
+END
+CreditCardReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion/Services/CreditCardReporter.cs
+END
+DatabaseMaintenanceService.cs
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/SolutionUnion/!svn/ver/103/trunk/src/SolutionUnion/Services/DatabaseMaintenanceService.cs
+END
+ActionItemReport.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/62/trunk/src/SolutionUnion/Services/ActionItemReport.cs
+END
+NewAccountImporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/NewAccountImporter.cs
+END
+NewAccountReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/NewAccountReporter.cs
+END
+ServerReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/ServerReporter.cs
+END
+UserReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/SolutionUnion/!svn/ver/101/trunk/src/SolutionUnion/Services/UserReportItem.cs
+END
+DashboardDailyUsageReport.cs
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/SolutionUnion/!svn/ver/79/trunk/src/SolutionUnion/Services/DashboardDailyUsageReport.cs
+END
+PortalReport.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/SolutionUnion/!svn/ver/83/trunk/src/SolutionUnion/Services/PortalReport.cs
+END
+InvitationReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/SolutionUnion/!svn/ver/86/trunk/src/SolutionUnion/Services/InvitationReportItem.cs
+END
+UserReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/SolutionUnion/!svn/ver/101/trunk/src/SolutionUnion/Services/UserReporter.cs
+END
+DailyUsageReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/SolutionUnion/!svn/ver/65/trunk/src/SolutionUnion/Services/DailyUsageReportItem.cs
+END
+InvoiceReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/SolutionUnion/!svn/ver/98/trunk/src/SolutionUnion/Services/InvoiceReportItem.cs
+END
+InvitationReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/InvitationReporter.cs
+END
+AccountReportItem.cs
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/SolutionUnion/!svn/ver/71/trunk/src/SolutionUnion/Services/AccountReportItem.cs
+END
+DashboardReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/SolutionUnion/!svn/ver/101/trunk/src/SolutionUnion/Services/DashboardReporter.cs
+END
+DailyUsageReporter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/DailyUsageReporter.cs
+END
+AccountSynchronizer.cs
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Services/AccountSynchronizer.cs
+END

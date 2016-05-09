@@ -1,0 +1,8 @@
+﻿@model ErrorResult
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_SimpleLayout.cshtml";
+}
+
+<h1>Error</h1>
+<p>@(Model.Message.HasValue() ? Model.Message : this.Response.StatusDescription)</p>

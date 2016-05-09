@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Payment
+END
+AddCreditCardResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion/Payment/AddCreditCardResult.cs
+END
+PaymentResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Payment/PaymentResult.cs
+END
+PaymentProcessor.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Payment/PaymentProcessor.cs
+END
+UpdateCreditCardResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/SolutionUnion/!svn/ver/97/trunk/src/SolutionUnion/Payment/UpdateCreditCardResult.cs
+END
+BraintreePaymentProcessor.cs
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Payment/BraintreePaymentProcessor.cs
+END
+UserSignUpTransactionResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion/Payment/UserSignUpTransactionResult.cs
+END

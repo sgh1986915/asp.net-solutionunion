@@ -1,0 +1,153 @@
+﻿@functions {
+   string MenuClass(params string[] firstUrlSegment) {
+      return IsMenuActive(firstUrlSegment) ? "active" : "";
+   }
+
+   bool IsMenuActive(params string[] firstUrlSegment) {
+      return firstUrlSegment.Any(s => Request.AppRelativeCurrentExecutionFilePath.Split('/')[1].Equals(s, StringComparison.OrdinalIgnoreCase));
+   }
+
+   string SubMenuStyle(params string[] firstUrlSegment) {
+      return IsMenuActive(firstUrlSegment) ? "height: auto" : "";
+   }
+}
+@helper SubMenuItem(string href, string text) { 
+   var isActive = Request.Url.AbsolutePath.Equals(href);
+   var cssClass =  isActive ? "active" : "";
+   <li class="@cssClass"><a href="@href">@text</a></li>
+}
+<!DOCTYPE html>
+<html>
+<head>
+   <title>:: Solution Union ::</title>
+   <link href="/Content/style.css?v20110930" rel="stylesheet"/>
+   <script src="/Scripts/jquery-1.6.2.min.js"></script>
+   <script src="/Scripts/jquery.validate.min.js"></script>
+   <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+   
+   <script src="/Scripts/table.js"></script>
+   <script src="/Scripts/jquery.form.js"></script>
+   
+   <link href="/Scripts/jqtransform/jqtransform.css?v20110804" rel="stylesheet"/>
+   <script src="/Scripts/jqtransform/jquery.jqtransform.js?v20110912"></script>
+   
+   <link href="/Scripts/fancybox/jquery.fancybox-1.3.4.css?v20110802" rel="stylesheet"/>
+   <script src="/Scripts/fancybox/jquery.easing-1.3.pack.js"></script>
+   <script src="/Scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+   <script src="/Scripts/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+   
+   <link href="/Scripts/jquery.tooltip/jquery.tooltip.css?v20110815" rel="stylesheet"/>
+   <script src="/Scripts/jquery.tooltip/jquery.tooltip.pack.js"></script>
+
+   <link href="//yui.yahooapis.com/combo?2.9.0/build/menu/assets/skins/sam/menu.css&2.9.0/build/button/assets/skins/sam/button.css" rel="stylesheet"/> 
+   <script src="//yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/container/container_core-min.js&2.9.0/build/menu/menu-min.js&2.9.0/build/element/element-min.js&2.9.0/build/button/button-min.js"></script>
+
+   <script src="/Scripts/global.js?v20110930"></script>
+   @RenderSection("head", required: false)
+</head>
+<body>
+   <div id="wrapper">
+      <!--Header-->
+      <!--Header-->
+      <div id="header">
+         <div class="top_navigation">
+            <a>@User.Identity.Name</a> &nbsp;|&nbsp; <a>Help</a> &nbsp;|&nbsp;
+            @Html.ActionLink("Sign Out", "SignOut", "~Home")
+         </div>
+         <div class="info_bar"></div>
+      </div>
+      <div class="clear_prop"></div>
+      <!--/Header-->
+      <!--/Header-->
+      <div class="clear_prop"></div>
+      <!--Content-->
+      <div id="content">
+         <div class="left">
+            <div class="top">
+               <div class="bottom">
+                  <div class="middle">
+                     <ul id="lnb" class="lnb">
+                        <li id="dashboard" class="@MenuClass("")">@Html.ActionLink("Dashboard", "", "~Home")</li>
+                        @if (User.IsInRole(UserRole.Administrator) || User.IsInRole(UserRole.Reseller)) {
+                        <li id="accounts" class="@MenuClass("Account", "NewAccount")">
+                           <a>Accounts</a>
+                           <div id="submenu" style="@SubMenuStyle("Account", "NewAccount")">
+                              <ul id="submenu">
+                                 @SubMenuItem(Url.Action("Add", "~Account"), "Add Account")
+                                 @SubMenuItem(Url.Action("List", "~Account"), "List Accounts")
+                                 @if (User.IsInRole(UserRole.Administrator)) {
+                                    @SubMenuItem(Url.Action("List", "~NewAccount"), "New Trial Accounts")
+                                 }
+                                 @SubMenuItem(Url.Action("MarkedAsDeleted", "~Account"), "Marked as Deleted")
+                              </ul>
+                           </div>
+                        </li>
+                        <li id="reporting" class="@MenuClass("Reporting")">
+                           <a href="@Url.Action("", "~Reporting")">Reporting</a>
+                        </li>
+                        }
+                        @if (User.IsInRole(UserRole.Administrator)) {
+                        <li id="users" class="@MenuClass("User")">
+                           <a>Users</a>
+                           <div id="submenu" style="@SubMenuStyle("User")">
+                              <ul id="submenu">
+                                 @SubMenuItem(Url.Action("Add", "~User"), "Add User")
+                                 @SubMenuItem(Url.Action("List", "~User"), "List Users")
+                                 @SubMenuItem(Url.Action("", "~User.Invoice"), "Invoices")
+                                 @SubMenuItem(Url.Action("List", "~User.Invitation"), "Invitations")
+                                 @SubMenuItem(Url.Action("Add", "~User.Invitation"), "Add Invitation")
+                                 @SubMenuItem(Url.Action("MarkedAsDeleted", "~User"), "Marked as Deleted")
+                                 @SubMenuItem(Url.Action("DefaultSettings", "~User"), "Default Settings")
+                              </ul>
+                           </div>
+                        </li>
+                        <li id="server_manager" class="@MenuClass("Server")">
+                           <a>Server Manager</a>
+                           <div id="submenu" style="@SubMenuStyle("Server")">
+                              <ul id="submenu">
+                                 @SubMenuItem(Url.Action("Add", "~Server"), "Add Server")
+                                 @SubMenuItem(Url.Action("List", "~Server"), "Server Manager")
+                              </ul>
+                           </div>
+                        </li>
+                        }
+                        <li id="documentation">
+                           <a href="http://www.solutionunion.com/support-documentation.html" target="_blank">Documentation</a>
+                        </li>
+                        @if (User.IsInRole(UserRole.Administrator)) {
+                        <li id="downloads">
+                           <a>Downloads</a>
+                        </li>
+                        }
+                        <li id="profile" class="@MenuClass("Profile")">
+                           <a href="@Url.Action("Profile", "~Home")">Profile</a>
+                        </li>
+                        <li id="billing" class="@MenuClass("Billing")">
+                           <a>Billing</a>
+                           <div id="submenu" style="@SubMenuStyle("Billing")">
+                              <ul id="submenu">
+                                 @SubMenuItem(Url.Action("", "~Billing.Invoice"), "Invoices")
+                                 @SubMenuItem(Url.Action("", "~Billing.CreditCard"), "Credit Cards")
+                              </ul>
+                           </div>
+                        </li>
+                        <li id="support_ticket"><a href="mailto:support@solutionunion.com?subject=Technical Support Request" target="_blank">Support Ticket</a></li>
+                     </ul>
+                     <div class="clear_prop">
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+         @RenderBody()
+         
+         <!--/Content-->
+         <div class="clear_prop"></div>
+         <!--Footer-->
+         <div id="footer"></div>
+         <!--/Footer-->
+      </div>
+   </div>
+</body>
+</html>

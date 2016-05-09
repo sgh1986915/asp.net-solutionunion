@@ -1,0 +1,160 @@
+﻿@model IEnumerable<CreditCardReportItem>
+@section head {
+   <style>
+      #gridContent .list td.last {
+         padding-right: 13px;
+      }
+      #gridContent .list td.last > * {
+         float: right;
+      }
+   </style>
+   <script>
+
+      function ApplyFilter() {
+         $('#ListFilterForm').submit();
+      }
+
+      function PerformAction(obj) {
+
+         var option = obj.options[obj.selectedIndex];
+         var action = option.value;
+
+         if (action.match(/^(\/)/)) {
+
+            var post = $(option).data('post');
+
+            if (post) {
+               var confirmMessage = $(option).data('confirm');
+
+               if (confirmMessage) {
+                  var confirmation = confirm(confirmMessage);
+
+                  if (!confirmation)
+                     return false;
+               }
+
+               $.post(action, function (data) {
+                  ShowMessage(data);
+                  ApplyFilter();
+               }, "json")
+               .error(function (xhr) {
+                  $.fancybox($.parseJSON(xhr.responseText));
+               });
+
+            } else {
+               window.location = action;
+            }
+         }
+
+         obj.selectedIndex = 0;
+      }
+
+      $(function () {
+
+         $('#ListFilterForm').submit(function (event) {
+
+            $.get($(this).attr('action'), $('#ListFilterForm').serialize(), function (data) {
+               $('#gridContent').html(data);
+            }, "html");
+
+            return false;
+         });
+
+         $('#ListFilterForm').jqTransform();
+      });
+      
+   </script>
+}
+
+<script>
+   $(function () {
+
+      $('.list')
+         .sortable({
+            currentValue: $('#sort').val(),
+            click: function (value, query) {
+               $('#sort').val(value);
+               ApplyFilter();
+            }
+         }).jqTransform();
+
+      $('.pager a[href]').click(function () {
+
+         $.get(this.href, function (data) {
+            $('#gridContent').html(data);
+         });
+
+         return false;
+      });
+   });
+</script>
+
+@if (!Request.IsAjaxRequest()) {
+   <a href="@Url.Action("Add")" style="float: right; margin-left: 1em;" class="btn">Add New Card</a>
+   <div style="float: right;">
+      <span id="message" style="display: none;"></span>
+   </div>
+   
+   <h1>Billing / List Credit Cards</h1>
+   <form id="ListFilterForm" action="@Url.Action(null)">
+      @Html.Hidden("sort")      
+   </form>
+}
+
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("<div id='gridContent'>");
+}
+
+<table class="list">
+   <thead>
+      <tr>
+         <th data-name="LastFour">Last Four</th>
+         <th data-name="Type">Type</th>
+         <th data-name="ExpirationMonth">Exp. Month</th>
+         <th data-name="ExpirationYear">Exp. Year</th>
+         <th data-name="IsDefault">Default</th>
+         <th></th>
+      </tr>
+   </thead>
+   <tbody>
+   @{ 
+      var list = Model.ToList(); 
+   }
+   @if (list.Count != 0) {
+      int i = -1;
+      foreach (var item in list) {
+         i++;
+         
+         <tr class="@(i % 2 == 0 ? "" : "alternate")">
+            <td>
+               <a href="@Url.Action("Edit", new { Id = item.Id })">@item.LastFour</a>
+            </td>
+            <td>@item.Type</td>
+            <td>@item.ExpirationMonth.ToString("00")</td>
+            <td>@item.ExpirationYear</td>
+            <td>@(item.IsDefault ? "Yes" : "No")</td>
+            <td class="last">
+               <select name="action" onchange="PerformAction(this);">
+                  <option selected="selected" value="">Action</option>
+                  <option value="@Url.Action("Edit", new { Id = item.Id })">Edit</option>
+                  <option value="@Url.Action("MakeDefault", new { Id = item.Id })" data-post="true">Make Default</option>
+                  <option value="@Url.Action("Delete", new { Id = item.Id })" data-post="true" data-confirm="Are you sure you want to delete this credit card?">Delete</option>
+               </select>
+            </td>
+         </tr>
+      }
+   } else {
+      <tr>
+         <td colspan="6">
+            No Credit Cards to display.
+         </td>
+      </tr>
+   }
+   </tbody>
+</table>
+
+@Html.Pager()
+
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("</div>");
+}

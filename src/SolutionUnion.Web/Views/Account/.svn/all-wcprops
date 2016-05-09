@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/SolutionUnion/!svn/ver/101/trunk/src/SolutionUnion.Web/Views/Account
+END
+DailyUsage.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/SolutionUnion/!svn/ver/65/trunk/src/SolutionUnion.Web/Views/Account/DailyUsage.cshtml
+END
+EditHead.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/SolutionUnion/!svn/ver/85/trunk/src/SolutionUnion.Web/Views/Account/EditHead.cshtml
+END
+Add.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/85/trunk/src/SolutionUnion.Web/Views/Account/Add.cshtml
+END
+ChangePassword.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/SolutionUnion/!svn/ver/46/trunk/src/SolutionUnion.Web/Views/Account/ChangePassword.cshtml
+END
+List.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/SolutionUnion/!svn/ver/101/trunk/src/SolutionUnion.Web/Views/Account/List.cshtml
+END
+MarkedAsDeleted.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/SolutionUnion/!svn/ver/88/trunk/src/SolutionUnion.Web/Views/Account/MarkedAsDeleted.cshtml
+END
+Edit.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/SolutionUnion/!svn/ver/84/trunk/src/SolutionUnion.Web/Views/Account/Edit.cshtml
+END

@@ -1,0 +1,4 @@
+﻿@model ErrorResult
+
+<h1>Error</h1>
+<p>@(Model.Message.HasValue() ? Model.Message : this.Response.StatusDescription)</p>

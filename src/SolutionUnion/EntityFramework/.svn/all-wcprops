@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/EntityFramework
+END
+DbContextRepository`1.cs
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/EntityFramework/DbContextRepository%601.cs
+END
+DbContextApplicationSettingRepository.cs
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/EntityFramework/DbContextApplicationSettingRepository.cs
+END
+DbContextRoleRepository.cs
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/EntityFramework/DbContextRoleRepository.cs
+END
+DbContextApplicationSettingsStoragePriceRepository.cs
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/EntityFramework/DbContextApplicationSettingsStoragePriceRepository.cs
+END
+SolutionUnionContext.cs
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/EntityFramework/SolutionUnionContext.cs
+END

@@ -1,0 +1,537 @@
+﻿@model DashboardReport
+@functions {
+   public static string GetDisplayForBytes(decimal fileSize) {
+      fileSize = fileSize / 1024 / 1024;
+      if (fileSize < 1024) {
+         return String.Format("{0}Mb", Decimal.Round(fileSize, 1));
+      } else {
+         fileSize = fileSize / 1024;
+         return String.Format("{0}Gb", Decimal.Round(fileSize, 1));
+      }
+   }
+}
+@{
+   Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+@section head {
+   <style type="text/css">
+      .price-box {
+         float: right;
+         width: 146px;
+         padding-top: 0px;
+         border: 1px solid #e4e4e4;
+         text-align: center;
+         padding-top: 5px;
+         background: url('/Content/images/pricebox-bg.jpg') repeat-x bottom;
+         margin-top: -18px;
+         margin-right: 3px;
+         height: 160px;
+         padding-bottom: 5px;
+         font-family: Arial;
+      }
+      .right_middle h1 {
+         margin: 0;
+      }
+      
+      .graysubhead {
+         font-family: Arial, Helvetica, sans-serif;
+         font-weight: bold;
+         color: #7b7b7b;
+         font-size: 13px;
+      }
+      .graysubhead.selected {
+         
+      }
+      .graysubhead.selected .topnumbers {
+         
+      }
+      .topnumbers {
+         font-family: Arial, Helvetica, sans-serif;
+         font-weight: bold;
+         color: #4a4a4a;
+         font-size: 60px;
+         font-weight: bold;
+      }
+      .topnumbers a { 
+         color: inherit;
+         text-decoration: none;
+      }
+      .topnumbers a:hover {
+         text-decoration: none;
+      }
+      .smallcontent {
+         font-family: Arial, Helvetica, sans-serif;
+         font-weight: bold;
+         color: #999999;
+         font-size: 14px;
+      }
+
+      #usageAll, #usagePro, #usageLite { cursor: pointer; }
+
+      .charthead{padding-left: 10px; font-weight: bold; padding-top:14px; height:26px; font-size:14px; color:#000; font-family:Arial, Helvetica, sans-serif;}
+      .blue{color:#0c8cbf; font-family:Arial, Helvetica, sans-serif;}
+
+      .chartdata{ padding-left: 10px; font-weight: bold; padding-top:4px; padding-bottom: 4px; height:37px; font-size:34px; color:#000; font-family:Arial, Helvetica, sans-serif; margin-bottom:13px;}
+
+      .chartdata .size { float: left; min-width: 3.5em; }
+      .chartdata .user { float: left; font-weight: bold; padding-top: .2em; font-size:14px; color:#000; font-family:Arial, Helvetica, sans-serif;}
+      .chartdata .user .name { display: block; }
+      .chartdata .user .email { display: block; font-size: 80%; }
+
+      .chartdata.n1 { background-color: #bbbbbb; }
+      .chartdata.n2 { background-color: #cccccc; }
+      .chartdata.n3 { background-color: #dddddd; }
+      .chartdata.n4 { background-color: #eeeeee; }
+
+      .subhead10 { font-family:Arial, Helvetica, sans-serif; font-weight:bold; color:#000000; padding-top:5px; }
+      .subheadcontentblue { font-family:Arial, Helvetica, sans-serif; font-weight:bold; color:#000000; padding-top:10px; }
+      .subheadcontentwhite { font-family:Arial, Helvetica, sans-serif; font-weight:bold; color:#000000; padding-top:15px; }
+
+      .error { color:#FF0000; }
+
+      .list { margin: 0; }
+      .list th { background-color: transparent; border: none; }
+      .list tr.empty td { background-color: inherit; }
+      
+   </style>
+   <link href="/Scripts/jquery.jqplot/jquery.jqplot.min.css" rel="stylesheet" type="text/css" />
+   <script src="/Scripts/Date.min.js" type="text/javascript"></script>
+   <!--[if IE]><script type="text/javascript" src="/Scripts/jquery.jqplot/excanvas.min.js"></script><![endif]-->
+   <script type="text/javascript" src="/Scripts/jquery.jqplot/jquery.jqplot.min.js"></script>
+   <script type="text/javascript" src="/Scripts/jquery.jqplot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+   <script type="text/javascript">
+
+      $.jqplot.config.enablePlugins = true;
+
+      var usagePlot = null;
+      var usageData = null;
+
+      function refreshUsageGraph(url) {
+
+         if (url != null)
+            this.url = url;
+
+         $.get(url || this.url || '_Usage', function (data) {
+
+            usageData = data;
+
+            var lite = data.LiteUsage;
+            var pro = data.ProUsage;
+
+            $('#usageDateRange').text($D(data.StartDate).strftime('%b %e') + ' - ' + $D(data.EndDate).strftime('%b %e'));
+            $('#usageDateRangeContainer').css('visibility', 'visible');
+
+            if (lite.length == 0 && pro.length == 0) {
+               usagePlot = null;
+               $('#usageGraph').text('No data available in the selected period.');
+               return;
+            }
+
+            var showPro = !($('#usageLite').data('on') == true);
+            var showLite = !($('#usagePro').data('on') == true);
+
+            if (usagePlot == null) {
+
+               $('#usageGraph').text('');
+
+               usagePlot = $.jqplot('usageGraph', [pro, lite], {
+                  axes: {
+                     xaxis: {
+                        renderer: $.jqplot.DateAxisRenderer,
+                        tickOptions: {
+                           formatString: '%#d'//'%b %#d'
+                        },
+                        tickInterval: '1 day'
+                     },
+                     yaxis: {
+                        min: 0,
+                        tickOptions: {
+                           formatString: '%d' + usageData.Unit
+                        }
+                     }
+                  },
+                  series: [
+                     { showMarker: false, color: '#0e8ec1' },
+                     { showMarker: false, color: '#f19100' }
+                  ],
+                  grid: {
+                     // wether to draw lines across the grid or not.
+                     drawGridLines: false,
+                     // *Color of the grid lines.       
+                     gridLineColor: '#cccccc',
+                     // CSS color spec for background color of grid.
+                     background: '#f7f7f7',
+                     // CSS color spec for border around grid.
+                     borderColor: '#999999',
+                     // pixel width of border around grid.
+                     borderWidth: 2,
+                     // draw a shadow for grid.
+                     shadow: false,
+                     // angle of the shadow.  Clockwise from x axis.
+                     shadowAngle: 45,
+                     // offset from the line of the shadow.
+                     shadowOffset: 1.5,
+                     // width of the stroke for the shadow.
+                     shadowWidth: 3,
+                     // Number of strokes to make when drawing shadow.
+                     // Each stroke offset by shadowOffset from the last.
+                     shadowDepth: 3,
+                     // Opacity of the shadow
+                     shadowAlpha: 0.07,
+                     // renderer to use to draw the grid.
+                     renderer: $.jqplot.CanvasGridRenderer,
+                     // options to pass to the renderer.  Note, the default
+                     // CanvasGridRenderer takes no additional options.
+                     rendererOptions: {}
+                  }
+               });
+
+               if (!(showPro && showLite)) 
+                  $(showPro ? '#usagePro' : '#usageLite').click();
+
+            } else {
+
+               usagePlot.series[0].data = pro;
+               usagePlot.series[0].show = showPro;
+               usagePlot.series[1].data = lite;
+               usagePlot.series[1].show = showLite;
+               usagePlot.replot({ resetAxes: true });
+            }
+         });
+      }
+
+      function toggleUsageLines(data) {
+         if (usagePlot != null) {
+            usagePlot.series[0].data = data[0];
+            usagePlot.series[1].data = data[1];
+            usagePlot.replot({ resetAxes: false });
+         }
+      }
+
+      $(function () {
+
+         function setOn(img) {
+            img.src = img.src.replace(/-sm\./, '-sm-over.');
+            $(img).data('on', true);
+         }
+
+         function setOff(img) {
+            img.src = img.src.replace(/-sm-over\./, '-sm.');
+            $(img).data('on', false);
+         }
+
+         refreshUsageGraph();
+
+         setOn($('#usageAll')[0]);
+
+         $('#usageAll').click(function () {
+
+            $('#usagePro,#usageLite').each(function () {
+               setOff(this);
+            });
+
+            setOn(this);
+
+            if (usageData != null)
+               toggleUsageLines([usageData.ProUsage, usageData.LiteUsage]);
+         });
+
+         $('#usagePro').click(function () {
+
+            $('#usageLite,#usageAll').each(function () {
+               setOff(this);
+            });
+
+            setOn(this);
+
+            if (usageData != null)
+               toggleUsageLines([usageData.ProUsage, []]);
+         });
+
+         $('#usageLite').click(function () {
+
+            $('#usagePro,#usageAll').each(function () {
+               setOff(this);
+            });
+
+            setOn(this);
+
+            if (usageData != null)
+               toggleUsageLines([[], usageData.LiteUsage]);
+         });
+
+         $('#usagePager .btn-prev').click(function () {
+
+            if (usageData != null && usageData.Previous != null)
+               refreshUsageGraph(usageData.Previous);
+         });
+
+         $('#usagePager .btn-next').click(function () {
+
+            if (usageData != null && usageData.Next != null)
+               refreshUsageGraph(usageData.Next);
+         });
+      });
+
+    </script>
+}
+
+@if (User.IsInRole(UserRole.Administrator) || User.IsInRole(UserRole.Reseller)) {
+   <div class="right">
+      <!--right-middlr-start-->
+      <div class="right_middle" style="border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc;">
+         <h1 style="padding: 0 0 5px 6px;">
+            At a Glance</h1>
+         <div class="price-box">
+            <h1 style="font-size: 20px">
+               Pricing</h1>
+            <div style="margin-left: 8px; width: 130px; height: 1px; background-color: #CCCCCC;
+               margin-right: 10px; margin-top: 5px; margin-bottom: 5px;">
+            </div>
+            <div style="width: 130px; height: 46px; background-color: #0099cc;
+               margin-top: 10px; margin-bottom: 5px; margin-left: 8px; line-height: 46px; font-size: 28px;
+               font-family: Arial; color: #FFFFFF; font-weight: bold;">
+               <span>@Model.PerGbRate.ToString("c")/Gb</span></div>
+            <div align="left" style="margin-left: 8px; width: 130px; text-align: center; line-height: 14px;
+               font-size: 9px; color: #333333;">
+               <strong>The more you vault the cheaper it gets! The rate is based on PRO product only.</strong></div>
+            <div style="float: left; width: 20px; margin-top: 10px; margin-left: 10px;">
+               <img src="/Content/images/chart.gif" /></div>
+            <div style="margin-top: 10px; font-size: 11px; font-weight: bold;">
+               <a href="http://www.solutionunion.com/obm-prices.html" target="_blank" style="text-decoration: underline;">View Pricing Chart</a></div>
+            <br />
+         </div>
+         <br />
+         <div style="float: left; width: 120px; margin-left: 5px;" class="graysubhead selected">
+            Number Of Clients<div style="height: 1px; margin-top: 4px; background-color: #CCCCCC;">
+            </div>
+            <div class="topnumbers">
+               <a href="@Url.Action("List", "Account")">@Model.NumberOfAccounts</a>
+            </div>
+         </div>
+         <div style="float: left; width: 120px; margin-left: 22px;" class="graysubhead">
+            Trial Accounts
+            <div style="height: 1px; margin-top: 4px; background-color: #CCCCCC;">
+            </div>
+            <div class="topnumbers">
+               <a href="@Url.Action("List", "Account", new { type = "Trial" })">@Model.NumberOfTrialAccounts</a></div>
+         </div>
+         <div style="float: left; width: 120px; margin-left: 22px;" class="graysubhead">
+            Pro Storage<div style="height: 1px; margin-top: 4px; background-color: #CCCCCC;">
+            </div>
+            <div class="topnumbers">
+               @Decimal.Round(Model.ProStorageGb)<span class="smallcontent">GB</span></div>
+         </div>
+         <div style="float: left; width: 120px; margin-left: 22px;" class="graysubhead">
+            Successfull Jobs<div style="height: 1px; margin-top: 4px; background-color: #CCCCCC;">
+            </div>
+            <div class="topnumbers">
+               @Model.NumberOfSuccessfulJobs</div>
+         </div>
+         <div style="margin-top: 104px; margin-top: 112px; margin-left: 6px; background: url('/Content/images/welcome-bg.png') no-repeat;
+            color: #4a4a4a; width: 544px; max-height: 42px; height: 37px; line-height: 36px;
+            padding-left: 10px; font-family: Arial, Helvetica, sans-serif;">
+            <img src="/Content/images/star.png" style="padding-right: 10px; padding-top: 11px; vertical-align: middle;"
+               align="left" /><strong>Welcome back partner, we thank you for your business and support.</strong></div>
+
+         <div class="clear">
+         </div>
+
+         <div class="clear">
+         </div>
+
+         <div class="clear">
+         </div>
+
+         <div class="clear">
+         </div>
+
+      </div>
+      <div class="clear">
+      </div>
+   </div>
+}
+<div class="right">
+   <div class="right_top">
+   </div>
+   <!--right-middlr-start-->
+   <div class="right_middle" style="padding: 0 10px;">
+      <h1 style="padding-left: 4px; margin-bottom: 23px">
+         Dashboard</h1>
+      <div style="float: right; font-size: 16px; color: #292929; font-weight: bold; margin-right: 5px;
+         font-family: Arial; position: relative;">
+         <span id="usageDateRangeContainer" style="visibility: hidden;">
+            You are viewing <a id="usageDateRange" class="blue"></a>
+         </span>
+         <div id="usagePager" style="display: inline-block; font-size: 0; position: absolute; right: 10px; top: 25px;">
+            <span class="btn-prev"></span>
+            <span class="btn-next"></span>
+         </div>
+      </div>
+      <div style="font-size: 16px; color: #292929; font-weight: bold;">
+         <div style="float: left; margin-right: 10px; margin-left: 5px; font-family: Arial;">
+            Total Usage</div>
+         
+         <img id="usageAll" src="/Content/images/all-sm.png" />
+         <img id="usagePro" src="/Content/images/pro-sm.png?v201108" style="padding: 0 10px" />
+         <img id="usageLite" src="/Content/images/lite-sm.png?v201108" />
+      </div>
+      <div id="usageGraph" class="plot" style="width: 720px; height: 365px; margin-top: 20px; margin-left: 5px;">
+      </div>
+      <!--top-search-bar-start-->
+      <!--top-search-bar-end-->
+      <!--top-heads-bar-start-->
+      <!--top-heads-bar-end-->
+      <div class="clear">
+      </div>
+      <div style="height: 50px;">
+      </div>
+      @if (User.IsInRole(UserRole.Administrator) || User.IsInRole(UserRole.Reseller)) {
+         <div style="float: left; padding-left: 0px; width: 430px; border: 1px solid #cccccc;
+            margin-left: 5px;">
+            <div style="background-color: #eeeeee; max-height: 30px; margin-bottom: 15px;" class="charthead">
+               Top Users (<span class="tooltip" title="Accounts with the most overall vault storage.">?</span>)<br />
+            </div>
+            @if (Model.TopUsageUsers.Count > 0) {
+               for (int i = 0; i < Model.TopUsageUsers.Count; i++) {
+                  var item = Model.TopUsageUsers[i];
+            
+                  <div class="chartdata n@(i + 1)">
+                     <div class="size">
+                        @GetDisplayForBytes(item.Usage)
+                     </div>
+                     <div class="user">
+                        <span class="name">&lt;@item.AccountName&gt;</span>
+                        <span class="email">&lt;@item.Email&gt;</span>
+                     </div>
+                  </div>
+               }
+               <div style="background-color: #CCCCCC; height: 1px; margin-left: 5px; margin-right: 5px;">
+               </div>
+               <div style="float: right; padding-right: 7px; padding-bottom: 10px; padding-top: 10px;">
+                  <a href="@Url.Action("List", "Account")">View Accounts</a></div>
+            } else { 
+               <table class="list">
+                  <tr class="empty">
+                     <td>This list is empty.</td>
+                  </tr>
+               </table>
+            }
+         </div>
+         <div style="float: left; padding-left: 0px; width: 272px; border: 1px solid #cccccc;
+            margin-left: 15px;">
+            <div style="background-color: #eeeeee; max-height: 30px;" class="charthead">
+               Quota Risk Center (<span class="tooltip" title="A quick look on accounts about to run out of space. Percentage is based on usage against quota.">?</span>)
+            </div>
+         
+            <div style="padding: 5px; padding-top: 0;">
+               <table class="list">
+                  @if (Model.TopUsedQuotaUsers.Count > 0) {
+                     <tr>
+                        <th>Account Name</th>
+                        <th>Quota</th>
+                        <th>Percent</th>
+                     </tr>
+                     for (int i = 0; i < Model.TopUsedQuotaUsers.Count; i++) {
+                        var item = Model.TopUsedQuotaUsers[i];
+                        <tr class="@(i % 2 == 0 ? "alternate" : "")">
+                           <td>
+                              <a href="@Url.Action("Edit", "Account", new { id = item.AccountId, returnUrl = Request.Url.PathAndQuery })">@item.AccountName</a>
+                           </td>
+                           <td>
+                              @(Decimal.Round(item.QuotaGb, 0))Gb
+                           </td>
+                           <td>
+                              @(Decimal.Round(item.Percent, 2))%
+                           </td>
+                        </tr>
+                     }
+                  } else { 
+                     <tr class="empty">
+                        <td>This list is empty.</td>
+                     </tr>
+                  }
+               </table>
+               @if (Model.TopUsedQuotaUsers.Count > 0) {
+                  <div style="text-align: right; padding: 8px 0 4px 0">
+                     <a href="@Url.Action("List", "Account")">View Accounts</a>
+                  </div>
+               }
+            </div>
+
+         </div>
+         <div style="clear: both">
+         </div>
+         <br />
+         <br />
+      }
+      <div style="float: left; padding-left: 0px; width: 720px; border: 1px solid #cccccc;
+         margin-left: 5px; margin-bottom: 50px;">
+         <div style="background-color: #eeeeee;" class="charthead">
+            Action Items (<span class="tooltip" title="Anything other than success will be listed here.">?</span>)
+         </div>
+
+         <div style="padding: 5px;">
+            <table class="list">
+               @if (Model.NonSuccessfulJobs.Count > 0) {
+                  <tr>
+                     <th>Account Name</th>
+                     <th>Backup Set</th>
+                     <th>Backup Time</th>
+                     <th>Description</th>
+                     <th></th>
+                  </tr>
+                  for (int i = 0; i < Model.NonSuccessfulJobs.Count; i++) {
+                     var item = Model.NonSuccessfulJobs[i];
+                     <tr class="@(i % 2 == 0 ? "alternate" : "")">
+                        <td>
+                           <a href="@Url.Action("Edit", "Account", new { id = item.AccountId, returnUrl = Request.Url.PathAndQuery })">@item.AccountName</a>
+                        </td>
+                        <td>
+                           @item.SetName
+                        </td>
+                        <td>
+                           @item.JobDate
+                        </td>
+                        <td>
+                           <span class="error">@item.JobDescription</span>
+                        </td>
+                        <td style="text-align: right;">
+                           <a href="@Url.Action("BackupJobReport", "Reporting", new { id = item.JobSummaryId })" target="_blank" class="btn-report">View Report</a>
+                        </td>
+                     </tr>
+                  }
+               } else { 
+                  <tr class="empty">
+                     <td>This list is empty.</td>
+                  </tr>
+               }
+            </table>
+         </div>
+
+         @if (Model.NonSuccessfulJobs.Count > 0) {
+            <div style="margin: 22px 0; margin-left: 160px; background: url('/Content/images/chart-bottom-bg.png') no-repeat;
+               width: 410px; height: 27px; padding-top: 13px; padding-left: 20px; font-family: Arial, Helvetica, sans-serif; font-size: 90%">
+               This list only shows the last 10 action items <a href="@Url.Action("", "Reporting")"
+                  style="text-decoration: underline;">Click here to see full list</a></div>
+         }
+      </div>
+      <!--first-panel-start-->
+      <!--first-panel-end-->
+      <div class="clear">
+      </div>
+      <!--second-panel-start-->
+      <!--second-panel-end-->
+      <div class="clear">
+      </div>
+      <!--pagination-panel-start-->
+      <!--pagination-panel-end-->
+      <div class="clear">
+      </div>
+      <!--right-middlr-end-->
+   </div>
+   <div class="right_bottom">
+      <div class="clear">
+      </div>
+   </div>
+</div>

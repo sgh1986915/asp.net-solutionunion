@@ -1,0 +1,17 @@
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\SolutionUnion.dll
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\SolutionUnion.pdb
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\Braintree-2.11.0.dll
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\EntityFramework.dll
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\itextsharp.dll
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\LinqKit.dll
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\EntityFramework.xml
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\obj\Debug\ResolveAssemblyReference.cache
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\obj\Debug\SolutionUnion.Resources.Model.ModelRes.resources
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\obj\Debug\SolutionUnion.Resources.Validation.ValidationRes.resources
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\obj\Debug\GenerateResource.read.1.tlog
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\obj\Debug\GenerateResource.write.1.tlog
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\obj\Debug\SolutionUnion.dll
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\SolutionUnion\obj\Debug\SolutionUnion.pdb

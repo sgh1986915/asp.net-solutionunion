@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <!-- make sure to set 'Copy To Output Directory' option for this file -->
+   <!-- go to http://nlog-project.org/wiki/Configuration_file for more information -->
+
+   <targets>
+      <target name="ActionItemReport" xsi:type="File" fileName="c:/Logs/${date:format=yyyy-MM-dd}_ActionItemReport.txt" />
+      <target name="Daily" xsi:type="File" fileName="c:/Logs/${date:format=yyyy-MM-dd}_Daily.txt" />
+      <target name="ImportNewAccounts" xsi:type="File" fileName="c:/Logs/${date:format=yyyy-MM-dd}_ImportNewAccounts.txt" />
+      <target name="SynchronizeAccounts" xsi:type="File" fileName="c:/Logs/${date:format=yyyy-MM-dd}_SynchronizeAccounts.txt" />
+      <target name="SynchronizeAccountsSuperFrequent" xsi:type="File" fileName="c:/Logs/${date:format=yyyy-MM-dd}_SynchronizeAccountsSuperFrequent.txt" />
+   </targets>
+
+   <rules>
+      <logger name="ActionItemReport" minlevel="Debug" writeTo="ActionItemReport" />
+      <logger name="Daily" minlevel="Debug" writeTo="Daily" />
+      <logger name="ImportNewAccounts" minlevel="Debug" writeTo="ImportNewAccounts" />
+      <logger name="SynchronizeAccounts" minlevel="Debug" writeTo="SynchronizeAccounts" />
+      <logger name="SynchronizeAccountsSuperFrequent" minlevel="Debug" writeTo="SynchronizeAccountsSuperFrequent" />
+   </rules>
+</nlog>

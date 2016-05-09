@@ -1,0 +1,176 @@
+﻿@model CreditCardEdit
+@functions {
+   string GetStatesUrl() {
+      string url = this.Url.Action("Edit_States", new { p0 = "0" });
+      url = url.Remove(url.Length - 1);
+      return url;
+   }
+}
+@section head {
+   @RenderPage("EditHead.cshtml")
+}
+@{
+   Layout = (Request.IsAjaxRequest()) ? null : Layout;
+   bool isNew = Page.IsNew ?? false;
+}
+
+<script>
+
+   $(function () {
+      $(':input[name="Country"]').change(function () {
+         var $countrySelect = $(this);
+         var $stateSelect = $(':input[name="State"]');
+
+         $stateSelect.find('option[value!=""]').remove();
+
+         if ($countrySelect.val()) {
+
+            $.getJSON('@GetStatesUrl()' + $countrySelect.val(), function (data) {
+
+               $.each(data, function (key, value) {
+                  $stateSelect.append($('<option/>').attr('value', key).append(value));
+               });
+            });
+         }
+      });
+   });
+</script>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "EditCreditCardForm" })) { 
+   
+   <div style="float: right;">
+      @if (ViewBag.Message != null) {
+         <span id="message" class="hide-after-load">@ViewBag.Message</span>
+      }
+      @if (!isNew && !Request.IsAjaxRequest()) {
+         <a href="@(Request.QueryString["returnUrl"] ?? Url.Action(""))" style=" margin-left: 10px;">&lsaquo; Back</a>
+      }
+   </div>
+   
+   <h1>Billing / @(isNew ? "Add" : "Edit") Credit Card</h1>
+   
+   @Html.ValidationSummary(excludePropertyErrors: true)
+   
+   <table class="form td2">
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.NameOnCard)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.BillingAddress)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.NameOnCard, new { HtmlAttributes = new { tabindex = 23, autocomplete = "off" } })
+            @Html.ValidationMessageFor(p => p.NameOnCard)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.BillingAddress, new { HtmlAttributes = new { tabindex = 29 } })
+            @Html.ValidationMessageFor(p => p.BillingAddress)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.CreditCardNumber)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.City)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.CreditCardNumber, new { HtmlAttributes = new { tabindex = 24, autocomplete = "off" } })
+            @if (!isNew) {
+               <div class="hint">Leave blank to keep current value</div>
+            }
+            @Html.ValidationMessageFor(p => p.CreditCardNumber)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.City, new { HtmlAttributes = new { tabindex = 30 } })
+            @Html.ValidationMessageFor(p => p.City)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.Expiry)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.State)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.ExpiryMonth, new { HtmlAttributes = new { tabindex = 25 } })
+            @Html.EditorFor(p => p.ExpiryYear, new { HtmlAttributes = new { tabindex = 26 } })
+            @Html.ValidationMessageFor(p => p.ExpiryMonth)
+            @Html.ValidationMessageFor(p => p.ExpiryYear)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.State, new { HtmlAttributes = new { tabindex = 31 } })
+            @Html.ValidationMessageFor(p => p.State)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.CreditCardCVV)
+            <a class="cvv clickable" style="margin-left: 6.3em">What's this?</a>
+         </td>
+         <td>
+            @Html.LabelFor(p => p.PostalCode)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.CreditCardCVV, new { HtmlAttributes = new { tabindex = 27, autocomplete = "off" } })
+            @if (!isNew) {
+               <div class="hint">Leave blank to keep current value</div>
+            }
+            @Html.ValidationMessageFor(p => p.CreditCardCVV)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.PostalCode, new { HtmlAttributes = new { tabindex = 32 } })
+            @Html.ValidationMessageFor(p => p.PostalCode)
+         </td>
+      </tr>
+      <tr>
+         <td></td>
+         <td>
+            @Html.LabelFor(p => p.Country)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @if (isNew) {
+               <label>
+                  @Html.EditorFor(p => p.MakeDefault, new { HtmlAttributes = new { tabindex = 28 } })
+                  Make Default
+               </label>
+               @Html.ValidationMessageFor(p => p.MakeDefault)               
+            }
+         </td>
+         <td>
+            @Html.EditorFor(p => p.Country, new { HtmlAttributes = new { tabindex = 33 } })
+            @Html.ValidationMessageFor(p => p.Country)
+         </td>
+      </tr>
+   </table>
+   <div class="separator">
+   </div>
+   
+   <div class="create-form">
+      <input type="submit" id="btnSubmit" name="btnSubmit" class="@(isNew ? "create" : "update")" tabindex="34" />
+      @if (isNew || !Request.IsAjaxRequest()) {
+         <span class="or-link">
+            Or
+            @if (isNew) {
+               <input type="reset" value="Clear" tabindex="35" />
+            } else {
+               <a href="@Url.Action("List")" tabindex="35">Cancel</a>
+            }
+         </span>
+      }
+   </div>
+   <div class="clear">
+   </div>
+}

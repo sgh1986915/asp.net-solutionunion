@@ -1,0 +1,39 @@
+﻿@functions {
+   
+   bool? _Value;
+   bool valueInit;
+
+   bool? Value {
+      get {
+         if (valueInit)
+            return _Value;
+         
+         if (ViewData.Model != null)
+            _Value = Convert.ToBoolean(ViewData.Model, System.Globalization.CultureInfo.InvariantCulture);
+
+         valueInit = true;
+
+         return _Value;
+      }
+   }
+   
+   List<SelectListItem> GetTriStateValues() {
+      return new List<SelectListItem> {
+         new SelectListItem { Text = "Not Set", Value = "", Selected = !Value.HasValue },
+         new SelectListItem { Text = "True", Value = "true", Selected = Value.HasValue && Value.Value },
+         new SelectListItem { Text = "False", Value = "false", Selected = Value.HasValue && !Value.Value }
+      };
+   }
+}
+@{
+   bool isNullableValueType = ViewData.ModelMetadata.IsNullableValueType;
+   var extraAttributes = this.ViewBag.HtmlAttributes as object;
+   var attributes = new RouteValueDictionary(extraAttributes) { 
+      { "class", (isNullableValueType) ? "list-box tri-state" : "check-box" }
+   };
+}
+@if (isNullableValueType) {
+   @Html.DropDownList("", GetTriStateValues(), attributes)
+} else {
+   @Html.CheckBox("", Value ?? false, attributes)
+}

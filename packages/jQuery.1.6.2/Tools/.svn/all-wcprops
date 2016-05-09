@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/SolutionUnion/!svn/ver/3/trunk/packages/jQuery.1.6.2/Tools
+END
+install.ps1
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/SolutionUnion/!svn/ver/3/trunk/packages/jQuery.1.6.2/Tools/install.ps1
+END
+jquery-1.6.2-vsdoc-para.js
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/SolutionUnion/!svn/ver/3/trunk/packages/jQuery.1.6.2/Tools/jquery-1.6.2-vsdoc-para.js
+END
+uninstall.ps1
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/SolutionUnion/!svn/ver/3/trunk/packages/jQuery.1.6.2/Tools/uninstall.ps1
+END

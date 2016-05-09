@@ -1,0 +1,130 @@
+﻿@model IEnumerable<UserReportItem>
+<div style="width: 731px; min-height: 300px;">
+   <h1>Assign User</h1>
+   <form id="assignForm" method="get" action="@Url.Action("AssignUser")">
+      <div id="top-search-bar">
+         <div class="drop-lft">
+         </div>
+         <div class="drop-middle-bg">
+            <div class="view-block">
+               <label>
+                  View:
+               </label>
+               @Html.DropDownList("az", (IEnumerable<SelectListItem>)ViewBag.az, "All", new { id = "user_az", style = "width: 40px;", autopostback = "true", onchange = "AssignFilter();" })
+            </div>
+            <div class="account-type-block">
+               <label>
+                  User Type:
+               </label>
+               @Html.DropDownList("type", (IEnumerable<SelectListItem>)ViewBag.type, "All", new { id = "user_type", style = "width: 80px;", autopostback = "true", onchange = "AssignFilter();" })
+            </div>
+            <div class="search-block">
+               @Html.TextBox("search", null, new { id = "user_search" })
+            </div>
+         </div>
+         <div class="drop-rgt">
+         </div>
+      </div>
+      <div class="clear">
+      </div>
+      <table class="list" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+         <tr>
+            <th>
+               Company
+            </th>
+            <th>
+               Name
+            </th>
+            <th>
+               User Name
+            </th>
+            <th>
+               Type
+            </th>
+            <th>
+               Registration
+            </th>
+            <th>
+               Balance
+            </th>
+         </tr>
+         @{ int count = Model.Count(); }
+         @if (count > 0) {
+            int i = -1;
+            foreach (UserReportItem user in Model) {
+               i++;
+               <tr onclick="AssignAccount(@ViewBag.AccountID, @user.UserId);" class="@(i % 2 == 0 ? "" : "alternate")">
+                  <td>
+                     @user.CompanyName
+                  </td>
+                  <td>
+                     @user.FirstName
+                  </td>
+                  <td>
+                     @user.Email
+                  </td>
+                  <td>
+                     @user.UserRoleName
+                  </td>
+                  <td>
+                     @user.DateCreated.ToShortDateString()
+                  </td>
+                  <td>
+                     @user.Balance
+                  </td>
+               </tr>
+            }
+         } else { 
+            <tr>
+               <td colspan="6">No user match the search criteria.</td>
+            </tr>
+         }
+      </table>
+
+      @Html.Pager()
+   </form>
+   <script type="text/javascript">
+
+      function AssignFilter() {
+         $('form#assignForm').submit();
+      }
+
+      function AssignAccount(accountID, userID) {
+
+         $.post('AssignUser/' + accountID, "userID=" + userID, function (data) {
+
+            $.fancybox.close()
+            ShowMessage(data);
+            $('#AccountFilterForm').submit();
+
+         }, "json")
+
+         .error(function (xhr) {
+            $.fancybox($.parseJSON(xhr.responseText));
+         });
+      }
+
+      $(function () {
+
+         $('form#assignForm').jqTransform();
+
+         $('form#assignForm').ajaxForm({
+            success: function (data) {
+               $.fancybox(data);
+            },
+            error: function (xhr) {
+               $.fancybox($.parseJSON(xhr.responseText));
+            }
+         });
+
+         $('form#assignForm .pager a[href]').click(function () {
+            
+            $.get(this.href, function (data) {
+               $.fancybox(data);
+            });
+
+            return false;
+         });
+      });
+   </script>
+</div>

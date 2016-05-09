@@ -1,0 +1,246 @@
+﻿@model IEnumerable<AccountReportItem>
+@functions {
+   public static string GetDisplayForBytes(decimal fileSize) {
+      fileSize = fileSize / 1024 / 1024;
+      if (fileSize < 1024) {
+         return string.Format("{0}M", Math.Round(fileSize, 1));
+      } else {
+         fileSize = fileSize / 1024;
+         return string.Format("{0}G", Math.Round(fileSize, 1));
+      }
+   }
+}
+@section head {
+   <style>
+      #gridContent .list td:first-child, 
+      #gridContent .list th:first-child { 
+         width: 1%; 
+         white-space: nowrap
+      }
+      #gridContent .list td.last {
+         padding-right: 13px;
+      }
+      #gridContent .list td.last > * {
+         float: right;
+      }
+   </style>
+   <script>
+
+      function ApplyFilter() {
+         $('#AccountFilterForm').submit();
+      }
+
+      function ChangePageSize(el) {
+         $('#pageSize').val($(el).val());
+         ApplyFilter();
+      }
+
+      function PerformAction(obj, id) {
+         
+         var action = obj.options[obj.selectedIndex].value;
+         
+         if (action.match(/^(mailto\:|\/)/)) {
+            location.href = action;
+
+         } else if (action) {
+
+            var confirmation = confirm("Are you sure you want to " + action + " this account?");
+
+            if (!confirmation)
+               return false;
+
+            $.post(action + "/" + id, function (data) {
+               ShowMessage(data);
+               ApplyFilter();
+            }, "json")
+            .error(function (xhr) {
+               $.fancybox($.parseJSON(xhr.responseText));
+            });
+         }
+
+         obj.selectedIndex = 0;
+      }
+
+      $(function () {
+
+         $('#AccountFilterForm').submit(function (event) {
+            $.get($(this).attr('action'), $('#AccountFilterForm').serialize(), function (data) {
+               $('#gridContent').html(data);
+            }, "html");
+
+            event.preventDefault();
+         });
+
+         $("#AccountFilterForm select:[autopostback=true]").change(function () {
+            $(this).closest("form").submit();
+         });
+
+         $('#AccountFilterForm').jqTransform();
+      });
+      
+   </script>
+}
+
+<script>
+   $(function () {
+
+      $('.list')
+         .sortable({
+            currentValue: $('#sort').val(),
+            click: function (value, query) {
+               $('#sort').val(value);
+               ApplyFilter();
+            }
+         })
+         .jqTransform();
+
+      $('#usedQuotaHead').sortable({
+         currentValue: $('#sort').val(),
+         click: function (value, query) {
+            $('#sort').val(value);
+            ApplyFilter();
+         }
+      }).find('.sorting').closest('th').addClass('sorting');
+
+      $('.pager a[href]').click(function () {
+
+         $.get(this.href, function (data) {
+            $('#gridContent').html(data);
+         });
+
+         return false;
+      });
+
+      $('.pagesize select').jqTransSelect();
+   });
+</script>
+
+@if (!Request.IsAjaxRequest()) {
+   <div style="float: right;">
+      <span id="message" style="display: none;"></span>
+   </div>
+   <h1>
+      Accounts / Marked as Deleted
+   </h1>
+   <!--top-search-bar-start-->
+   <form id="AccountFilterForm" action="@Url.Action(null)">
+      @Html.Hidden("sort")
+      @Html.Hidden("pageSize")
+
+      <div id="top-search-bar">
+         <div class="drop-lft">
+         </div>
+         <div class="drop-middle-bg">
+            <div class="view-block">
+               <label>
+                  View:
+               </label>
+               @Html.DropDownList("az", (IEnumerable<SelectListItem>)ViewBag.az, "All", new { style = "width: 40px;", autopostback = "true", onchange = "ApplyFilter();" })
+            </div>
+            <div class="account-type-block">
+               <label>
+                  Server:
+               </label>
+               @Html.DropDownList("serverId", (IEnumerable<SelectListItem>)ViewBag.serverId, "All", new { style = "width: 80px;", autopostback = "true", onchange = "ApplyFilter();" })
+            </div>
+            <div class="account-type-block">
+               <label>
+                  Account Status:
+               </label>
+               @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.status, "All", new { style = "width: 70px;", autopostback = "true", onchange = "ApplyFilter();" })
+            </div>
+            <div class="search-block">
+               @Html.TextBox("search")
+            </div>
+         </div>
+         <div class="drop-rgt">
+         </div>
+      </div>
+   </form>
+   <!--top-search-bar-end-->
+   <div class="clear"></div>
+}
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("<div id='gridContent'>");
+}
+
+<table class="list" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+      <tr>
+         <th data-name="AccountName" style="padding-left: 9px;">
+            User
+         </th>
+         <th data-name="CompanyName">
+            Company
+         </th>
+         <th data-name="ServerDescription" style="padding-left: 9px;">
+            Server
+         </th>
+         <th id="usedQuotaHead" data-name="">
+            <span>Used</span>
+            <span data-name="">/</span>
+            <span>Quota</span>
+            <span data-name="Average"> (Avg)</span>
+         </th>
+         <th data-name="MarkedAsDeletedDate">
+            Date Deleted
+         </th>
+         <th data-name="">
+            Time Left
+         </th>
+         <th></th>
+      </tr>
+   </thead>
+   
+   @{ var accounts = Model.ToList(); }
+   @if (accounts.Count > 0) {
+      int i = -1;
+      foreach (var account in accounts) {
+         i++;
+      <tr class="@(i % 2 == 0 ? "" : "alternate")">
+         <td>
+            @account.AccountName
+         </td>
+         <td>
+            @account.CompanyName
+         </td>
+         <td>
+            @account.ServerDescription
+         </td>
+         <td>
+            @GetDisplayForBytes(account.Used) / @GetDisplayForBytes(account.Quota)
+            (@GetDisplayForBytes(account.Average))
+         </td>
+         <td>
+            @account.MarkedAsDeletedDate.ToShortDateString()
+         </td>
+         <td>
+            @{
+               TimeSpan timeLeft = account.TimeLeft;
+               int hours = timeLeft.Hours + (timeLeft.Days * 24);
+            }
+            @(String.Concat(hours, ":", timeLeft.ToString(@"mm\:ss")))
+         </td>
+         <td class="last">
+            <select id="action" name="action" onchange="PerformAction(this,'@account.AccountId');">
+               <option selected="selected" value="">Action</option>
+               <option value="Restore">Restore</option>
+               <option value="Delete">Delete</option>
+            </select>
+         </td>
+      </tr>
+      }
+   } else { 
+      <tr>
+         <td colspan="7">
+            No accounts to display.
+         </td>
+      </tr>
+   }
+</table>
+
+@Html.Pager()
+
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("</div>");
+}

@@ -1,0 +1,7 @@
+﻿@{
+   var extraAttributes = this.ViewBag.HtmlAttributes as object;
+   var attributes = new RouteValueDictionary(extraAttributes) { 
+      { "class", "text-box single-line" }
+   };
+}
+@Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, attributes)

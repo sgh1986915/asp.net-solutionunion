@@ -1,0 +1,329 @@
+﻿@model PortalReport
+@section head {
+   <style type="text/css">
+      form#filter label { 
+         margin-left: 1em;
+      }
+      form#filter label input[type=checkbox] { 
+         vertical-align: middle;
+      }
+      form#filter select { 
+         width: auto;
+      }
+      .top-right-options { 
+         margin-top: .5em; 
+         position: relative;
+         float: right;
+      }
+      .refresh {
+         position: absolute;
+         top: 1.5em;
+         right: 12px;
+         text-decoration: underline;
+      }
+      .list .btn-report { 
+         margin-right: 2px;
+      }
+      .content h3 { 
+         margin-bottom: 0;
+      }
+      .list h3 { 
+         margin: 0;
+      }
+   </style>
+}
+<script type="text/javascript">
+   $(function () {
+
+      var refresh = function () {
+         $('form#filter').submit();
+      };
+
+      /* form#filter
+      ----------------------------------------*/
+      $('form#filter').ajaxForm({
+         beforeSubmit: function () {
+            $('form#filter').find(':input').each(function () { this.disabled = true; });
+         },
+         success: null,
+         target: '.content'
+      });
+
+      $(":checkbox[name=all]").change(function () {
+         if (this.checked)
+            $(":checkbox[name!=all]").each(function () { this.checked = true; });
+      });
+
+      $(":checkbox[name!=all]").change(function () {
+         if (!this.checked)
+            $(":checkbox[name=all]")[0].checked = false;
+      });
+
+      $('form#filter :checkbox, form#filter select').change(function () {
+         refresh();
+      });
+
+      $('.refresh').click(function () {
+         refresh();
+      });
+
+      /* .list
+      ----------------------------------------*/
+      $('#portalLogList')
+         .sortable({
+            currentValue: $('#portalLogSort').val(),
+            click: function (value, query) {
+               $('#portalLogSort').val(value);
+               refresh();
+            }
+         });
+
+      $('#failedJobsHeader')
+         .sortable({
+            currentValue: $('#failedJobsSort').val(),
+            click: function (value, query) {
+               $('#failedJobsSort').val(value);
+               refresh();
+            }
+         });
+
+      $('#successfulJobsHeader')
+         .sortable({
+            currentValue: $('#successfulJobsSort').val(),
+            click: function (value, query) {
+               $('#successfulJobsSort').val(value);
+               refresh();
+            }
+         });
+
+      $('.list a.btn-report').click(function () {
+
+         var url = $(this).attr('href');
+
+         $.ajax(url, {
+            type: 'HEAD',
+            success: function () {
+               window.open(url);
+            },
+            error: function () {
+               ShowMessage('No backup report available.');
+            },
+         });
+
+         return false;
+      });
+   });
+</script>
+
+<div style="float: right;">
+   <span id="message" style="display: none;"></span>
+</div>
+<h1>
+   Reporting</h1>
+<div class="subheader">
+   <form id="filter" method="post">
+      @Html.Hidden("portalLogSort")
+      @Html.Hidden("failedJobsSort")
+      @Html.Hidden("successfulJobsSort")
+
+      <table cellpadding="0" cellspacing="0" border="0">
+         <tr>
+            <td valign="middle">
+               @Html.DropDownList("date")
+            </td>
+            <td style="text-align: center;">
+               Filtering:
+               <label>
+                  @Html.CheckBox("all")
+                  All
+               </label>
+               <label>
+                  @Html.CheckBox("portalLog")
+                  Portal Log
+               </label>
+               <label>
+                  @Html.CheckBox("failedJobs")
+                  Failed
+               </label>
+               <label>
+                  @Html.CheckBox("successfulJobs")
+                  Success
+               </label>
+            </td>
+            <td style="text-align: right">
+               @Html.TextBox("search", null, new { @class = "search" })
+            </td>
+         </tr>
+      </table>
+   </form>
+</div>
+
+<div class="top-right-options">
+   <a class="refresh clickable">Refresh</a>
+</div>
+
+@if (ViewBag.portalLog) {
+   <h3>
+      You are viewing <span class="blue">Portal log</span></h3>
+   <table id="portalLogList" class="list" cellpadding="0" cellspacing="0" border="0">
+      @if (Model.PortalLog.Count > 0) {
+         <thead>
+            <tr>
+               <th>
+                  Message
+               </th>
+               <th data-name="CompanyName">
+                  Company
+               </th>
+               <th data-name="AccountName">
+                  Account
+               </th>
+               <th data-name="Created">
+                  Date
+               </th>
+            </tr>
+         </thead>
+         int i = -1;
+         foreach (var item in Model.PortalLog) {
+            i++;
+            <tr class="@(i % 2 == 0 ? "" : "alternate")">
+               <td>
+                  @item.Message
+               </td>
+               <td>
+                  @item.CompanyName
+               </td>
+               <td>
+                  @if (item.AccountId.HasValue) {
+                     @Html.ActionLink(item.AccountName, "Edit", "Account", new { id = item.AccountId }, null)
+                  } else { 
+                     @item.AccountName                  
+                  }
+               </td>
+               <td>
+                  @item.Created
+               </td>
+            </tr>
+         }
+
+      } else { 
+         <tr class="empty">
+            <td>This list is empty.</td>
+         </tr>
+      }
+   </table>
+}
+
+@if (ViewBag.failedJobs || ViewBag.successfulJobs) {
+   <table class="list">
+      @if (ViewBag.failedJobs) {
+         <tr>
+            <td colspan="5" style="padding-left: 0; border: none;">
+               <h3>You are viewing <span class="blue">Failed Jobs</span></h3>
+            </td>
+         </tr>
+         if (Model.FailedJobs.Count > 0) {
+            <tr id="failedJobsHeader">
+               <th data-name="AccountName">
+                  Account Name
+               </th>
+               <th data-name="SetName">
+                  Backup Set
+               </th>
+               <th data-name="JobDate">
+                  Backup Time
+               </th>
+               <th data-name="JobDescription">
+                  Description
+               </th>
+               <th>
+                  &nbsp;
+               </th>
+            </tr>
+            int i = -1;
+            foreach (var item in Model.FailedJobs) {
+               i++;
+               <tr class="@(i % 2 == 0 ? "" : "alternate")">
+                  <td>
+                     @Html.ActionLink(item.AccountName, "Edit", "Account", new { id = item.AccountId, returnUrl = Request.Url.PathAndQuery }, null)
+                  </td>
+                  <td>
+                     @item.SetName
+                  </td>
+                  <td>
+                     @item.JobDate
+                  </td>
+                  <td class="red">
+                     @item.JobDescription
+                  </td>
+                  <td style="text-align: right;">
+                     @Html.ActionLink("View Report", "BackupJobReport", new { id = item.SummaryId }, new { @class = "btn-report", target = "_blank" })
+                  </td>
+               </tr>
+            }
+
+         } else { 
+            <tr class="empty">
+               <td colspan="5">This list is empty.</td>
+            </tr>
+         }
+      }
+      @if (ViewBag.successfulJobs) {
+         if (ViewBag.failedJobs) {
+            <tr>
+               <td colspan="5" style="border: none;"></td>
+            </tr>
+         }
+         <tr>
+            <td colspan="5" style="padding-left: 0; border: none;">
+               <h3>You are viewing <span class="blue">Successfull Jobs</span></h3>
+            </td>
+         </tr>
+         if (Model.SuccessfulJobs.Count > 0) {
+            <tr id="successfulJobsHeader">
+               <th data-name="AccountName">
+                  Account Name
+               </th>
+               <th data-name="SetName">
+                  Backup Set
+               </th>
+               <th data-name="JobDate">
+                  Backup Time
+               </th>
+               <th data-name="JobDescription">
+                  Description
+               </th>
+               <th>
+                  &nbsp;
+               </th>
+            </tr>
+            int i = -1;
+            foreach (var item in Model.SuccessfulJobs) {
+               i++;
+               <tr class="@(i % 2 == 0 ? "" : "alternate")">
+                  <td>
+                     @Html.ActionLink(item.AccountName, "Edit", "Account", new { id = item.AccountId, returnUrl = Request.Url.PathAndQuery }, null)
+                  </td>
+                  <td>
+                     @item.SetName
+                  </td>
+                  <td>
+                     @item.JobDate
+                  </td>
+                  <td class="green">
+                     @item.JobDescription
+                  </td>
+                  <td style="text-align: right">
+                     @Html.ActionLink("View Report", "BackupJobReport", new { id = item.SummaryId }, new { @class = "btn-report", target = "_blank" })
+                  </td>
+               </tr>
+            }
+
+         } else { 
+            <tr class="empty">
+               <td colspan="5">This list is empty.</td>
+            </tr>
+         }
+      }
+   </table>
+}

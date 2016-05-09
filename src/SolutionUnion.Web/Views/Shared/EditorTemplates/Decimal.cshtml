@@ -1,0 +1,18 @@
+﻿@functions {
+   
+   object ModelValue {
+      get {
+         if (ViewData.TemplateInfo.FormattedModelValue == ViewData.ModelMetadata.Model) {
+            return String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:0.00}", ViewData.ModelMetadata.Model);
+         }
+         return ViewData.TemplateInfo.FormattedModelValue;
+      }
+   }
+}
+@{
+   var extraAttributes = this.ViewBag.HtmlAttributes as object;
+   var attributes = new RouteValueDictionary(extraAttributes) { 
+      { "class", "text-box single-line" }
+   };
+}
+@Html.TextBox("", ModelValue, attributes)

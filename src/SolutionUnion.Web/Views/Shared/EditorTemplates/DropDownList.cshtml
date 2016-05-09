@@ -1,0 +1,21 @@
+﻿@{
+   bool useOptionLabel = true;
+
+   if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("DropDownList.OmitOptionLabel")) {
+      useOptionLabel = false;
+   }
+
+   object optionLabel;
+   
+   if (!ViewData.ModelMetadata.AdditionalValues.TryGetValue("DropDownList.OptionLabel", out optionLabel)) {
+      optionLabel = "--Select One--";
+   }
+
+   var extraAttributes = this.ViewBag.HtmlAttributes as object;
+   var attributes = new RouteValueDictionary(extraAttributes);
+}
+@if (useOptionLabel) {
+   @Html.DropDownList("", null, optionLabel.ToString(), attributes)
+} else { 
+   @Html.DropDownList("", null, attributes)
+}

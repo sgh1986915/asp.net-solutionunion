@@ -1,0 +1,52 @@
+﻿@if ((int)ViewData[PagerExtensions.TotalResultsViewDataKey] > 0) {
+   int pageSize = (int)ViewData[PagerExtensions.PageSizeViewDataKey];
+   <script>
+
+      function ChangePageSize(p0) {
+         var val = typeof p0 == "string" ? p0 : $(p0).val();
+         $('#pageSize').val(val).closest('form').submit();
+      }
+
+      $(function () {
+         
+         var selectedText = $('#pageSizeList option:selected').text();
+
+         var pageSizeMenu = new YAHOO.widget.Button("pageSizeMenu", {
+            type: "menu",
+            menu: "pageSizeList"
+         });
+
+         pageSizeMenu.set("label", selectedText);
+
+         var onMenuClick = function (p_sType, p_aArgs) {
+            var oEvent = p_aArgs[0], // DOM event
+            oMenuItem = p_aArgs[1]; // MenuItem instance that was the target of the event
+
+            if (oMenuItem) {
+               var text = oMenuItem.cfg.getProperty("text");
+               var value = oMenuItem.value;
+
+               pageSizeMenu.set("label", text);
+
+               ChangePageSize(value);
+            }
+         };
+
+         pageSizeMenu.getMenu().subscribe("click", onMenuClick);
+
+      });
+   </script>
+   <div id="pager">
+      <div class="pagerwrap">
+         @Html.Pager()
+         <div class="pagesize yui-skin-sam">
+            <input type="button" id="pageSizeMenu" style="display: none;" />
+            @Html.DropDownList("pageSizeList", new[] { 
+            new SelectListItem { Text = "50 per page", Value = "50", Selected = pageSize == 50 },
+            new SelectListItem { Text = "100 per page", Value = "100", Selected = pageSize == 100 },
+            new SelectListItem { Text = "200 per page", Value = "200", Selected = pageSize == 200 }
+         }, new { onchange = "ChangePageSize(this)" })
+         </div>
+      </div>
+   </div>
+}

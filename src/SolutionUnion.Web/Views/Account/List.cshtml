@@ -1,0 +1,365 @@
+﻿@model IEnumerable<AccountReportItem>
+@functions {
+   public static string GetDisplayForBytes(decimal fileSize) {
+      fileSize = fileSize / 1024 / 1024;
+      if (fileSize < 1024) {
+         return string.Format("{0}M", Math.Round(fileSize, 1));
+      } else {
+         fileSize = fileSize / 1024;
+         return string.Format("{0}G", Math.Round(fileSize, 1));
+      }
+   }
+}
+@{
+   bool userIsAdmin = User.IsInRole(UserRole.Administrator);
+}
+@section head {
+   <style>
+      .content h1 {
+         margin: 0;
+      }
+
+      #gridContent .list td:first-child, 
+      #gridContent .list th:first-child { 
+         width: 1%; 
+         white-space: nowrap
+      }
+
+      #gridContent .list td:first-child { 
+         font-size: 0;
+         text-align: right;
+      }
+
+      #gridContent .list td.last {
+         padding-right: 13px;
+      }
+
+      #gridContent .list td.last > * {
+         float: right;
+      }
+
+      #dvCompanyFilter { 
+         display: inline-block;
+         background-color: lightyellow;
+         padding: 2px 3px;
+      }
+
+   </style>
+   <script>
+
+      function PerformAction(obj, id) {
+         
+         var action = obj.options[obj.selectedIndex].value;
+         
+         if (action.match(/^(mailto\:|\/)/)) {
+            location.href = action;
+
+         } else if (action == "ChangePassword") {
+
+            $.get('ChangePassword/' + id, function (data) {
+               $.fancybox(data);
+               $.validator.unobtrusive.parse("#ChangePasswordForm"); 
+            }, "html");
+            
+         } else if (action == "Assign") {
+            
+            $.get('AssignUser/' + id, function (data) {
+               $.fancybox(data);
+            }, "html");
+
+         } else if (action == "DailyUsage") {
+
+            $.get(action + '/' + id, function (data) {
+               $.fancybox(data);
+            }, "html");
+         
+         } else if (action == "Convert" || action == "Activate" || action == "Suspend" || action == "MarkAsDeleted") {
+
+            if (action == "Convert" || action == "MarkAsDeleted") {
+               var actionDisplay = (action == "MarkAsDeleted") ? "Delete" : action;
+               var confirmation = confirm("Are you sure you want to " + actionDisplay + " this account?");
+
+               if (!confirmation)
+                  return false;
+            }
+
+            $.post(action + "/" + id, function (data) {
+               ShowMessage(data);
+               ApplyFilter();
+            }, "json")
+
+            .error(function (xhr) {
+               $.fancybox($.parseJSON(xhr.responseText));
+            });
+         }
+
+         obj.selectedIndex = 0;
+      }
+
+      function ApplyFilter() {
+         $('#AccountFilterForm').submit();
+      }
+
+      function ApplyCompanyFilter(company) {
+         if ($("#company").val() != company) {
+            if (company == "") {
+               $("#dvCompanyFilter").hide();
+            }
+            else {
+               $("#dvCompanyFilter").show();
+            }
+
+            $("#CompanyName").html(company);
+            $("#company").val(company);
+            ApplyFilter();
+         }
+      }
+
+      $(function () {
+         $('#AccountFilterForm').submit(function (event) {
+            event.preventDefault();
+            $.get($(this).attr('action'), $('#AccountFilterForm').serialize(), function (data) {
+               $('#gridContent').html(data);
+            }, "html");
+         });
+
+         $('#AccountFilterForm')
+            .jqTransform()
+            .find('select').jqTransSelect()
+            ;
+      });
+
+   </script>
+}
+
+<script>
+
+   $(function () {
+
+      $('.list')
+         .sortable({
+            currentValue: $('#sort').val(),
+            click: function (value, query) {
+               $('#sort').val(value);
+               ApplyFilter();
+            }
+         })
+         .find('select').jqTransSelect();
+
+      $('#usedQuotaHead').sortable({
+         currentValue: $('#sort').val(),
+         click: function (value, query) {
+            $('#sort').val(value);
+            ApplyFilter();
+         }
+      }).find('.sorting').closest('th').addClass('sorting');
+
+      $('.pager a[href]').click(function () {
+
+         $.get(this.href, function (data) {
+            $('#gridContent').html(data);
+         });
+
+         return false;
+      });
+
+      $('#info').click(function () {
+         $.fancybox($('#icon-help').html());
+      });
+   });
+</script>
+
+@if (!Request.IsAjaxRequest()) {
+   <div style="float: right;">
+      <span id="message" style="display: none;"></span>
+      <span id="dvCompanyFilter" style="@(ViewBag.company == null ? "display: none;" : "") margin-left: 10px;">
+         Now Viewing <span id="CompanyName">@ViewBag.company</span>.
+         <a onclick="ApplyCompanyFilter('');" class="clickable" style="text-decoration: underline;">VIEW ALL</a>
+      </span>
+   </div>
+   <h1>
+      Accounts / List Accounts
+   </h1>
+   <div class="clear"></div>
+   <!--top-search-bar-start-->
+   <form id="AccountFilterForm" action="@Url.Action(null)">
+      @Html.Hidden("company")
+      @Html.Hidden("sort")
+      @Html.Hidden("pageSize")
+
+      <div id="top-search-bar">
+         <div class="drop-lft">
+         </div>
+         <div class="drop-middle-bg">
+            <div class="view-block">
+               <label>
+                  View:
+               </label>
+               @Html.DropDownList("az", (IEnumerable<SelectListItem>)ViewBag.az, "All", new { style = "width: 40px;", autopostback = "true", onchange = "ApplyFilter();" })
+            </div>
+            <div class="account-type-block">
+               <label>
+                  Account Type:
+               </label>
+               @Html.DropDownList("type", (IEnumerable<SelectListItem>)ViewBag.type, "All", new { style = "width: 50px;", autopostback = "true", onchange = "ApplyFilter();" })
+            </div>
+            <div class="account-type-block">
+               <label>
+                  Account Status:
+               </label>
+               @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.status, "All", new { style = "width: 70px;", autopostback = "true", onchange = "ApplyFilter();" })
+            </div>
+            <div class="search-block">
+               @Html.TextBox("search")
+            </div>
+         </div>
+         <div class="drop-rgt">
+         </div>
+      </div>
+   </form>
+   <!--top-search-bar-end-->
+   <div class="clear"></div>
+}
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("<div id='gridContent'>");
+}
+<table class="list" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+      <tr>
+         <th data-name="" style="text-align: center;">
+            Info (<a id="info" class="clickable">?</a>)
+         </th>
+         <th data-name="AccountName">
+            User
+         </th>
+         @if (userIsAdmin) {
+            <th data-name="CompanyName">
+               Company
+            </th>
+            <th data-name="ServerDescription" style="padding-left: 9px;">
+               Server
+            </th>
+         }
+         <th data-name="DateCreated">
+            Registration
+         </th>
+         <th id="usedQuotaHead" data-name="">
+            <span>Used</span>
+            <span data-name="">/</span>
+            <span>Quota</span>
+            <span data-name="Average"> (Avg)</span>
+         </th>
+         <th>
+            Cost
+         </th>
+         <th>
+            &nbsp;
+         </th>
+      </tr>
+   </thead>
+   @{ 
+      var accounts = Model.ToList(); 
+   }
+   @if (accounts.Count() != 0) {
+      int i = -1;
+      foreach (var account in accounts) {
+         i++;
+      <tr class="@(i % 2 == 0 ? "" : "alternate")">
+         <td>
+            @if (account.IndividualMicrosoftExchange) {
+               <img src="/Content/images/icon-e.gif" width="15" height="15" />
+            }
+            @if (!account.IsActive) {
+               <img src="/Content/images/icon-s.gif" width="15" height="15" />
+            }
+
+            @if (!account.IsPaid) {
+               TimeSpan timeSpan = DateTime.Today - account.DateCreated.Date;
+
+               int daysOld = (int)timeSpan.TotalDays + 1;
+
+               string icon = String.Format("icon-{0}.gif", daysOld.ToString("00"));
+
+               if (daysOld >= 30 && daysOld < 45) {
+                  icon = "icon-30-yellow.gif";
+               }
+
+               if (daysOld >= 45 && daysOld < 55) {
+                  icon = "icon-45.gif";
+               }
+
+               if (daysOld >= 55) {
+                  icon = "icon-sad.gif";
+               }
+                  
+               <img src="/Content/images/@icon" width="20" height="15" />
+            }
+
+            <img src="/Content/images/icon-@(account.IsAcb ? "l" : "p").gif" width="15" height="15" />
+         </td>
+         <td>
+            <a href="Edit/@account.AccountId" title="Edit this account">
+               @account.AccountName</a>
+         </td>
+         @if (userIsAdmin) {
+            <td>
+               <a class="Company clickable" onclick="javascript:ApplyCompanyFilter('@account.CompanyName');">
+                  @account.CompanyName</a>
+            </td>
+            <td>
+               @account.ServerDescription
+            </td>
+         }
+         <td>
+            @account.DateCreated.ToShortDateString()
+         </td>
+         <td>
+            @GetDisplayForBytes(account.Used) / @GetDisplayForBytes(account.Quota)
+            (@GetDisplayForBytes(account.Average))
+         </td>
+         <td>
+            @account.Cost.ToString("c")
+         </td>
+         <td class="last">
+            <select id="action" name="action" onchange="PerformAction(this,'@account.AccountId');">
+               <option selected="selected" value="">Action</option>
+               <option value="@Url.Action("Edit", new { id = account.AccountId })">Edit</option>
+               @if (User.IsInRole(UserRole.Administrator)) {
+                  <option value="Assign">Assign</option>
+               }
+               <option value="mailto:@account.Email">Mail To</option>
+               @if (!account.IsPaid) {
+                  <option value="Convert">Convert</option>
+               }
+               @if (account.IsActive) {
+                  <option value="Suspend">Suspend</option>
+               } else {
+                  <option value="Activate">Activate</option>
+               }
+               <option value="MarkAsDeleted">Delete</option>
+               <option value="ChangePassword">Change Password</option>
+               <option value="@Url.Action("", "Reporting", new { accountId = account.AccountId })">Reports</option>
+               <option value="DailyUsage">Avg</option>
+            </select>
+         </td>
+      </tr>
+      }
+   } else {
+      <tr>
+         <td></td>
+         <td colspan="@(userIsAdmin ? 7 : 5)">
+            No Accounts to display.
+         </td>
+      </tr>
+   }
+</table>
+
+@{Html.RenderPartial("PagerWithPageSizeSelector");}
+
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("</div>");
+                      
+   <div id="icon-help" style="display: none;">
+      @{Html.RenderPartial("IconHelp");}
+   </div>
+}

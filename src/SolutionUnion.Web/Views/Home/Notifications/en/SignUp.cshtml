@@ -1,0 +1,17 @@
+﻿@model UserSignUpMessage
+
+Hi @(String.Join(" ", new[] { Model.FirstName, Model.LastName }.Where(s => !String.IsNullOrEmpty(s)))),
+
+Thank you for signing up for a Solution Union account. Welcome!
+
+Username: @Html.Raw(Model.Username)
+Password: @Html.Raw(Model.Password)
+
+You can now log in to our control panel and start managing your online services:
+http://manage.solutionunion.com
+
+We have kept everything in one place to make it easy for you but if for any reason you need assistance please don’t hesitate to contact us support@solutionunion.com.
+
+Best regards,
+
+The Solution Union Team

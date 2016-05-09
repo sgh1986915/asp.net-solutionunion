@@ -1,0 +1,229 @@
+﻿@model AccountEdit
+@{
+   bool isNew = Page.IsNew ?? false;   
+}
+@section head {
+   @RenderPage("EditHead.cshtml")
+}
+@using (Html.BeginForm()) { 
+   
+   @Html.HiddenFor(p => p.IsAcb)
+   
+   <div style="float: right;">
+      @if (ViewBag.Message != null) {
+         <span id="message" class="hide-after-load">@ViewBag.Message</span>
+      }
+      @if (!isNew) {
+         <a href="@(Request.QueryString["returnUrl"] ?? Url.Action("List"))" style=" margin-left: 10px;">&lsaquo; Back</a>         
+      }
+   </div>
+   
+   <h1>Accounts / @(isNew ? "Add" : "Edit") Account</h1>
+   
+   @Html.ValidationSummary(excludePropertyErrors: true)
+   
+   if (isNew) { 
+      <h2>
+         <img src="/Content/images/icon-step-01.gif" width="21" height="21" align="absmiddle">Select
+         an Account Type</h2>
+      <div style="margin: 0 0 20px 40px;">
+         <input type="button" id="btnPro" class="pro-@(!Model.IsAcb ? "on" : "off")" onclick="SetAccountType('pro');" />
+         <span class="or-separator">Or</span>
+         <input type="button" id="btnLite" class="lite-@(Model.IsAcb ? "on" : "off")" onclick="SetAccountType('lite');" />
+      </div>
+
+      <div class="separator">
+      </div>
+   }
+
+   <table style="width: 100%">
+      <tr>
+         <td style="width: 50%; vertical-align: top">
+            <h2>
+               <img src="/Content/images/icon-step-0@(isNew ? 2 : 1).gif" width="21" height="21" align="absmiddle" />
+                  User Details</h2>
+            
+            <table class="form">
+               <tr>
+                  <td>
+                     @Html.LabelFor(p => p.AccountName)
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @if (isNew) {
+                        @Html.EditorFor(p => p.AccountName)
+                        @Html.ValidationMessageFor(p => p.AccountName)
+                     } else { 
+                        <input type="hidden" name="AccountName" value="@Model.AccountName" />
+                        <input type="text" value="@Model.AccountName" disabled="disabled" />
+                     }
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @Html.LabelFor(p => p.ContactName)
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @Html.EditorFor(p => p.ContactName)
+                     @Html.ValidationMessageFor(p => p.ContactName)
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @Html.LabelFor(p => p.Email)
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @Html.EditorFor(p => p.Email)
+                     @Html.ValidationMessageFor(p => p.Email)
+                  </td>
+               </tr>
+               @if (isNew) {
+                  <tr>
+                     <td>
+                        @Html.LabelFor(p => p.Password)
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        @Html.EditorFor(p => p.Password)
+                        @Html.ValidationMessageFor(p => p.Password)
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        @Html.LabelFor(p => p.ConfirmPassword)
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        @Html.EditorFor(p => p.ConfirmPassword)
+                        @Html.ValidationMessageFor(p => p.ConfirmPassword)
+                     </td>
+                  </tr>
+               }
+            </table>
+         </td>
+         <td style="width: 50%; vertical-align: top">
+            <h2>
+               <img src="/Content/images/icon-step-0@(isNew ? 3 : 2).gif" width="21" height="21" align="absmiddle"/>
+                  Technical Details</h2>
+
+            <table class="form">
+               @if (isNew || User.IsInRole(UserRole.Administrator)) {
+                  <tr>
+                     <td>
+                        @Html.LabelFor(p => p.AccountType)
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        @Html.EditorFor(p => p.AccountType)
+                        @Html.ValidationMessageFor(p => p.AccountType)
+                     </td>
+                  </tr>
+               }
+               <tr>
+                  <td>
+                     @Html.LabelFor(p => p.TimeZone)
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @Html.EditorFor(p => p.TimeZone)
+                     @Html.ValidationMessageFor(p => p.TimeZone)
+                  </td>
+               </tr>
+               @if (User.IsInRole(UserRole.Administrator)) {
+                  <tr>
+                     <td>
+                        @Html.LabelFor(p => p.ServerId)
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        @if (isNew) {
+                           @Html.EditorFor(p => p.ServerId)
+                        } else { 
+                           @Html.EditorFor(p => p.ServerId, new { HtmlAttributes = new { disabled = "disabled" } })
+                        }
+                        @Html.ValidationMessageFor(p => p.ServerId)
+                     </td>
+                  </tr>
+               }
+               <tr>
+                  <td>
+                     @Html.LabelFor(p => p.VaultSize)
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @Html.EditorFor(p => p.VaultSize)
+                     @Html.ValidationMessageFor(p => p.VaultSize)
+                  </td>
+               </tr>
+               <tr>
+                  <td id="mailboxtext">
+                     @Html.LabelFor(p => p.NumberOfIndividualMicrosoftExchangeMailboxes, "Add Mailboxes")
+                  </td>
+               </tr>
+               <tr>
+                  <td id="mailboxvalues">
+                     @Html.EditorFor(p => p.NumberOfIndividualMicrosoftExchangeMailboxes)
+                     <label>
+                        @Html.EditorFor(p => p.IndividualMicrosoftExchange)
+                        Exchange
+                     </label>
+                     @Html.ValidationMessageFor(p => p.NumberOfIndividualMicrosoftExchangeMailboxes)
+                     @Html.ValidationMessageFor(p => p.IndividualMicrosoftExchange)
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+   
+   <div class="separator">
+   </div>
+   <div id="dvAdditionalContacts">
+      <h2>
+         Additional Contacts (<a onclick="AddContact();" style="cursor: pointer;">Add Contact</a>&nbsp;
+         <a onclick="RemoveContacts();" id="RemoveContact" name="RemoveContact" style="cursor: pointer;">Remove Contact</a>)</h2>
+      <table class="user-table" id="AdditionalContacts" width="100%" cellpadding="0" cellspacing="0">
+         @*<tr><td>Contact Name:</td><td>Email:</td></tr><tr><td><input type="text" class="AdditionalContact" id="AdditionalContact" name="AdditionalContact" /></td><td><input type="text" class="AdditionalEmail" id="AdditionalEmail" name="AdditionalEmail" /></td></tr>*@
+         @for (int i = 0; i < Model.AdditionalContacts.Count; i++) {
+            <tr>
+               <td>
+                  @Html.HiddenFor(p => p.AdditionalContacts[i].Id)
+                  Contact Name:<br />
+                  @Html.EditorFor(p => p.AdditionalContacts[i].Name)
+                  @Html.ValidationMessageFor(p => p.AdditionalContacts[i].Name)
+               </td>
+               <td>
+                  Email:<br />
+                  @Html.EditorFor(p => p.AdditionalContacts[i].Email)
+                  @Html.ValidationMessageFor(p => p.AdditionalContacts[i].Email)
+               </td>
+            </tr>
+         }
+      </table>
+   </div>
+   <div class="create-form">
+      <input type="submit" class="@(isNew ? "create" : "update")" id="btnSubmit" name="btnSubmit" />
+      <span class="or-link">
+         Or
+         @if (isNew) {
+            <input type="reset" value="Clear" />
+         } else {
+            @Html.ActionLink("Cancel", "List")
+         }
+      </span>
+   </div>
+   <div class="clear">
+   </div>
+
+}

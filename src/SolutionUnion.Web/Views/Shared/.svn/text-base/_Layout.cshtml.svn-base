@@ -1,0 +1,20 @@
+﻿@{
+   ViewBag.Title = "_Layout";
+   Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+@section head {
+   @RenderSection("head", required: false)   
+}
+
+<div class="right">
+   <div class="right_top"></div>
+   <div class="right_middle">
+      <div class="content">
+         @RenderBody()
+      </div>
+   </div>
+   <div class="right_bottom">
+      <div class="clear"></div>
+   </div>
+</div>

@@ -1,0 +1,146 @@
+﻿@model UserSignUpPaymentInput
+@using SolutionUnion.Resources.Validation
+@functions {
+   string GetStatesUrl() {
+      string url = this.Url.Action("SignUpPayment_States", new { p0 = "0" });
+      url = url.Remove(url.Length - 1);
+      return url;
+   }
+}
+@{
+   Layout = "_SignUpLayout.cshtml";
+   int tabindex = 1;
+}
+@section head {
+   <link href="/Scripts/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" />
+   <script src="/Scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+   <script>
+      $(function () {
+         $(':input[name="@Model.Metadata.CountryField"]').change(function () {
+            var $countrySelect = $(this);
+            var $stateSelect = $(':input[name="@Model.Metadata.StateField"]');
+
+            $stateSelect.find('option[value!=""]').remove();
+
+            if ($countrySelect.val()) {
+
+               $.getJSON('@GetStatesUrl()' + $countrySelect.val(), function (data) {
+
+                  $.each(data, function (key, value) {
+                     $stateSelect.append($('<option/>').attr('value', key).append(value));
+                  });
+               });
+            }
+         });
+      });
+   </script>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { action = Model.Metadata.PaymentUrl, autocomplete = "off" })) {
+
+   foreach (var pair in Model.HiddenFields) {
+      @Html.Hidden(pair.Key, pair.Value)
+   }
+   
+   @Html.ValidationSummary(excludePropertyErrors: true);
+   
+   <h2>
+      <img src="/Content/images/icon-step-01.gif" width="21" height="21" align="absmiddle"/>Your
+      payment details</h2>
+   
+   <table class="form horizontal">
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.CardHolderNameField, "Cardholder Name")
+         </td>
+         <td>
+            @Html.TextBox(Model.Metadata.CardHolderNameField, null, new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.ValidationMessage(Model.Metadata.CardHolderNameField)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.CardNumberField, "Credit Card Number")
+         </td>
+         <td>
+            @Html.TextBox(Model.Metadata.CardNumberField, null, new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.ValidationMessage(Model.Metadata.CardNumberField)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.ExpiryMonthField, "Expiry")
+         </td>
+         <td>
+            @Html.DropDownList(Model.Metadata.ExpiryMonthField, null, "--Month--", new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.DropDownList(Model.Metadata.ExpiryYearField, null, "--Year--", new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.ValidationMessage(Model.Metadata.ExpiryMonthField)
+            @Html.ValidationMessage(Model.Metadata.ExpiryYearField)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.CvvField, "CVV")
+            <a style="margin-left: 10px" class="cvv clickable">What's this?</a>
+         </td>
+         <td>
+            @Html.TextBox(Model.Metadata.CvvField, null, new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.ValidationMessage(Model.Metadata.CvvField)
+         </td>
+      </tr>
+   </table>
+   
+   <h2>
+      <img src="/Content/images/icon-step-02.gif" width="21" height="21" align="absmiddle"/>Your
+      billing address</h2>
+   
+   <table class="form horizontal">
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.AddressField, "Address")
+         </td>
+         <td>
+            @Html.TextBox(Model.Metadata.AddressField, null, new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.ValidationMessage(Model.Metadata.AddressField)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.CityField, "City")
+         </td>
+         <td>
+            @Html.TextBox(Model.Metadata.CityField, null, new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.ValidationMessage(Model.Metadata.CityField)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.StateField, "State")
+         </td>
+         <td>
+            @Html.DropDownList(Model.Metadata.StateField, null, "--Select One--", new { tabindex = tabindex++ })
+            @Html.ValidationMessage(Model.Metadata.StateField)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.PostalCodeField, "Postal Code")
+         </td>
+         <td>
+            @Html.TextBox(Model.Metadata.PostalCodeField, null, new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.ValidationMessage(Model.Metadata.PostalCodeField)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.Label(Model.Metadata.CountryField, "Country")
+         </td>
+         <td>
+            @Html.DropDownList(Model.Metadata.CountryField, null, new { tabindex = tabindex++, data_val_required = ValidationRes.Required, data_val = "true" })
+            @Html.ValidationMessage(Model.Metadata.CountryField)
+         </td>
+      </tr>
+   </table>
+   
+   <input type="submit" value="Sign Up" class="btn large" tabindex="@(tabindex++)" style="float: right" />
+}

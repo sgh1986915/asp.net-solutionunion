@@ -1,0 +1,14 @@
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\bin\Debug\jobs.config
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\bin\Debug\NLog.config
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\bin\Debug\PageInvokerService.exe.config
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\bin\Debug\PageInvokerService.exe
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\bin\Debug\PageInvokerService.pdb
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\bin\Debug\NLog.dll
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\bin\Debug\NLog.xml
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\obj\x86\Debug\PageInvokerService.ProjectInstaller.resources
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\obj\x86\Debug\PageInvokerService.SolutionUnionJobRunner.resources
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\obj\x86\Debug\PageInvokerService.exe
+E:\ODesk\Kevin Judd(html,css)\SolutionUnion\src\PageInvokerService\obj\x86\Debug\PageInvokerService.pdb

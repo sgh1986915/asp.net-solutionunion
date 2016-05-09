@@ -1,0 +1,103 @@
+﻿@model ApplicationSettingUserDefaultsEdit
+
+@using (Html.BeginForm()) { 
+   
+   <div style="float: right;">
+      @if (ViewBag.Message != null) {
+         <span id="message" class="hide-after-load">@ViewBag.Message</span>
+      }
+   </div>
+   <h1>Users / Default Settings</h1>
+   
+   @Html.ValidationSummary(excludePropertyErrors: true);
+   
+   <table class="form td2">
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.MinimumMonthlyFee)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.LiteCostPerGb)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.MinimumMonthlyFee, new { HtmlAttributes = new { tabindex = 1 } })
+            @Html.ValidationMessageFor(p => p.MinimumMonthlyFee)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.LiteCostPerGb, new { HtmlAttributes = new { tabindex = 4 } })
+            @Html.ValidationMessageFor(p => p.LiteCostPerGb)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.ProAccountMinimumFee)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.LiteAccountMinimumFee)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.ProAccountMinimumFee, new { HtmlAttributes = new { tabindex = 2 } })
+            @Html.ValidationMessageFor(p => p.ProAccountMinimumFee)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.LiteAccountMinimumFee, new { HtmlAttributes = new { tabindex = 5 } })
+            @Html.ValidationMessageFor(p => p.LiteAccountMinimumFee)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(p => p.ProVaultMinimumGb)
+         </td>
+         <td>
+            @Html.LabelFor(p => p.LiteVaultMinimumGb)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.EditorFor(p => p.ProVaultMinimumGb, new { HtmlAttributes = new { tabindex = 3 } })
+            @Html.ValidationMessageFor(p => p.ProVaultMinimumGb)
+         </td>
+         <td>
+            @Html.EditorFor(p => p.LiteVaultMinimumGb, new { HtmlAttributes = new { tabindex = 6 } })
+            @Html.ValidationMessageFor(p => p.LiteVaultMinimumGb)
+         </td>
+      </tr>
+   </table>
+   
+   <h2>@Html.LabelFor(p => p.ProPricingScale)</h2>
+   @Html.ValidationMessageFor(p => p.ProPricingScale)
+   <table class="list">
+      <thead>
+         <tr>
+            <th>@Html.LabelFor(p => p.ProPricingScale[0].StorageGb)</th>
+            <th>@Html.LabelFor(p => p.ProPricingScale[0].PricePerGb)</th>
+         </tr>
+      </thead>
+      <tbody>
+         @for (int i = 0; i < Model.ProPricingScale.Count; i++) {
+		      <tr class="@(i % 2 == 0 ? "" : "alternate")">
+               <td>
+                  @Html.EditorFor(p => p.ProPricingScale[i].StorageGb)
+                  @Html.ValidationMessageFor(p => p.ProPricingScale[i].StorageGb)
+               </td>
+               <td>
+                  @Html.EditorFor(p => p.ProPricingScale[i].PricePerGb)
+                  @Html.ValidationMessageFor(p => p.ProPricingScale[i].PricePerGb)
+               </td>
+            </tr>
+         }
+      </tbody>
+   </table>
+   
+   <div class="separator">
+   </div>
+   <div class="create-form">
+      <input type="submit" id="btnSubmit" name="btnSubmit" class="update" tabindex="7" />
+   </div>
+   <div class="clear">
+   </div>
+}

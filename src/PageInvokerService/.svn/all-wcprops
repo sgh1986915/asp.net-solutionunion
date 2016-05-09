@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/SolutionUnion/!svn/ver/54/trunk/src/PageInvokerService
+END
+SolutionUnionJobService.resx
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/SolutionUnionJobService.resx
+END
+jobs.config
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/SolutionUnion/!svn/ver/54/trunk/src/PageInvokerService/jobs.config
+END
+NLog.config
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/SolutionUnion/!svn/ver/54/trunk/src/PageInvokerService/NLog.config
+END
+ProjectInstaller.resx
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/ProjectInstaller.resx
+END
+SolutionUnionJobService.Designer.cs
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/SolutionUnionJobService.Designer.cs
+END
+app.config
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/app.config
+END
+SolutionUnionJobService.cs
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/SolutionUnionJobService.cs
+END
+ProjectInstaller.Designer.cs
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/ProjectInstaller.Designer.cs
+END
+ProjectInstaller.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/ProjectInstaller.cs
+END
+PageInvokerService.csproj
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/PageInvokerService.csproj
+END
+Program.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/Program.cs
+END
+Job.cs
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/SolutionUnion/!svn/ver/34/trunk/src/PageInvokerService/Job.cs
+END

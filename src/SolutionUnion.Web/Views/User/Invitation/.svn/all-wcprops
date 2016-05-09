@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion.Web/Views/User/Invitation
+END
+EditHead.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/SolutionUnion/!svn/ver/84/trunk/src/SolutionUnion.Web/Views/User/Invitation/EditHead.cshtml
+END
+Add.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/SolutionUnion/!svn/ver/84/trunk/src/SolutionUnion.Web/Views/User/Invitation/Add.cshtml
+END
+List.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/SolutionUnion/!svn/ver/86/trunk/src/SolutionUnion.Web/Views/User/Invitation/List.cshtml
+END
+Edit.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion.Web/Views/User/Invitation/Edit.cshtml
+END

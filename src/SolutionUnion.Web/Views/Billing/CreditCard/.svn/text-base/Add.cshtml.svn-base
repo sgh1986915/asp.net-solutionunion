@@ -1,0 +1,8 @@
+﻿@section head {
+   @RenderPage("EditHead.cshtml")
+}
+@{
+   Layout = (Request.IsAjaxRequest()) ? null : Layout;
+   Page.IsNew = true;
+}
+@RenderPage("Edit.cshtml")

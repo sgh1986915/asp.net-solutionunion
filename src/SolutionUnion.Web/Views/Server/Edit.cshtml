@@ -1,0 +1,173 @@
+﻿@model ServerEdit
+@{
+   bool isNew = Page.IsNew ?? false;   
+}
+@section head {
+   @RenderPage("EditHead.cshtml")
+}
+@using (Html.BeginForm()) {
+   
+   @Html.HiddenFor(p => p.Type)
+   
+   
+   <h1>
+      User / @(isNew ? "Add" : "Edit")
+      Server Manager</h1>
+   
+   @Html.ValidationSummary(excludePropertyErrors: true)
+   
+   if (isNew) { 
+   <h2>
+      <img src="/Content/images/icon-step-01.gif" width="21" height="21" align="absmiddle">Select
+      a Server Type</h2>
+   <div style="margin: 0 0 20px 40px;">
+      <input type="button" id="btnPro" class="pro-@(Model.Type == ServerType.Pro ? "on" : "off")" onclick="SetAccountType('Pro');" />
+      <span class="or-separator">Or</span>
+      <input type="button" id="btnLite" class="lite-@(Model.Type == ServerType.Lite ? "on" : "off")" onclick="SetAccountType('Lite');" />
+   </div>
+   <div class="separator">
+   </div>
+   }
+
+   <div>
+      <h2>
+         <img src="/Content/images/icon-step-0@(isNew ? 2 : 1).gif" width="21" height="21" align="absmiddle"/>
+         Core Details</h2>
+   </div>
+   <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+         <td style="width: 50%;">
+            <table class="user-table" width="100%" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td>
+                     Username:
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @if (isNew) {
+                        @Html.TextBoxFor(p => p.UserName, new { tabindex = 1 })
+                        @Html.ValidationMessageFor(p => p.UserName)
+                     } else { 
+                        <input type="hidden" name="UserName" value="@Model.UserName" />
+                        <input type="text" value="@Model.UserName" disabled="disabled" tabindex="1"/>
+                     }
+                  </td>
+               </tr>
+               @if (isNew) {
+                  <tr>
+                     <td>
+                        Password:
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        @Html.PasswordFor(p => p.Password, new { tabindex = 3 })
+                        @Html.ValidationMessageFor(p => p.Password)
+                     </td>
+                  </tr>
+               }
+            </table>
+         </td>
+         <td>
+            <table width="100%" cellpadding="0" cellspacing="0" class="user-table">
+               <tr>
+                  <td>
+                     Description:
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @Html.TextBoxFor(p => p.Description, new { tabindex = 2 })
+                     @Html.ValidationMessageFor(p => p.Description)
+                  </td>
+               </tr>
+               @if (isNew) { 
+                  <tr>
+                     <td>
+                        Confirm Password:
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        @Html.PasswordFor(p => p.ConfirmPassword, new { tabindex = 4 })
+                        @Html.ValidationMessageFor(p => p.ConfirmPassword)
+                     </td>
+                  </tr>
+               }
+            </table>
+         </td>
+      </tr>
+   </table>
+   <div class="separator">
+   </div>
+   <div>
+      <h2>
+         <img src="/Content/images/icon-step-0@(isNew ? 3 : 2).gif" width="21" height="21" align="absmiddle"/>
+         Technical Details</h2>
+   </div>
+   <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+         <td style="width: 50%;" valign="top">
+            <table class="user-table" width="100%" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td>
+                     IP/ URL:
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     @Html.TextBoxFor(p => p.OrIpUrl, new { tabindex = 5 })
+                     @Html.ValidationMessageFor(p => p.OrIpUrl)
+                  </td>
+               </tr>
+            </table>
+         </td>
+         <td valign="top">
+            <table class="user-table" width="100%" cellpadding="0" cellspacing="0" id="HomeDirectories">
+               <tr>
+                  <td>
+                     1. Home Directory:<br />
+                     @Html.TextBoxFor(p => p.HomeDirectory, new { tabindex = 6 })
+                     @Html.ValidationMessageFor(p => p.HomeDirectory)
+                  </td>
+               </tr>
+               @for (int i = 0; i < Model.AdditionalHomeDirectories.Count; i++) {
+                  <tr>
+                     <td>
+                        @Html.HiddenFor(p => p.AdditionalHomeDirectories[i].Id)
+                        @(i + 2). Home Directory:<br />
+                        @Html.TextBoxFor(p => p.AdditionalHomeDirectories[i].HomeDirectory, new { tabindex = 7 + i })
+                        @Html.ValidationMessageFor(p => p.AdditionalHomeDirectories[i].HomeDirectory)
+                     </td>
+                  </tr>
+               }
+            </table>
+            <table class="user-table" width="100%" cellpadding="0" cellspacing="0" id="Table1">
+               <tr>
+                  <td>
+                     <h2>
+                        <a onclick="AddDirectory();" style="cursor: pointer;">Add</a>&nbsp; <a onclick="RemoveDirectory();"
+                           id="RemoveDirectory" name="RemoveDirectory" style="cursor: pointer;">Remove</a>
+                     </h2>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+   <div class="create-form">
+      @{ int submitTabIndex = 7 + Model.AdditionalHomeDirectories.Count; }
+      <input type="submit" class="@(isNew ? "create" : "update")" id="btnSubmit" name="btnSubmit" tabindex="@submitTabIndex" />
+      <span class="or-link">
+         Or
+         @if (isNew) {
+            <input type="reset" value="Clear" tabindex="@(submitTabIndex + 1)" />
+         } else {
+            <a href="@Url.Action("List")" tabindex="@(submitTabIndex + 1)">Cancel</a>
+         }
+      </span>
+   </div>
+   <div class="clear">
+   </div>   
+}

@@ -1,0 +1,15 @@
+﻿
+<script>
+   function SetRole(role) {
+
+      $('#Role').val(role);
+
+      if (role == "Reseller") {
+         $('#btnReseller').attr('class', 'reseller-on');
+         $('#btnRetail').attr('class', 'retail-off');
+      } else {
+         $('#btnReseller').attr('class', 'reseller-off');
+         $('#btnRetail').attr('class', 'retail-on');
+      }
+   }
+</script>

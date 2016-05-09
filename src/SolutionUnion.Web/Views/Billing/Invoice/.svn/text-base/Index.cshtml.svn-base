@@ -1,0 +1,217 @@
+﻿@model IEnumerable<InvoiceReportItem>
+@section head {
+   <style>
+      .content h2 { 
+         font-size: 14px;
+      }
+
+      .content .list td.last {
+         padding-right: 13px;
+      }
+      .content .list td.last > * {
+         float: right;
+      }
+   </style>
+   <script>
+
+      function ApplyFilter() {
+         $('#ListFilterForm').submit();
+      }
+
+      function PerformAction(obj) {
+
+         var option = obj.options[obj.selectedIndex];
+         var action = option.value;
+
+         if (action.match(/^(\/)/)) {
+
+            var post = $(option).data('post');
+
+            if (post) {
+               var confirmMessage = $(option).data('confirm');
+
+               if (confirmMessage) {
+                  var confirmation = confirm(confirmMessage);
+
+                  if (!confirmation)
+                     return false;
+               }
+
+               $.post(action, function (data) {
+                  ShowMessage(data);
+                  ApplyFilter();
+               }, "json")
+               .error(function (xhr) {
+                  if (xhr.getResponseHeader("Content-type").match("^application/json(;|$)"))
+                     $.fancybox($.parseJSON(xhr.responseText));
+                  else
+                     $.fancybox(xhr.responseText);
+               });
+
+            } else {
+               window.location = action;
+            }
+         }
+
+         obj.selectedIndex = 0;
+      }
+
+      $(function () {
+
+         $('#ListFilterForm').submit(function (event) {
+
+            $.get($(this).attr('action'), $('#ListFilterForm').serialize(), function (data) {
+               $('#gridContent').html(data);
+            }, "html");
+
+            return false;
+         });
+
+         $('#ListFilterForm').jqTransform();
+      });
+      
+   </script>
+}
+
+<script>
+   $(function () {
+
+      $('.list.paid')
+         .sortable({
+            currentValue: $('#sort').val(),
+            click: function (value, query) {
+               $('#sort').val(value);
+               ApplyFilter();
+            }
+         });
+
+      $('.list.outstanding').jqTransform();
+
+      $('.pager a[href]').click(function () {
+
+         $.get(this.href, function (data) {
+            $('#gridContent').html(data);
+         });
+
+         return false;
+      });
+   });
+</script>
+
+@if (!Request.IsAjaxRequest()) {
+   <div style="float: right;">
+      <span id="message" style="display: none;"></span>
+   </div>
+   <h1>Billing / Invoices</h1>
+   <form id="ListFilterForm" action="@Url.Action(null)">
+      @Html.Hidden("sort")      
+   </form>
+   
+   @Html.Raw("<div id='gridContent'>");
+}
+
+@{
+   var outstanding = (IEnumerable<InvoiceReportItem>)ViewBag.Outstanding;
+}
+   
+<h2>
+   <span class="red">Outstanding Invoices:</span>
+</h2>
+    
+<table class="list outstanding">
+   <thead>
+      <tr>
+         <th>Info</th>
+         <th>Invoice #</th>
+         <th>Status</th>
+         <th>Date</th>
+         <th>Amount</th>
+         <th></th>
+      </tr>
+   </thead>
+   <tbody>
+   @if (outstanding.Count() != 0) {
+      int i = -1;
+      foreach (var item in outstanding) {
+         i++;
+         
+         <tr class="@(i % 2 == 0 ? "" : "alternate")">
+            <td>
+               <img src="/Content/images/icon-warn-red.gif" />
+            </td>
+            <td>@item.Id</td>
+            <td>
+               <span class="red">Not Paid</span>
+            </td>
+            <td>@item.Created.ToShortDateString()</td>
+            <td>@item.Amount.ToString("c")</td>
+            <td class="last">
+               <select name="action" onchange="PerformAction(this);">
+                  <option selected="selected" value="">Action</option>
+                  <option value="@Url.Action("Pay", new { Id = item.Id })" data-post="true">Pay Now</option>
+               </select>
+            </td>
+         </tr>
+      }
+   } else {
+      <tr>
+         <td colspan="7">
+            No Invoices to display.
+         </td>
+      </tr>
+   }
+   </tbody>
+</table>
+
+<h2>Paid Invoices:</h2>
+
+<table class="list paid">
+   <thead>
+      <tr>
+         <th data-name="">Info</th>
+         <th data-name="Id">Invoice #</th>
+         <th data-name="IsPaid">Status</th>
+         <th data-name="Created">Date</th>
+         <th>Amount</th>
+         <th></th>
+      </tr>
+   </thead>
+   <tbody>
+   @{ 
+      var list = Model.ToList(); 
+   }
+   @if (list.Count != 0) {
+      int i = -1;
+      foreach (var item in list) {
+         i++;
+         
+         <tr class="@(i % 2 == 0 ? "" : "alternate")">
+            <td>
+               <img src="/Content/images/icon-tick-2.gif" />
+            </td>
+            <td>@item.Id</td>
+            <td>
+               <span class="green">Paid</span>
+            </td>
+            <td>@item.Created.ToShortDateString()</td>
+            <td>@item.Amount.ToString("c")</td>
+            <td class="last">
+               <a href="@Url.Action("Download", new { Id = item.Id })" class="button">Download Invoice</a>
+            </td>
+         </tr>
+      }
+   } else {
+      <tr>
+         <td colspan="7">
+            No Invoices to display.
+         </td>
+      </tr>
+   }
+   </tbody>
+</table>
+
+@Html.Pager()
+
+@if (!Request.IsAjaxRequest()) {
+   @Html.Raw("</div>");
+}

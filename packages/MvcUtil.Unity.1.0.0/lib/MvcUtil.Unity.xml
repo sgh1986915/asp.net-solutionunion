@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MvcUtil.Unity</name>
+    </assembly>
+    <members>
+        <member name="T:MvcUtil.Unity.PerRequestLifetimeManager">
+            <summary>
+            A <see cref="T:Microsoft.Practices.Unity.LifetimeManager"/> that stores instances in the current HTTP context <see cref="P:System.Web.HttpContext.Items"/>.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.Unity.UnityControllerFactory">
+            <summary>
+            A <see cref="T:System.Web.Mvc.DefaultControllerFactory"/> to enable dependency injection
+            for controllers using <see cref="T:Microsoft.Practices.Unity.IUnityContainer"/>.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.Unity.PerSessionLifetimeManager">
+            <summary>
+            A <see cref="T:Microsoft.Practices.Unity.LifetimeManager"/> that stores instances in the current HTTP context <see cref="P:System.Web.HttpContext.Session"/>.
+            </summary>
+        </member>
+    </members>
+</doc>

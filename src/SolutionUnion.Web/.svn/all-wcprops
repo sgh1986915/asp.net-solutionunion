@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/SolutionUnion/!svn/ver/103/trunk/src/SolutionUnion.Web
+END
+Global.asax.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion.Web/Global.asax.cs
+END
+SolutionUnion.Web.csproj
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/SolutionUnion/!svn/ver/102/trunk/src/SolutionUnion.Web/SolutionUnion.Web.csproj
+END
+Web.Release.config
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/SolutionUnion/!svn/ver/32/trunk/src/SolutionUnion.Web/Web.Release.config
+END
+Web.config
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion.Web/Web.config
+END
+packages.config
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion.Web/packages.config
+END
+Error.aspx
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/12/trunk/src/SolutionUnion.Web/Error.aspx
+END
+Web.Debug.config
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion.Web/Web.Debug.config
+END
+Global.asax
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion.Web/Global.asax
+END
+favicon.ico
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion.Web/favicon.ico
+END

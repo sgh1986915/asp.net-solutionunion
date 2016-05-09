@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SolutionUnion</RootNamespace>
+    <AssemblyName>SolutionUnion</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Braintree-2.11.0">
+      <HintPath>..\..\lib\Braintree-2.11.0.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\packages\iTextSharp.5.1.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqKit">
+      <HintPath>..\..\packages\LinqKit.1.0\lib\35\LinqKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="AccountEdit.cs" />
+    <Compile Include="Ahsay\BackupJobStatusList.cs" />
+    <Compile Include="ApplicationSettingsStoragePrice.cs" />
+    <Compile Include="ApplicationSettingUserDefaultsEdit.cs" />
+    <Compile Include="Configuration\BraintreeConfigurationSection.cs" />
+    <Compile Include="CreditCard.cs" />
+    <Compile Include="CreditCardCreatedResult.cs" />
+    <Compile Include="CreditCardEdit.cs" />
+    <Compile Include="EntityFramework\DbContextApplicationSettingRepository.cs" />
+    <Compile Include="EntityFramework\DbContextApplicationSettingsStoragePriceRepository.cs" />
+    <Compile Include="EntityFramework\DbContextRepository`1.cs" />
+    <Compile Include="EntityFramework\DbContextRoleRepository.cs" />
+    <Compile Include="EntityFramework\SolutionUnionContext.cs" />
+    <Compile Include="Invitation.cs" />
+    <Compile Include="InvitationCreateInput.cs" />
+    <Compile Include="InvitationEdit.cs" />
+    <Compile Include="InvitationMessage.cs" />
+    <Compile Include="InvoicePayError.cs" />
+    <Compile Include="InvoicePdf.cs" />
+    <Compile Include="IUserSettings.cs" />
+    <Compile Include="Payment\AddCreditCardResult.cs" />
+    <Compile Include="Payment\BraintreePaymentProcessor.cs" />
+    <Compile Include="Payment\PaymentProcessor.cs" />
+    <Compile Include="Payment\PaymentResult.cs" />
+    <Compile Include="Payment\UpdateCreditCardResult.cs" />
+    <Compile Include="Payment\UserSignUpTransactionResult.cs" />
+    <Compile Include="Repositories\Repository`1.cs" />
+    <Compile Include="ServiceEdit.cs" />
+    <Compile Include="Services\CreditCardReporter.cs" />
+    <Compile Include="Services\CreditCardReportItem.cs" />
+    <Compile Include="Services\InvitationReporter.cs" />
+    <Compile Include="Services\InvitationReportItem.cs" />
+    <Compile Include="Services\ServiceReporter.cs" />
+    <Compile Include="Services\ServiceReportItem.cs" />
+    <Compile Include="SignUp.cs" />
+    <Compile Include="UserSignUpPaymentError.cs" />
+    <Compile Include="UserSignUpResult.cs" />
+    <Compile Include="UserChangePasswordInput.cs" />
+    <Compile Include="Services\AccountReporter.cs" />
+    <Compile Include="Services\AccountReportItem.cs" />
+    <Compile Include="AccountStatus.cs" />
+    <Compile Include="Services\AccountSynchronizer.cs" />
+    <Compile Include="AccountType.cs" />
+    <Compile Include="AccountChangePasswordInput.cs" />
+    <Compile Include="Services\ActionItemReport.cs" />
+    <Compile Include="Services\ActionItemReporter.cs" />
+    <Compile Include="Ahsay\BackupJobReport.cs" />
+    <Compile Include="ApplicationSetting.cs" />
+    <Compile Include="BackupJobReportSummary.cs" />
+    <Compile Include="Contact.cs" />
+    <Compile Include="Services\DailyUsageReporter.cs" />
+    <Compile Include="Services\DailyUsageReportItem.cs" />
+    <Compile Include="Services\DashboardDailyUsageReport.cs" />
+    <Compile Include="Services\DashboardReport.cs" />
+    <Compile Include="Services\DashboardReporter.cs" />
+    <Compile Include="Services\DatabaseMaintenanceService.cs" />
+    <Compile Include="InvoiceItemLine.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Services\NewAccountImporter.cs" />
+    <Compile Include="Services\PortalReport.cs" />
+    <Compile Include="Services\PortalReporter.cs" />
+    <Compile Include="ServerChangePasswordInput.cs" />
+    <Compile Include="DailyUsage.cs" />
+    <Compile Include="HomeDirectory.cs" />
+    <Compile Include="Invoice.cs" />
+    <Compile Include="Services\InvoiceReporter.cs" />
+    <Compile Include="Services\InvoiceReportItem.cs" />
+    <Compile Include="NewAccount.cs" />
+    <Compile Include="Services\NewAccountReporter.cs" />
+    <Compile Include="Services\NewAccountReportItem.cs" />
+    <Compile Include="Resources\Model\ModelRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Validation\ValidationRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValidationRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Server.cs" />
+    <Compile Include="ServerEdit.cs" />
+    <Compile Include="ServerGetBackupJobReportSummariesResult.cs" />
+    <Compile Include="Ahsay\BackupSetStatusOnly.cs" />
+    <Compile Include="ServerGetNewAccountsResult.cs" />
+    <Compile Include="Ahsay\UserInfo.cs" />
+    <Compile Include="Ahsay\BackupJobList.cs" />
+    <Compile Include="Services\ServerReporter.cs" />
+    <Compile Include="Services\ServerReportItem.cs" />
+    <Compile Include="ServerType.cs" />
+    <Compile Include="Service.cs" />
+    <Compile Include="Session.cs" />
+    <Compile Include="TimeZones.cs" />
+    <Compile Include="UserSignUpMessage.cs" />
+    <Compile Include="UserSignUpPaymentInput.cs" />
+    <Compile Include="UserSignUpPaymentResult.cs" />
+    <Compile Include="UserCreateInput.cs" />
+    <Compile Include="UserEdit.cs" />
+    <Compile Include="UserLoginInput.cs" />
+    <Compile Include="UserLoginResult.cs" />
+    <Compile Include="Country.cs" />
+    <Compile Include="UserProfile.cs" />
+    <Compile Include="UserProfileChangePassword.cs" />
+    <Compile Include="UserRecoverPasswordInput.cs" />
+    <Compile Include="UserRecoverPasswordResult.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Services\UserReporter.cs" />
+    <Compile Include="Services\UserReportItem.cs" />
+    <Compile Include="UserSignUpInput.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserRole.cs" />
+    <Compile Include="ErrorResult.cs" />
+    <Compile Include="OperationResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuccessfulResult.cs" />
+    <Compile Include="Utilities\BraintreeGatewayFactory.cs" />
+    <Compile Include="Utilities\Cryptographer.cs" />
+    <Compile Include="Utilities\DisplayNameLocalizedAttribute.cs" />
+    <Compile Include="Utilities\MailViewRenderer.cs" />
+    <Compile Include="Utilities\QueryStringBuilder.cs" />
+    <Compile Include="Utilities\SolutionUnionProtectedConfigurationProvider.cs" />
+    <Compile Include="Utilities\SolutionUnionSmtpClient.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Model\ModelRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModelRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Validation\ValidationRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ValidationRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

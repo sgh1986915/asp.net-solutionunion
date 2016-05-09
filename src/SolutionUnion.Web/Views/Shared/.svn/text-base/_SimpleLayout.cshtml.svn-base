@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <title>:: Solution Union ::</title>
+   <link href="/Content/style.css" rel="stylesheet" type="text/css"/>
+   <script src="/Scripts/jquery-1.6.2.min.js" type="text/javascript"></script>
+   <script src="/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+   <script src="/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+   @RenderSection("head", required: false)
+</head>
+<body>
+   <div class="forgot-pass">
+      <img src="/Content/images/header-forgot-pass.gif" width="361" height="73" />
+      <div class="forgot-pass-main">
+         <div class="forgot-pass-form">
+            @RenderBody()
+         </div>
+         <div class="clear">
+         </div>
+      </div>
+   </div>
+</body>
+</html>

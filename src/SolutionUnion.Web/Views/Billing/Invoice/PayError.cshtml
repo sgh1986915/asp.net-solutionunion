@@ -1,0 +1,109 @@
+﻿@model InvoicePayError
+@{
+   Layout = null;
+}
+
+<script>
+
+   function parseForm(isNew) {
+      $.validator.unobtrusive.parse("#EditCreditCardForm");
+
+      $('#EditCreditCardForm').ajaxForm({
+         beforeSubmit: function () {
+            return $('#EditCreditCardForm').valid();
+         },
+         success: function (data) {
+
+            if (isNew) {
+               retry(data.Id);
+            } else {
+               retry('@Model.AttemptedCreditCard.Id');
+            }
+         },
+         error: function (xhr) {
+            $.fancybox(xhr.responseText);
+            parseForm(isNew);
+         },
+         clearForm: true
+      });
+   }
+
+   function retry(cardId) {
+      $.fancybox.close();
+
+      ShowMessage('Retrying...');
+
+      $.post('@Url.Action("Pay")', { creditCardId: cardId }, function (data) {
+         ShowMessage(data);
+         ApplyFilter();
+      }, "json")
+      .error(function (xhr) {
+         ShowMessage('');
+
+         if (xhr.getResponseHeader("Content-type").match("^application/json(;|$)"))
+            $.fancybox($.parseJSON(xhr.responseText));
+         else
+            $.fancybox(xhr.responseText);
+      }); ;
+   }
+
+   $(function () {
+
+      $('ul.payment-options select.other-cards').change(function () {
+
+         var val = $(this).val();
+
+         if (val) 
+            retry(val);
+      });
+
+      $('ul.payment-options a.edit-card').click(function () {
+
+         $.get($(this).attr('href'), function (data) {
+
+            $.fancybox(data);
+            parseForm(false);
+         });
+
+         return false;
+      });
+
+      $('ul.payment-options a.add-card').click(function () {
+
+         $.get($(this).attr('href'), function (data) {
+
+            $.fancybox(data);
+            parseForm(true);
+         });
+
+         return false;
+      });
+   });
+</script>
+
+<div style="width: 400px" class="payment-error">
+   <h1>Payment failed</h1>
+   <p style="color: Red">
+      @Model.Message
+   </p>
+   
+   <ul style="list-style-type: none" class="payment-options">
+      @if (Model.OtherCardsAvailable.Length > 0) {
+         <li>
+            a) Retry with another card:
+            <select class="other-cards">
+               <option value="">--Select One--</option>
+               @foreach (var item in Model.OtherCardsAvailable) {
+                  <option value="@item.Id">@item.LastFour</option>
+               }
+            </select>
+         </li>
+      }
+      <li>
+         b) <a href="@Url.Action("Edit", "CreditCard", new { Id = Model.AttemptedCreditCard.Id })" class="edit-card">Edit Card ending in @Model.AttemptedCreditCard.LastFour</a>
+      </li>
+      <li>
+         c) <a href="@Url.Action("Add", "CreditCard")" class="add-card">Add a new Card</a>
+      </li>
+   </ul>
+</div>

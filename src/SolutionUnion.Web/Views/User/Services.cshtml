@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ServiceReportItem>
+
+<script>
+
+   function ServiceAction(obj) {
+
+      var option = obj.options[obj.selectedIndex];
+      var action = option.value;
+
+      if (action.match(/^(\/)/)) {
+
+         var post = $(option).data('post');
+
+         if (post) {
+            var confirmMessage = $(option).data('confirm');
+
+            if (confirmMessage) {
+               var confirmation = confirm(confirmMessage);
+
+               if (!confirmation)
+                  return false;
+            }
+
+            $.post(action, function (data) {
+               ShowMessage(data, '.services.message');
+               RefreshServices();
+            }, "json")
+            .error(function (xhr) {
+               $.fancybox($.parseJSON(xhr.responseText));
+            });
+
+         } else {
+            
+            $.get(action, function (data) {
+               $.fancybox(data);
+               $.validator.unobtrusive.parse("#fancybox-content");
+            }, "html");
+         }
+      }
+
+      obj.selectedIndex = 0;
+   }
+
+   $(function () {
+
+      $('div.services .list').jqTransform();
+   });
+
+</script>
+
+<table class="list">
+   <thead>
+      <tr>
+         <th>Description</th>
+         <th>Price</th>
+         <th></th>
+      </tr>
+   </thead>
+   <tbody>
+      @if (Model.Count() > 0) {
+         int i = -1;
+         var routeDate = ViewContext.RequestContext.RouteData;
+         foreach (var item in Model) {
+            i++;
+            <tr class="@(i % 2 == 0 ? "" : "alternate")">
+               <td>@item.Description</td>
+               <td>@item.Price.ToString("c")</td>
+               <td class="last">
+                  <select onchange="ServiceAction(this,'@item.Id');">
+                     <option value="" selected="selected">Action</option>
+                     <option value="@Url.Action("EditService", new { id = routeDate.GetRequiredString("id"), serviceId = item.Id })">Edit</option>
+                     <option value="@Url.Action("DeleteService", new { id = routeDate.GetRequiredString("id"), serviceId = item.Id })" data-post="true" data-confirm="Are you sure you want to delete this Service?">Delete</option>
+                  </select>
+               </td>
+            </tr>
+         }
+      } else { 
+         <tr class="empty">
+            <td colspan="3">No Services to display.</td>
+         </tr>
+      }
+   </tbody>
+</table>

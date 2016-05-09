@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <title>:: Solution Union ::</title>
+   <link href="/Content/style.css?v20110930" rel="stylesheet"/>
+   <style>
+      table.form td { width: 40%; }
+      table.form td + td { width: 60%; }
+      tr#roleRow td + td label { display: inline-block; margin-right: 1em; vertical-align: middle; }
+      tr#roleRow td + td input { margin: 0; }
+      tr#roleRow td + td input, tr#roleRow td + td span { vertical-align: middle; }
+
+      .tos label > * { vertical-align: middle; }
+      body.webkit .tos input  { margin-top: 2px; }
+
+      #rs-maincontent .rs-rightpanel .expand { cursor: pointer; }
+
+      #rs-maincontent .rs-rightpanel .expand {
+         background-image: url("/Content/images/but-plus-small.png");
+         background-position: 2% 50%;
+         background-repeat: no-repeat;
+         padding-left: 2em;
+      }
+
+      #rs-maincontent .rs-rightpanel .expand:hover {
+         background-image: url("/Content/images/but-plus-small-hover.png");
+      }
+
+      #rs-maincontent .rs-rightpanel .expand.open {
+         background-image: url("/Content/images/but-minus-small-sel.png");
+      }
+
+      #rs-maincontent .rs-rightpanel p {
+         line-height: 150%;
+      }
+   </style>
+   <script src="/Scripts/jquery-1.6.2.min.js"></script>
+   <script src="/Scripts/jquery.validate.min.js"></script>
+   <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+   <script src="/Scripts/global.js?v20110930"></script>
+   <script>
+      $(function () {
+         $('#rs-maincontent .rs-rightpanel .collapse').hide();
+         $('#rs-maincontent .rs-rightpanel .expand').click(function () {
+            $(this).toggleClass('open').siblings().removeClass('open').end()
+               .next('.collapse').slideToggle().siblings('.collapse:visible').slideUp();
+            return false;
+         });
+      });
+   </script>
+   @RenderSection("head", required: false)
+</head>
+<body class="alt">     
+   <div class="container">
+      <div class="regheader">
+         <img src="/Content/images/signup-header.gif" width="980" height="50" border="0" />
+      </div>
+      <div id="rs-maincontent" class="signup content">
+         <div style="background-image: url('/Content/images/reseller-signup-banner.jpg'); background-repeat: no-repeat; height: 158px;"></div>
+         <div class="rs-columns-wrapper">
+            <div class="rs-leftpanel">
+               @RenderBody()
+            </div>
+            <div class="rs-rightpanel">
+               <div class="rhtblock last">
+                  <img src="/Content/images/rs-quick-facts.gif" />
+                  <h4>
+                     100’s of companies & growing.</h4>
+                  <p>
+                     You’re in great company, our user base grows everyday!</p>
+                  <h4>
+                     We’re Always here.</h4>
+                  <p>
+                     We’re here whenever you need us 24/7/365!</p>
+                  <h4>
+                     The Lowest prices online.</h4>
+                  <p>
+                     We scour the web daily to ensure that we offer you the best prices online.</p>
+                  <h4>
+                     No Contracts. Ever.</h4>
+                  <p>
+                     We work harder then the competition to keep you happy.</p>
+                  <br />
+                  <img src="/Content/images/rs-faqs.gif" />
+                  <h4 class="expand">
+                     What is Private Label?</h4>
+                  <p class="collapse">
+                     Private Label positions you for immediate profitability. You set the prices, payment
+                     schedules, and deal with the customer on your own terms — directly. There’s no need
+                     to invest thousands of dollars in equipment, licensing, training, and data center
+                     facility fees. With Solution Union no major investment is needed and you can start
+                     selling same-day, in most cases.</p>
+                  <h4 class="expand">
+                     How does it work?</h4>
+                  <p class="collapse">
+                     Once we establish your ideal application branding and identity our applications
+                     are created in your image. Operating system support for Windows 7, XP, Vista, Server
+                     2000-2008, MAC OSX, Linux, SUN, and Novell are all covered. Also included are the
+                     agents to backup MS Exchange, SQL, MYSQL, Lotus Notes, Lotus Domino, and Oracle
+                     directly. You simply install the application on the client machine and bill them
+                     based on usage. Yes, it’s really that simple!</p>
+                  <h4 class="expand">
+                     How do I manage it all?</h4>
+                  <p class="collapse">
+                     All resellers get access to our Partner Portal management system. Our EXCLUSIVE
+                     executive dashboard was designed for complete command and control of your entire
+                     online backup enterprise.</p>
+                  <h4 class="expand">
+                     What happens when I need help?</h4>
+                  <p class="collapse">
+                     Solution Union is always here to assist you. If one of your customers is having
+                     an issue, we’ll work with you privately to solve the problem. We never engage your
+                     customers directly and you get the credit every time. We have private remote tools
+                     to get in the server or desktop which allows us to be on your team either in a leadership
+                     capacity or subordinate one. We work for you!</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</body>
+</html>

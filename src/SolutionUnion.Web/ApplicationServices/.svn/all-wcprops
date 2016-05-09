@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion.Web/ApplicationServices
+END
+ApplicationRoleProvider.cs
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/SolutionUnion/!svn/ver/52/trunk/src/SolutionUnion.Web/ApplicationServices/ApplicationRoleProvider.cs
+END
+ApplicationMembershipProvider.cs
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion.Web/ApplicationServices/ApplicationMembershipProvider.cs
+END

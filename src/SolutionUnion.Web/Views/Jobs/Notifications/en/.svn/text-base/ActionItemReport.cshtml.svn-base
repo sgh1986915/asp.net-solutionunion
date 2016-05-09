@@ -1,0 +1,184 @@
+﻿@model ActionItemReport
+@{
+   Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+   <title>ActionItemReport</title>
+   <style type="text/css">
+      html, body, table, tr, td {
+         margin: 0px;
+         outline: 0px;
+         border: 0px;
+         padding: 0px;
+         font-size: 100%;
+         font-style: inherit;
+         font-weight: inherit;
+         font-family: inherit;
+         line-height: 1.5em;
+         text-align: left;
+         vertical-align: middle;
+      }
+      
+      
+      :focus {
+         outline: 0px;
+      }
+      
+      
+      body {
+         margin: 24px;
+         color: #2A2A2A;
+         text-align: justify;
+         font-size: 12px;
+         font-family: Arial, Helvetica, sans-serif;
+      }
+      
+      
+      table {
+         border-collapse: collapse;
+      }
+      
+      
+      .left-indent {
+         padding-left: 12px;
+      }
+      
+      .left-indent2 {
+         padding-left: 24px;
+      }
+      
+      .left-indent3 {
+         padding-left: 36px;
+      }
+      
+      .top-indent {
+         padding-top: 12px;
+      }
+      
+      .top-indent2 {
+         padding-top: 24px;
+      }
+      
+      .top-indent3 {
+         padding-top: 36px;
+      }
+      
+      .top-indent4 {
+         padding-top: 48px;
+      }
+      
+      .right-indent {
+         padding-right: 12px;
+      }
+      
+      .right-indent2 {
+         padding-right: 24px;
+      }
+      
+      .right-indent3 {
+         padding-right: 36px;
+      }
+      
+      
+      .very-small-text {
+         font-size: 8px;
+      }
+      
+      .small-text {
+         font-size: 10px;
+      }
+      
+      .normal-text {
+         font-size: 12px;
+      }
+      
+      .big-text {
+         font-size: 16px;
+      }
+      
+      
+      .highlight {
+         color: #12AFE9 !important;
+      }
+      
+      
+      .left {
+         text-align: left;
+      }
+      
+      .center {
+         text-align: center;
+      }
+      
+      .justify {
+         text-align: justify;
+      }
+      
+      .right {
+         text-align: right;
+      }
+      
+      
+      .bold {
+         font-weight: bold;
+      }
+      
+      .italic {
+         font-style: italic;
+      }
+      
+      
+      .default-cursor {
+         cursor: default;
+      }
+      
+      
+      .data-grid th {
+         text-align: left;
+         white-space: nowrap;
+         padding-left: 6px;
+         padding: 10px 0px 10px 6px;
+         background-color: #EEEEEE;
+         cursor: default;
+      }
+      
+      .data-grid td {
+         white-space: normal;
+         text-align: left;
+         width: 100%;
+         padding: 10px 0px 10px 6px;
+      }
+   </style>
+</head>
+<body>
+@{ var jobsToEmail = Model.Jobs.Where(j => !j.FinishedSuccessfully).ToList(); }
+@if (jobsToEmail.Count > 0) {
+   <table class="data-grid">
+      <tr style="color: #12AFE9; font-weight: bold;">
+         <th>Account Name</th>
+         <th>Backup Set</th>
+         <th>Backup Time</th>
+         <th>Description</th>
+      </tr>
+      @{ int i = 0; }
+      @foreach (var item in jobsToEmail) {
+         <tr style="background-color: #@(++i % 2 == 0 ? "EEEEEE" : "DEDEDE");">
+            <td style="width: 167px;">@item.AccountName</td>
+            <td style="width: 175px;">@item.SetName</td>
+            <td style="width: 175px;">@item.StartTime</td>
+            <td style="padding-right: 6px; width: 175px;">@item.JobStatusDescription</td>
+         </tr>
+      }
+   </table>
+} else { 
+   <p>Dear @Model.UserCompanyName,</p><br />
+   <p>All jobs successful no action items today!</p>
+   <br /><br />
+   <p>Thank you,</p>
+   <p>Solution Union</p>
+}
+   
+</body>
+</html>

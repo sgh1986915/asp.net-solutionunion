@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Web Developer Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionUnion.Web", "src\SolutionUnion.Web\SolutionUnion.Web.csproj", "{A253E763-4FC4-4B5E-B390-506F4672639E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionUnion", "src\SolutionUnion\SolutionUnion.csproj", "{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageInvokerService", "src\PageInvokerService\PageInvokerService.csproj", "{FA2455DF-8DF9-43F2-909C-E38FD379125A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A253E763-4FC4-4B5E-B390-506F4672639E}.Release|x86.ActiveCfg = Release|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8D713E84-5BDC-433D-B35B-EE8CB3332BB4}.Release|x86.ActiveCfg = Release|Any CPU
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Debug|x86.ActiveCfg = Debug|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Debug|x86.Build.0 = Debug|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Release|Any CPU.ActiveCfg = Release|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Release|x86.ActiveCfg = Release|x86
+		{FA2455DF-8DF9-43F2-909C-E38FD379125A}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
+	EndGlobalSection
+EndGlobal

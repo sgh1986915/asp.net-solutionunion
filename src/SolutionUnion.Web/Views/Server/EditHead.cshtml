@@ -1,0 +1,36 @@
+﻿<script type="text/javascript">
+
+   function AddDirectory() {
+
+      var $table = $('#HomeDirectories');
+      var index = $table.find('tr').length - 1;
+
+      var $newRow = $('<tr/>')
+         .append($('<td>' + (index + 2) + '. Home Directory:<br/></td>').append($('<input type="text"/>').attr('name', 'AdditionalHomeDirectories[' + index + '].HomeDirectory')))
+         ;
+      $table.append($newRow);
+   };
+
+   function RemoveDirectory() {
+
+      var $table = $('#HomeDirectories');
+      var rowCount = $table.find('tr').length;
+
+      if (rowCount > 1)
+         $table.find("tr:last").remove();
+   }
+
+   function SetAccountType(accountType) {
+      $('#Type').val(accountType);
+      
+      if (accountType == "Pro") {
+         $('#btnPro').attr('class', 'pro-on');
+         $('#btnLite').attr('class', 'lite-off');
+      }
+      else {
+         $('#btnPro').attr('class', 'pro-off');
+         $('#btnLite').attr('class', 'lite-on');
+      }
+   }
+   
+</script>

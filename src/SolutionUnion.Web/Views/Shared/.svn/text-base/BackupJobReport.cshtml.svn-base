@@ -1,0 +1,350 @@
+﻿@model SolutionUnion.Ahsay.BackupJobReport
+@functions {
+   public static string GetDisplayForBytes(double fileSize) {
+      fileSize = fileSize / 1024 / 1024;
+      if (fileSize < 1024) {
+         return String.Format("{0}M", Math.Round(fileSize, 1));
+      } else {
+         fileSize = fileSize / 1024;
+         return String.Format("{0}G", Math.Round(fileSize, 1));
+      }
+   }
+}
+@section head {
+   <style type="text/css">
+      
+      h2 { 
+         margin-bottom: 0;
+      }
+
+      #jobSummary .table-row-group > div > div {
+         padding: .6em;
+         color: #555;
+      }
+
+      #jobSummary .table-row-group > div > div:first-child {
+         color: inherit;
+         font-weight: normal;
+      }
+
+      #reportStats { 
+         padding: 1em;
+         background-color: #ededed;
+      }
+
+      #reportStats .table-row-group > div > div { 
+         text-align: right;
+         padding: .6em;
+         padding-left: 0;
+         color: #0E8EC1;
+         font-weight: bold;
+         white-space: nowrap;
+      }
+
+      #reportStats .table-row-group > div > div:first-child { 
+         text-align: left;
+         color: inherit;
+         font-weight: normal;
+      }
+
+      table.list td {
+         white-space: nowrap;
+      }
+
+      table.list td.last { 
+         white-space: normal;
+         width: 100%;
+      }
+
+   </style>
+}
+<div>
+   <div class="table" style="width: 100%;">
+      <div class="table-row">
+         <div style="padding-right: 1em; width: 100%;">
+            <div id="jobSummary">
+               <h1>Backup Job Summary</h1>
+               <div class="table" style="width: 100%; border: solid 1px silver; border-left: none; border-right: none;">
+                  <div class="table-row-group">
+                     <div>
+                        <div>Login Name</div>
+                        <div>@Model.AccountName</div>
+                     </div>
+                     <div>
+                        <div>Backup Set</div>
+                        <div>@Model.SetName (@Model.SetId)</div>
+                     </div>
+                     <div>
+                        <div>Backup Job</div>
+                        <div>@Model.ID</div>
+                     </div>
+                     <div>
+                        <div>Job Status</div>
+                        <div>@Model.JobStatusDescription</div>
+                     </div>
+                     <div>
+                        <div>Backup Time</div>
+                        <div>@Model.StartTime - @Model.EndTime</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div>
+            <div id="reportStats" class="round-corners-7">
+               <h1>Report Statistics</h1>
+               <div class="table" style="width: 100%; border-top: solid 1px silver;">
+                  <div class="table-row-group">
+                     <div>
+                        <div>New Files</div>
+                        <div>@Model.NumOfNewFiles [@GetDisplayForBytes(Model.TotalNewFilesSize)]</div>
+                     </div>
+                     <div>
+                        <div>Updated Files</div>
+                        <div>@Model.NumOfUpdatedFiles [@GetDisplayForBytes(Model.TotalUpdatedFilesSize)]</div>
+                     </div>
+                     <div>
+                        <div>Permission Updated Files</div>
+                        <div>@Model.NumOfUpdatedPermissionFiles [@GetDisplayForBytes(Model.TotalUpdatedPermissionFileSize)]</div>
+                     </div>
+                     <div>
+                        <div>Deleted Files</div>
+                        <div>@Model.NumOfDeletedFiles [@GetDisplayForBytes(Model.TotalDeletedFilesSize)]</div>
+                     </div>
+                     <div>
+                        <div>Moved Files</div>
+                        <div>@Model.NumOfMovedFiles [@GetDisplayForBytes(Model.TotalMovedFilesSize)]</div>
+                     </div>
+                  </div>
+               </div>
+               <div style="padding-top: .5em; font-size: 85%; color: Gray;">Unit = No of files [Total file zipped size]</div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <h2>Backup Logs</h2>
+   <table class="list">
+      @if (Model.LogEntries.Count > 0) {
+         <tr>
+            <th>No.</th>
+            <th>Type</th>
+            <th>Timestamp</th>
+            <th>Message</th>
+         </tr>
+         for (int i = 0; i < Model.LogEntries.Count; i++) {
+            var item = Model.LogEntries[i];
+            <tr class="@(i % 2 == 0 ? "" : "alternate")">
+               <td>@(i + 1).</td>
+               <td>@item.Type</td>
+               <td>@item.TimeStamp</td>
+               <td class="last">@item.Message</td>
+            </tr>
+         }
+      } else {
+         <tr class="empty">
+            <td>This list is empty.</td>
+         </tr>
+      }
+   </table>
+
+   <h2>New Files</h2>
+   <table class="list">
+      @if (Model.NewFiles.Count > 0) {
+         <tr>
+            <th>No.</th>
+            <th>Timestamp</th>
+            <th>File Name</th>
+         </tr>
+         for (int i = 0; i < Model.NewFiles.Count; i++) {
+            var item = Model.NewFiles[i];
+            <tr class="@(i % 2 == 0 ? "" : "alternate")">
+               <td>@(i + 1).</td>
+               <td>@item.LastModified</td>
+               <td class="last">@item.Name</td>
+            </tr>
+         }
+      } else {
+         <tr class="empty">
+            <td>This list is empty.</td>
+         </tr>
+      }
+   </table>
+
+   <h2>Updated Files</h2>
+   <table class="list">
+      @if (Model.UpdatedFiles.Count > 0) {
+         <tr>
+            <th>No.</th>
+            <th>Timestamp</th>
+            <th>File Name</th>
+         </tr>
+         for (int i = 0; i < Model.UpdatedFiles.Count; i++) {
+            var item = Model.UpdatedFiles[i];
+            <tr class="@(i % 2 == 0 ? "" : "alternate")">
+               <td>@(i + 1).</td>
+               <td>@item.LastModified</td>
+               <td class="last">@item.Name</td>
+            </tr>
+         }
+      } else {
+         <tr class="empty">
+            <td>This list is empty.</td>
+         </tr>
+      }
+   </table>
+
+   <h2>Permission Updated Files</h2>
+   <table class="list">
+      @if (Model.UpdatedPermissionFiles.Count > 0) {
+         <tr>
+            <th>No.</th>
+            <th>Timestamp</th>
+            <th>File Name</th>
+         </tr>
+         for (int i = 0; i < Model.UpdatedPermissionFiles.Count; i++) {
+            var item = Model.UpdatedPermissionFiles[i];
+         <tr class="@(i % 2 == 0 ? "" : "alternate")">
+            <td>@(i + 1).</td>
+            <td>@item.LastModified</td>
+            <td class="last">@item.Name</td>
+         </tr>
+         }
+      } else {
+         <tr class="empty">
+            <td>This list is empty.</td>
+         </tr>
+      }
+   </table>
+
+   <h2>Moved Files</h2>
+   <table class="list">
+      @if (Model.MovedFiles.Count > 0) {
+         <tr>
+            <th>No.</th>
+            <th>Timestamp</th>
+            <th>File Name</th>
+         </tr>
+         for (int i = 0; i < Model.MovedFiles.Count; i++) {
+            var item = Model.MovedFiles[i];
+         <tr class="@(i % 2 == 0 ? "" : "alternate")">
+            <td>@(i + 1).</td>
+            <td>@item.LastModified</td>
+            <td class="last">@item.FromFile -> @item.ToFile</td>
+         </tr>
+         }
+      } else {
+         <tr class="empty">
+            <td>This list is empty.</td>
+         </tr>
+      }
+   </table>
+
+   <h2>Deleted Files</h2>
+   <table class="list">
+      @if (Model.DeletedFiles.Count > 0) {
+         <tr>
+            <th>No.</th>
+            <th>Timestamp</th>
+            <th>File Name</th>
+         </tr>
+         for (int i = 0; i < Model.DeletedFiles.Count; i++) {
+            var item = Model.DeletedFiles[i];
+         <tr class="@(i % 2 == 0 ? "" : "alternate")">
+            <td>@(i + 1).</td>
+            <td>@item.LastModified</td>
+            <td class="last">@item.Name</td>
+         </tr>
+         }
+      } else {
+         <tr class="empty">
+            <td>This list is empty.</td>
+         </tr>
+      }
+   </table>
+
+   <div style="font-size: 90%; color: #444">
+      <p class="left-indent top-indent2 bold">
+         Notes:</p>
+      <p class="left-indent2">
+         This report shows all information recorded for this backup job</p>
+      <p class="left-indent top-indent bold">
+         Key:</p>
+      <table class="info">
+         <tr>
+            <td class="error left-indent2">
+               Backup Logs
+            </td>
+            <td class="left-indent">
+               Information / Warning / Error logged in this backup job
+            </td>
+         </tr>
+         <tr>
+            <td class="error left-indent2">
+               New Files
+            </td>
+            <td class="left-indent">
+               Files added since last backup job. These files are now in the current data area.
+            </td>
+         </tr>
+         <tr>
+            <td class="error left-indent2">
+               Updated Files
+            </td>
+            <td class="left-indent">
+               Files updated since last backup job. These files are now in the current data area
+               while the older version of the same files are now in the retention area.
+            </td>
+         </tr>
+         <tr>
+            <td class="error left-indent2">
+               Deleted Files
+            </td>
+            <td class="left-indent">
+               Files deleted since last backup job. These files are now in the retention area.
+            </td>
+         </tr>
+         <tr>
+            <td class="error left-indent2">
+               Moved Files
+            </td>
+            <td class="left-indent">
+               Files moved since last backup job. These file movements have been updated on the
+               backup server.
+            </td>
+         </tr>
+         <tr>
+            <td class="error left-indent2">
+               [C]
+            </td>
+            <td class="left-indent">
+               Checksum file
+            </td>
+         </tr>
+         <tr>
+            <td class="error left-indent2">
+               [D]
+            </td>
+            <td class="left-indent">
+               Delta file
+            </td>
+         </tr>
+         <tr>
+            <td class="error left-indent2">
+               [I]
+            </td>
+            <td class="left-indent">
+               Incremental delta file
+            </td>
+         </tr>
+         <tr>
+            <td class="error left-indent2">
+               [CD]
+            </td>
+            <td class="left-indent">
+               Checksum file for delta file
+            </td>
+         </tr>
+      </table>
+   </div>
+</div>

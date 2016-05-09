@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/SolutionUnion/!svn/ver/98/trunk/src/SolutionUnion.Web/Views/Shared
+END
+_SimpleLayout.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion.Web/Views/Shared/_SimpleLayout.cshtml
+END
+_LayoutBase.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/SolutionUnion/!svn/ver/98/trunk/src/SolutionUnion.Web/Views/Shared/_LayoutBase.cshtml
+END
+PublicError.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/SolutionUnion/!svn/ver/86/trunk/src/SolutionUnion.Web/Views/Shared/PublicError.cshtml
+END
+Error.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/SolutionUnion/!svn/ver/86/trunk/src/SolutionUnion.Web/Views/Shared/Error.cshtml
+END
+BackupJobReport.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/SolutionUnion/!svn/ver/80/trunk/src/SolutionUnion.Web/Views/Shared/BackupJobReport.cshtml
+END
+_Layout.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion.Web/Views/Shared/_Layout.cshtml
+END
+IconHelp.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/SolutionUnion/!svn/ver/63/trunk/src/SolutionUnion.Web/Views/Shared/IconHelp.cshtml
+END
+AssignUser.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/SolutionUnion/!svn/ver/45/trunk/src/SolutionUnion.Web/Views/Shared/AssignUser.cshtml
+END
+PagerWithPageSizeSelector.cshtml
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/SolutionUnion/!svn/ver/88/trunk/src/SolutionUnion.Web/Views/Shared/PagerWithPageSizeSelector.cshtml
+END

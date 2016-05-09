@@ -1,0 +1,108 @@
+﻿@model ServiceEdit
+@{
+   bool isNew = Page.IsNew ?? false;
+}
+@*<script src="/Scripts/jquery-1.6.2.min.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>*@
+<script>
+   $(function () {
+
+      $('#EditServiceForm').ajaxForm({
+         beforeSubmit: function () {
+            $('#EditServiceForm .submitError').text('').hide();
+            return $('#EditServiceForm').valid();
+         },
+         success: function (data) {
+            $.fancybox.close();
+            ShowMessage(data, '.services.message');
+            RefreshServices();
+         },
+         error: function (xhr) {
+            $('#EditServiceForm .submitError').text($.parseJSON(xhr.responseText)).show();
+         },
+         clearForm: true,
+         dataType: 'json'
+      });
+
+      var $trTemplate = $('#EditServiceForm .popup-form tbody tr:first-child').clone();
+
+      $('#EditServiceForm .popup-form .add.btn').click(function () {
+
+         var $thisTr = $(this).closest('tr');
+         var index = $thisTr.siblings().length;
+
+         var $newTr = $trTemplate.clone();
+
+         $newTr.find(':input[name]').each(function () {
+            var $el = $(this);
+            $el.attr('name', $el.attr('name').replace(/^\[([0-9]+)\]/, '[' + index + ']'));
+         });
+
+         $newTr.find('[data-valmsg-for]').each(function () {
+            var $el = $(this);
+            $el.attr('data-valmsg-for', $el.attr('data-valmsg-for').replace(/^\[([0-9]+)\]/, '[' + index + ']'));
+         });
+
+         $newTr.insertBefore($thisTr);
+
+         $('#EditServiceForm').removeData("validator");
+         $.validator.unobtrusive.parse("#EditServiceForm");
+      });
+
+      $('#EditServiceForm .popup-form .remove.btn').click(function () {
+
+         var $thisTr = $(this).closest('tr');
+         
+         if ($thisTr.index() > 1) 
+            $thisTr.prev().remove();
+      });
+   });
+</script>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "EditServiceForm" })) {
+   var editHtml = (isNew) ? Html.HtmlHelperFor<ServiceEdit>(Model, "[0]") : Html;
+   <div style="padding: .5em">
+      <h1 style="white-space: nowrap; margin: 0;">@(isNew ? "Add" : "Edit") Service</h1>
+      <p class="submitError red" style="display: none; margin-bottom: 0"></p>
+
+      <table class="popup-form">
+         <thead>
+            <tr>
+               <td>
+                  @editHtml.LabelFor(p => p.Description)
+               </td>
+               <td style="width: 2em"></td>
+               <td>
+                  @editHtml.LabelFor(p => p.Price)
+               </td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  @editHtml.EditorFor(p => p.Description, new { HtmlAttributes = new { style = "width: 15em" } })
+                  @editHtml.ValidationMessageFor(p => p.Description)
+               </td>
+               <td></td>
+               <td>
+                  @editHtml.EditorFor(p => p.Price, new { HtmlAttributes = new { style = "width: 5em" } })
+                  @editHtml.ValidationMessageFor(p => p.Price)
+               </td>
+            </tr>
+            @if (isNew) {
+               <tr>
+                  <td style="text-align: right; font-size: 90%">
+                     <a class="btn add">Add</a>
+                     <a class="btn remove">Remove</a>
+                  </td>
+               </tr>
+            }
+         </tbody>
+      </table>
+
+      <div style="text-align: right; margin-top: 1em">
+         <input type="submit" value="Save" class="btn" />
+      </div>
+   </div>
+}

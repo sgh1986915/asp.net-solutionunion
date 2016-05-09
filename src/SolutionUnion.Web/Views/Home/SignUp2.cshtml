@@ -1,0 +1,118 @@
+﻿@model UserSignUpInput
+@{
+   Layout = "_SignUpLayout.cshtml";
+}
+
+@using (Html.BeginForm()) {
+   @Html.AntiForgeryToken()
+   @Html.HiddenFor(p => p.InvitationId)
+
+   <div class="subheader" style="margin-bottom: 10px">
+      <h1 style="text-align: center; margin: auto">
+         Join Solution Union! <span class="blue">It only takes 30 seconds!</span></h1>
+   </div>
+   @Html.ValidationSummary(excludePropertyErrors: true, message: "Please correct the errors below.")
+   <h2>
+      <img src="/Content/images/icon-step-01.gif" width="21" height="21" align="absmiddle">Create
+      your account</h2>
+   <table class="form horizontal">
+      <tr>
+         <td>
+            @Html.LabelFor(m => m.Email)
+         </td>
+         <td>
+            @Html.EditorFor(m => m.Email, new { HtmlAttributes = new { tabindex = 1 } })
+            @Html.ValidationMessageFor(m => m.Email)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(m => m.Password)
+         </td>
+         <td>
+            @Html.EditorFor(m => m.Password, new { HtmlAttributes = new { tabindex = 2 } })
+            @Html.ValidationMessageFor(m => m.Password)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(m => m.ConfirmPassword)
+         </td>
+         <td>
+            @Html.EditorFor(m => m.ConfirmPassword, new { HtmlAttributes = new { tabindex = 3 } })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword)
+         </td>
+      </tr>
+      <tr id="roleRow">
+         <td>
+            @Html.LabelFor(m => m.Role)
+         </td>
+         <td>
+            @{ int roleTabIndex = 3; }
+            @foreach (var item in (SelectList)ViewBag.Role) {
+               roleTabIndex++;
+               <label>
+                  @Html.RadioButtonFor(m => m.Role, item.Value, new { id = "Role_" + item.Value, tabindex = roleTabIndex })
+                  <span>@item.Text</span>
+               </label>
+            }
+
+            @Html.ValidationMessageFor(m => m.Role)
+         </td>
+      </tr>
+   </table>
+   <div class="separator">
+   </div>
+   <h2>
+      <img src="/Content/images/icon-step-02.gif" width="21" height="21" align="absmiddle">Your
+      personal details</h2>
+   <table class="form horizontal">
+      <tr>
+         <td>
+            @Html.LabelFor(m => m.FirstName)
+         </td>
+         <td>
+            @Html.EditorFor(m => m.FirstName, new { HtmlAttributes = new { tabindex = 6 } })
+            @Html.ValidationMessageFor(m => m.FirstName)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(m => m.LastName)
+         </td>
+         <td>
+            @Html.EditorFor(m => m.LastName, new { HtmlAttributes = new { tabindex = 7 } })
+            @Html.ValidationMessageFor(m => m.LastName)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(m => m.CompanyName)
+         </td>
+         <td>
+            @Html.EditorFor(m => m.CompanyName, new { HtmlAttributes = new { tabindex = 8 } })
+            @Html.ValidationMessageFor(m => m.CompanyName)
+         </td>
+      </tr>
+      <tr>
+         <td>
+            @Html.LabelFor(m => m.Phone)
+         </td>
+         <td>
+            @Html.EditorFor(m => m.Phone, new { HtmlAttributes = new { tabindex = 9 } })
+            @Html.ValidationMessageFor(m => m.Phone)
+         </td>
+      </tr>
+   </table>
+   <div class="separator">
+   </div>
+   @Html.ValidationMessageFor(m => m.AgreedToTermsOfService)
+   <input type="submit" value="Next &rsaquo;" class="btn large" tabindex="21" style="float: right" />
+   <h2 class="tos">
+      <label>
+         @Html.EditorFor(m => m.AgreedToTermsOfService, new { HtmlAttributes = new { tabindex = 20 } })
+         <span>I have read and agree to the </span>
+         <a href="http://www.solutionunion.com/terms.html" target="_blank">Terms of Service</a>
+      </label>
+   </h2>
+}

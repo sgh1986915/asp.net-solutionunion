@@ -1,0 +1,92 @@
+10
+
+dir
+104
+https://50.57.103.196:8443/svn/SolutionUnion/trunk/packages
+https://50.57.103.196:8443/svn/SolutionUnion
+
+
+
+2011-10-01T20:05:07.923600Z
+98
+max.toro
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+93962c83-0020-f442-9d2c-da0eb4dc8a14
+
+EntityFramework.4.1.10331.0
+dir
+
+jQuery.1.6.2
+dir
+
+MvcUtil.Unity.1.0.0
+dir
+
+LinqKit.1.0
+dir
+
+CommonServiceLocator.1.0
+dir
+
+repositories.config
+file
+
+
+
+
+2011-10-13T00:44:50.184570Z
+99c94382d1a9cc41643ab3022c96a369
+2011-07-09T05:43:57.990156Z
+3
+max.toro
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+269
+
+MvcCodeRouting.0.9.1
+dir
+
+iTextSharp.5.1.1
+dir
+
+jQuery.Validation.1.8.1
+dir
+
+Unity.2.1.505.0
+dir
+
+MvcUtil.1.0.0
+dir
+

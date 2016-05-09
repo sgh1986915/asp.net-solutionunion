@@ -1,0 +1,47 @@
+﻿@functions {
+   string GetStatesUrl() { 
+      string url = this.Url.Action("Add_States", new { p0 = "0" });
+      url = url.Remove(url.Length - 1);
+      return url;
+   }
+}
+@section head {
+   @RenderPage("EditHead.cshtml")
+   <script>
+      function SetUserType(type) {
+
+         $('#Role').val(type);
+
+         if (type == "Reseller") {
+            $('#btnReseller').attr('class', 'reseller-on');
+            $('#btnRetail').attr('class', 'retail-off');
+         } else {
+            $('#btnReseller').attr('class', 'reseller-off');
+            $('#btnRetail').attr('class', 'retail-on');
+         }
+      }
+
+      $(function () {
+         $(':input[name="CreditCard.Country"]').change(function () {
+            var $countrySelect = $(this);
+            var $stateSelect = $(':input[name="CreditCard.State"]');
+
+            $stateSelect.find('option[value!=""]').remove();
+
+            if ($countrySelect.val()) {
+
+               $.getJSON('@GetStatesUrl()' + $countrySelect.val(), function (data) {
+
+                  $.each(data, function (key, value) {
+                     $stateSelect.append($('<option/>').attr('value', key).append(value));
+                  });
+               });
+            }
+         });
+      });
+   </script>
+}
+@{
+   Page.IsNew = true;
+}
+@RenderPage("Edit.cshtml")

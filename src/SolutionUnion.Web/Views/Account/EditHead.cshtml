@@ -1,0 +1,58 @@
+﻿<script>
+
+   function AddContact() {
+
+      var $table = $('#AdditionalContacts');
+      var index = $table.find('tr').length;
+
+      var $newRow = $('<tr/>')
+            .append($('<td>Contact Name:<br/></td>').append($('<input type="text"/>').attr('name', 'AdditionalContacts[' + index + '].Name')))
+            .append($('<td>Email:<br/></td>').append($('<input type="text"/>').attr('name', 'AdditionalContacts[' + index + '].Email')))
+            ;
+      $table.append($newRow);
+   };
+
+   function RemoveContacts() {
+      $("#AdditionalContacts tr:last").remove();
+   }
+
+   function SetAccountType(accountType) {
+      
+      $('#IsAcb').val(accountType == "lite");
+      
+      if (accountType == "pro") {
+         $('#btnPro').attr('class', 'pro-on');
+         $('#btnLite').attr('class', 'lite-off');
+         $('#mailboxtext').show();
+         $('#mailboxvalues').show();
+      }
+      else {
+         $('#btnPro').attr('class', 'pro-off');
+         $('#btnLite').attr('class', 'lite-on');
+         $('#mailboxtext').hide();
+         $('#mailboxvalues').hide();
+      }
+
+      var isAcb = accountType == "lite";
+
+      var $servers = $("#ServerId");
+
+      $servers.find('option[value!=""]').remove();
+
+      $.getJSON('_Servers', { isAcb: isAcb }, function (data) {
+
+         $('#VaultSize').val(data.MinVaultSize);
+
+         $.each(data.Servers, function () {
+
+            var $option = $("<option value='" + this.Value + "'>" + this.Text + "</option>");
+
+            if (this.Selected)
+               $option.attr("selected", "selected");
+
+            $option.appendTo($servers);
+         });
+      });
+
+   }
+</script>

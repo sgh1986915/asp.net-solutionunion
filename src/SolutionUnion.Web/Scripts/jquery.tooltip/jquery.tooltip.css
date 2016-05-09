@@ -1,0 +1,15 @@
+
+.tooltip { color: #0E8EC1; cursor: default; }
+
+#tooltip {
+   position: absolute;
+   z-index: 3000;
+   border: 1px solid #111;
+   background-color: #FFFFE8;
+   padding: 5px;
+   opacity: .95;
+   max-width: 250px;
+}
+#tooltip h3, #tooltip div { margin: 0; }
+
+#tooltip h3 { font-size: 90%; font-weight: normal; }

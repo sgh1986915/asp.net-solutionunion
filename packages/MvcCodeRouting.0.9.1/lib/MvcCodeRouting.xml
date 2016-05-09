@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MvcCodeRouting</name>
+    </assembly>
+    <members>
+        <member name="M:MvcCodeRouting.CodeRoutingExtensions.EnableCodeRouting(System.Web.Mvc.ViewEngineCollection)">
+            <summary>
+            Enables namespace-aware views location.
+            </summary>
+            <param name="engines">The view engine collection.</param>
+            <remarks>Always call after you are done adding view engines.</remarks>
+        </member>
+        <member name="M:MvcCodeRouting.CodeRoutingExtensions.BindRouteProperties(System.Web.Mvc.ControllerBase)">
+            <summary>
+            Binds controller properties decorated with <see cref="T:MvcCodeRouting.FromRouteAttribute"/>
+            using the current route values.
+            </summary>
+            <param name="controller">The controller to bind.</param>
+            <remarks>You can call this method from <see cref="M:System.Web.Mvc.ControllerBase.Initialize(System.Web.Routing.RequestContext)"/>.</remarks>
+        </member>
+    </members>
+</doc>

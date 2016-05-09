@@ -1,0 +1,157 @@
+form.jqtransformdone label{
+	xmargin-top:4px;
+	xmargin-right: 8px;
+	display: block;
+	float:left;
+	padding-right:5px;
+	
+}
+form.jqtransformdone div.rowElem{
+	clear:both;
+	padding:4px 0px;
+}
+
+
+
+/* -------------
+ * Inputs
+ * ------------- */
+
+
+
+/* -------------
+ * Selects
+ * ------------- */
+.jqTransformSelectWrapper {
+	width: 20px;
+	position:relative;
+	height: 20px;
+	background: url(img/select_left.gif) no-repeat right 0px;
+	float:left;
+	xmargin-bottom:1px;
+	border:1px #ccc solid;
+}
+.jqTransformSelectWrapper:hover {
+	color:#FFFFFF;
+	width: 20px;
+	position:relative;
+	height: 20px;
+	background: url(img/select_left_hover.gif) no-repeat right 0px;
+	float:left;
+	xmargin-bottom:1px;
+	border:1px #ccc solid;
+}
+.jqTransformSelectWrapper div span {
+	
+	font-size: 11px;
+	float: none;
+	position: absolute;
+	white-space: nowrap;
+	height: 20px;
+	line-height: 10px;
+	padding: 5px 0 0 7px;
+	overflow: hidden;
+	cursor:pointer;
+	font-weight: normal;
+	color:#000000;
+	/*border: 1px solid #CCCCCC;*/
+/*	border-right: none;*/
+}
+
+.jqTransformSelectWrapper  a.jqTransformSelectOpen:hover {
+	display: block;
+	position: absolute;
+	right: 0px;
+	width: 22px;
+	height: 20px;
+	xbackground: url(img/select_righ_hovert.gif) no-repeat right center;
+}
+.jqTransformSelectWrapper  a.jqTransformSelectOpen {
+	display: block;
+	position: absolute;
+	right: 0px;
+	width: 22px;
+	height: 20px;
+	xbackground: url(img/select_right.gif) no-repeat right center;
+}
+.jqTransformSelectWrapper ul {
+	position: absolute;
+	width: 43px;
+	top: 20px;
+	left: 0px;
+	list-style: none;
+	background-color: #FFF;
+	border: solid 1px #CCC;
+	display: none;
+	margin: 0px;
+	padding: 0px;
+	height: 150px;
+	overflow: auto;
+	overflow-y: auto;
+	z-index:10;
+}
+
+.jqTransformSelectWrapper ul a {
+	display: block;
+	padding: 5px;
+	text-decoration: none;
+	color:#333;
+	background-color: #FFF;
+	font-size: 12px;
+}
+
+.jqTransformSelectWrapper ul a.selected {
+	background: #f9f294;
+	color: #333;
+}
+
+.jqTransformSelectWrapper ul a:hover, .jqTransformSelectWrapper ul a.selected:hover {
+	background:#f9f294;
+	color: #333;
+}
+
+/* -------------
+ * Hidden - used to hide the original form elements
+ * ------------- */
+.jqTransformHidden {display: none;}
+
+
+
+.jqTransformSelectWrapper ul {
+    padding: 0;
+}
+
+.jqTransformSelectWrapper ul .scrollbar-pane {
+    margin-right: 20px;
+}
+
+.jqTransformSelectWrapper ul .scrollbar-handle-container {
+    background:url(../images/dropdown-bg.jpg) repeat-y right top;
+    width: 15px;
+}
+
+.jqTransformSelectWrapper ul .scrollbar-handle {
+    width: 15px;
+	background:url(../images/drager.jpg) no-repeat right center;
+}
+
+.jqTransformSelectWrapper ul .scrollbar-handle:hover {
+   background:url(../images/drager.jpg) no-repeat right top;
+}
+
+.jqTransformSelectWrapper ul .scrollbar-handle.move {
+   background:url(../images/drager.jpg) no-repeat right top;
+}
+
+.jqTransformSelectWrapper ul .scrollbar-handle-up {
+	background:url(../images/dropdown-top.jpg) no-repeat right top;
+    width: 16px;
+    height: 25px;
+}
+
+.jqTransformSelectWrapper ul .scrollbar-handle-down {
+	background:url(../images/dropdown-bottom.jpg) no-repeat right top;
+    width: 16px;
+    height: 25px;
+}
+

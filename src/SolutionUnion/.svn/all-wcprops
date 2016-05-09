@@ -1,0 +1,371 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/SolutionUnion/!svn/ver/104/trunk/src/SolutionUnion
+END
+ServerEdit.cs
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/SolutionUnion/!svn/ver/14/trunk/src/SolutionUnion/ServerEdit.cs
+END
+TimeZones.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/SolutionUnion/!svn/ver/13/trunk/src/SolutionUnion/TimeZones.cs
+END
+ServerChangePasswordInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/70/trunk/src/SolutionUnion/ServerChangePasswordInput.cs
+END
+InvoicePayError.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/InvoicePayError.cs
+END
+State.cs
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/SolutionUnion/!svn/ver/82/trunk/src/SolutionUnion/State.cs
+END
+UserCreateInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/SolutionUnion/!svn/ver/97/trunk/src/SolutionUnion/UserCreateInput.cs
+END
+InvoiceItemLine.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/SolutionUnion/!svn/ver/91/trunk/src/SolutionUnion/InvoiceItemLine.cs
+END
+InvoicePdf.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/InvoicePdf.cs
+END
+DailyUsage.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/102/trunk/src/SolutionUnion/DailyUsage.cs
+END
+UserLoginInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion/UserLoginInput.cs
+END
+ErrorResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/90/trunk/src/SolutionUnion/ErrorResult.cs
+END
+InvitationCreateInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/SolutionUnion/!svn/ver/85/trunk/src/SolutionUnion/InvitationCreateInput.cs
+END
+UserProfileChangePassword.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/SolutionUnion/!svn/ver/83/trunk/src/SolutionUnion/UserProfileChangePassword.cs
+END
+InvitationMessage.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/SolutionUnion/!svn/ver/86/trunk/src/SolutionUnion/InvitationMessage.cs
+END
+ApplicationSettingsStoragePrice.cs
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/SolutionUnion/!svn/ver/76/trunk/src/SolutionUnion/ApplicationSettingsStoragePrice.cs
+END
+Invoice.cs
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Invoice.cs
+END
+Account.cs
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/SolutionUnion/!svn/ver/102/trunk/src/SolutionUnion/Account.cs
+END
+OperationResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/SolutionUnion/!svn/ver/10/trunk/src/SolutionUnion/OperationResult.cs
+END
+Service.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/SolutionUnion/!svn/ver/91/trunk/src/SolutionUnion/Service.cs
+END
+UserSignUpPaymentResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion/UserSignUpPaymentResult.cs
+END
+ApplicationSetting.cs
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/ApplicationSetting.cs
+END
+AccountEdit.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/AccountEdit.cs
+END
+UserSignUpResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion/UserSignUpResult.cs
+END
+CreditCard.cs
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion/CreditCard.cs
+END
+AccountChangePasswordInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/SolutionUnion/!svn/ver/70/trunk/src/SolutionUnion/AccountChangePasswordInput.cs
+END
+SignUp.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/SignUp.cs
+END
+ServiceEdit.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion/ServiceEdit.cs
+END
+NewAccount.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/NewAccount.cs
+END
+UserLoginResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion/UserLoginResult.cs
+END
+UserRecoverPasswordInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion/UserRecoverPasswordInput.cs
+END
+IUserSettings.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion/IUserSettings.cs
+END
+ServerType.cs
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/SolutionUnion/!svn/ver/14/trunk/src/SolutionUnion/ServerType.cs
+END
+CreditCardEdit.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/CreditCardEdit.cs
+END
+UserSignUpPaymentError.cs
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion/UserSignUpPaymentError.cs
+END
+HomeDirectory.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/SolutionUnion/!svn/ver/82/trunk/src/SolutionUnion/HomeDirectory.cs
+END
+packages.config
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/packages.config
+END
+SuccessfulResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/SolutionUnion/!svn/ver/10/trunk/src/SolutionUnion/SuccessfulResult.cs
+END
+User.cs
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/SolutionUnion/!svn/ver/104/trunk/src/SolutionUnion/User.cs
+END
+ServerGetNewAccountsResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/SolutionUnion/!svn/ver/27/trunk/src/SolutionUnion/ServerGetNewAccountsResult.cs
+END
+SolutionUnion.csproj
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/SolutionUnion.csproj
+END
+Log.cs
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/SolutionUnion/!svn/ver/102/trunk/src/SolutionUnion/Log.cs
+END
+UserSignUpPaymentInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/UserSignUpPaymentInput.cs
+END
+Session.cs
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/SolutionUnion/!svn/ver/102/trunk/src/SolutionUnion/Session.cs
+END
+Invitation.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Invitation.cs
+END
+UserEdit.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/SolutionUnion/!svn/ver/101/trunk/src/SolutionUnion/UserEdit.cs
+END
+UserSignUpInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion/UserSignUpInput.cs
+END
+UserRecoverPasswordResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion/UserRecoverPasswordResult.cs
+END
+UserChangePasswordInput.cs
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/SolutionUnion/!svn/ver/71/trunk/src/SolutionUnion/UserChangePasswordInput.cs
+END
+InvitationEdit.cs
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion/InvitationEdit.cs
+END
+CreditCardCreatedResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/CreditCardCreatedResult.cs
+END
+Contact.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/SolutionUnion/!svn/ver/83/trunk/src/SolutionUnion/Contact.cs
+END
+ApplicationSettingUserDefaultsEdit.cs
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/SolutionUnion/!svn/ver/92/trunk/src/SolutionUnion/ApplicationSettingUserDefaultsEdit.cs
+END
+AccountType.cs
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/SolutionUnion/!svn/ver/6/trunk/src/SolutionUnion/AccountType.cs
+END
+UserProfile.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/SolutionUnion/!svn/ver/96/trunk/src/SolutionUnion/UserProfile.cs
+END
+UserRole.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/SolutionUnion/!svn/ver/3/trunk/src/SolutionUnion/UserRole.cs
+END
+AccountStatus.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/SolutionUnion/!svn/ver/6/trunk/src/SolutionUnion/AccountStatus.cs
+END
+Country.cs
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Country.cs
+END
+Server.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/Server.cs
+END
+ServerGetBackupJobReportSummariesResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/SolutionUnion/!svn/ver/62/trunk/src/SolutionUnion/ServerGetBackupJobReportSummariesResult.cs
+END
+UserSignUpMessage.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/SolutionUnion/!svn/ver/87/trunk/src/SolutionUnion/UserSignUpMessage.cs
+END
+BackUpJobReportSummary.cs
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/SolutionUnion/!svn/ver/100/trunk/src/SolutionUnion/BackUpJobReportSummary.cs
+END

@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MvcUtil</name>
+    </assembly>
+    <members>
+        <member name="T:MvcUtil.HttpPatchAttribute">
+            <summary>
+            Represents an attribute that is used to restrict an action method so that the method handles only HTTP PATCH requests.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.DiskOutputCacheProvider">
+            <summary>
+            An <see cref="T:System.Web.Caching.OutputCacheProvider"/> that uses the file system for storage.
+            </summary>
+            <remarks>
+            Based on http://www.4guysfromrolla.com/articles/061610-1.aspx
+            by Scott Mitchell
+            </remarks>
+        </member>
+        <member name="T:MvcUtil.HttpGetHeadAttribute">
+            <summary>
+            Represents an attribute that is used to restrict an action method so that the method handles both HTTP GET and HEAD requests only.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.Html.CheckBoxListExtensions">
+            <summary>
+            Provides a set of static (Shared in Visual Basic) methods for rendering sets of
+            HTML checkboxes.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.QueryStringBuilder">
+            <summary>
+            Provides a set of static (Shared in Visual Basic) methods to convert a <see cref="T:System.Collections.Specialized.NameValueCollection"/> 
+            to a <see cref="T:System.String"/> using the application/x-www-form-urlencoded format.
+            </summary>
+            <remarks>
+            This class complements <see cref="T:System.UriBuilder"/> which does not provide a way to build the
+            query portion of the URI. It's also useful if you need to send the query string in the
+            body of an HTTP request.
+            </remarks>
+        </member>
+        <member name="M:MvcUtil.QueryStringBuilder.ToQueryString(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Converts the current <see cref="T:System.Collections.Specialized.NameValueCollection"/> to a <see cref="T:System.String"/> using the
+            application/x-www-form-urlencoded format.
+            </summary>
+            <param name="qs">The <see cref="T:System.Collections.Specialized.NameValueCollection"/> to convert.</param>
+            <returns>A <see cref="T:System.String"/> in application/x-www-form-urlencoded format.</returns>
+        </member>
+        <member name="M:MvcUtil.QueryStringBuilder.ToQueryString(System.Collections.Specialized.NameValueCollection,System.Boolean)">
+            <summary>
+            Converts the current <see cref="T:System.Collections.Specialized.NameValueCollection"/> to a <see cref="T:System.String"/> using the
+            application/x-www-form-urlencoded format.
+            </summary>
+            <param name="qs">The <see cref="T:System.Collections.Specialized.NameValueCollection"/> to convert.</param>
+            <param name="includeDelimiter">true to include the leading '?' delimiter when the resulting string length is greater than zero; otherwise false.</param>
+            <returns>A <see cref="T:System.String"/> in application/x-www-form-urlencoded format.</returns>
+        </member>
+        <member name="T:MvcUtil.MetadataTypeRegister">
+            <summary>
+            Provides a set of static (Shared in Visual Basic) methods to easily register <see cref="T:System.ComponentModel.DataAnnotations.AssociatedMetadataTypeTypeDescriptionProvider"/> 
+            to all types in an assembly decorated with <see cref="T:System.ComponentModel.DataAnnotations.MetadataTypeAttribute"/>.
+            </summary>
+            <remarks>
+            See: http://stackoverflow.com/questions/2657358
+            </remarks>
+        </member>
+        <member name="T:MvcUtil.HttpVerbPrefixedActionInvoker">
+            <summary>
+            A <see cref="T:System.Web.Mvc.ControllerActionInvoker"/> that supports HTTP verb prefixed action method names.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.CacheAttribute">
+            <summary>
+            Attribute that derives from <see cref="T:System.Web.Mvc.OutputCacheAttribute"/> to fix some of it's issues (see remarks).
+            </summary>
+            <remarks>
+            See: http://stackoverflow.com/questions/1755313
+            </remarks>
+        </member>
+        <member name="T:MvcUtil.EnumList">
+            <summary>
+            Provides a set of static (Shared in Visual Basic) methods that simplify the creation
+            of <see cref="T:System.Web.Mvc.SelectList"/> instances using the names and values of enumeration types.
+            </summary>
+        </member>
+        <member name="M:MvcUtil.EnumList.Create(System.Type)">
+            <summary>
+            Creates a <see cref="T:System.Web.Mvc.SelectList"/> instance using the
+            names and values of the provided enumeration type.
+            </summary>
+            <param name="type">The enumeration type.</param>
+            <returns>A <see cref="T:System.Web.Mvc.SelectList"/> instance.</returns>
+        </member>
+        <member name="M:MvcUtil.EnumList.Create(System.Type,System.Object)">
+            <summary>
+            Creates a <see cref="T:System.Web.Mvc.SelectList"/> instance using the
+            names and values of the provided enumeration type.
+            </summary>
+            <param name="type">The enumeration type.</param>
+            <param name="selectedValue">The selected value of the list.</param>
+            <returns>A <see cref="T:System.Web.Mvc.SelectList"/> instance.</returns>
+        </member>
+        <member name="M:MvcUtil.EnumList.Create(System.Type,System.Object,System.Boolean)">
+            <summary>
+            Creates a <see cref="T:System.Web.Mvc.SelectList"/> instance using the
+            names and values of the provided enumeration type.
+            </summary>
+            <param name="type">The enumeration type.</param>
+            <param name="selectedValue">The selected value of the list.</param>
+            <param name="lookForDescription">true to look for a <see cref="T:System.ComponentModel.DescriptionAttribute"/> on each enumeration member, if found the description is used as the item's text; otherwise false.</param>
+            <returns>A <see cref="T:System.Web.Mvc.SelectList"/> instance.</returns>
+        </member>
+        <member name="M:MvcUtil.EnumList.Create(System.Type,System.Object,System.Boolean,System.String)">
+            <summary>
+            Creates a <see cref="T:System.Web.Mvc.SelectList"/> instance using the
+            names and values of the provided enumeration type.
+            </summary>
+            <param name="type">The enumeration type.</param>
+            <param name="selectedValue">The selected value of the list.</param>
+            <param name="lookForDescription">true to look for a <see cref="T:System.ComponentModel.DescriptionAttribute"/> on each enumeration member, if found the description is used as the item's text; otherwise false.</param>
+            <param name="valueFormat">A formatting string for the enumeration value (e.g. use "d" for a numeric value instead of text).</param>
+            <returns>A <see cref="T:System.Web.Mvc.SelectList"/> instance.</returns>
+        </member>
+        <member name="T:MvcUtil.WebEvents">
+            <summary>
+            Provides a set of static (Shared in Visual Basic) methods to easily raise ASP.NET 
+            health-monitoring events.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.Html.HtmlHelperFactoryExtensions">
+            <summary>
+            Provides a set of static (Shared in Visual Basic) methods for creating <see cref="T:System.Web.Mvc.HtmlHelper`1"/>
+            from an existing <see cref="T:System.Web.Mvc.HtmlHelper"/> instance.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.Html.PagerExtensions">
+            <summary>
+            Provides a set of static (Shared in Visual Basic) methods for rendering HTML 
+            pagination links.
+            </summary>
+        </member>
+        <member name="T:MvcUtil.Html.PagerSettings">
+            <summary>
+            Class used to customize the behavior of <see cref="T:MvcUtil.Html.PagerExtensions"/>.
+            </summary>
+        </member>
+        <member name="M:MvcUtil.Html.PagerSettings.Clone">
+            <summary>
+            Creates a shallow copy of the current <see cref="T:MvcUtil.Html.PagerSettings"/>.
+            </summary>
+            <returns>A shallow copy of the current <see cref="T:MvcUtil.Html.PagerSettings"/></returns>
+        </member>
+        <member name="T:MvcUtil.Html.PagerParameterType">
+            <summary>
+            Specifies the type of value that represents the start position in a paginated set.
+            </summary>
+            <seealso cref="T:MvcUtil.Html.PagerSettings"/>
+        </member>
+        <member name="F:MvcUtil.Html.PagerParameterType.StartIndex">
+            <summary>
+            The parameter represents the zero-based start index.
+            </summary>
+        </member>
+        <member name="F:MvcUtil.Html.PagerParameterType.PageNumber">
+            <summary>
+            The parameter represents the one-based page number.
+            </summary>
+        </member>
+    </members>
+</doc>
